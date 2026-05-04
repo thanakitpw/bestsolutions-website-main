@@ -1,0 +1,96 @@
+/* =============================================================================
+   Inline heading badge — Aigocy signature
+   Sits inline INSIDE an h1/h2 line, pill-shaped, bg accent.
+   Uses em-based sizing so it scales with the heading + preserves Thai
+   vertical rhythm without breaking the line.
+   ============================================================================= */
+
+.heading-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  padding: 0.18em 0.55em;
+  border-radius: var(--r-full);
+  font-family: var(--font-body);
+  font-size: 0.5em;
+  font-weight: var(--weight-bold);
+  line-height: 1;
+  vertical-align: middle;
+  transform: translateY(-0.05em);
+  letter-spacing: var(--tracking-normal);
+  white-space: nowrap;
+}
+
+/* Variants */
+.heading-badge-orange {
+  background: var(--color-orange-500);
+  color: var(--color-text-on-dark);
+  box-shadow: 0 12px 28px -10px rgba(217, 65, 14, 0.55);
+}
+
+.heading-badge-blue {
+  background: var(--color-blue-500);
+  color: var(--color-text-on-dark);
+  box-shadow: 0 12px 28px -10px rgba(30, 64, 175, 0.50);
+}
+
+.heading-badge-light {
+  background: var(--color-surface-alt);
+  color: var(--color-text);
+}
+
+.heading-badge-dark {
+  background: var(--color-text);
+  color: var(--color-text-on-dark);
+}
+
+/* -------------------------------------------------------------------------
+   Inner icon chip — small 1em square placeholder with semi-transparent
+   white pill background. Stays legible regardless of badge variant.
+   ------------------------------------------------------------------------- */
+.heading-badge-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1em;
+  height: 1em;
+  border-radius: var(--r-xs);
+  background: rgba(255, 255, 255, 0.85);
+  color: var(--color-orange-700);
+  font-size: 0.7em;
+  font-weight: var(--weight-heavy);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+  flex-shrink: 0;
+}
+
+.heading-badge-blue .heading-badge-chip {
+  color: var(--color-blue-700);
+}
+
+.heading-badge-light .heading-badge-chip {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+
+.heading-badge-dark .heading-badge-chip {
+  background: var(--color-orange-500);
+  color: var(--color-text-on-dark);
+}
+
+/* -------------------------------------------------------------------------
+   Optional: a smaller badge for h3/h4 contexts — sized 0.6em and tighter.
+   ------------------------------------------------------------------------- */
+.heading-badge-sm {
+  font-size: 0.6em;
+  padding: 0.14em 0.45em;
+}
+
+/* -------------------------------------------------------------------------
+   Mobile tuning: slight padding bump so the touch-target still reads as
+   a chip not a smear when the heading wraps tightly.
+   ------------------------------------------------------------------------- */
+@media (max-width: 560px) {
+  .heading-badge {
+    padding: 0.22em 0.5em;
+  }
+}

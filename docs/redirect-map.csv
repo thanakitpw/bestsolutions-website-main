@@ -1,0 +1,17 @@
+old_path,new_path,status_code,notes
+/,/th,301,homepage; locale prefix added
+/about,/th/about,301,
+/services,/th/services,301,
+/portfolio,/th/portfolio,301,
+/blog,/th/blog,301,
+/contact,/th/contact,301,
+/services/ai-automation,/th/services/ai-automation,301,
+/services/ai-email,/th/services/ai-email,301,
+/services/website-design,/th/services/website-design,301,renamed to web-design? confirm slug consistency
+/portfolio/luxe-store-ecommerce,/th/portfolio/luxe-store-ecommerce,301,
+/portfolio/luxury-automotive-showcase,/th/portfolio/luxury-automotive-showcase,301,
+/blog/ai-automation,/th/blog/ai-automation,301,
+/blog/ai-automation-คืออะไร,/th/blog/ai-automation-คืออะไร,301,Thai-slug — must URL-encode in next.config redirects
+/blog/ai-automation-ecommerce,/th/blog/ai-automation-ecommerce,301,
+/blog/n8n-คืออะไร,/th/blog/n8n-คืออะไร,301,Thai-slug — must URL-encode
+/blog/online-marketing-for-business-digital-getting-started-increase-sales,/th/blog/online-marketing-for-business-digital-getting-started-increase-sales,301,long slug — consider shortening on new site (with redirect from old)

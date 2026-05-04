@@ -1,0 +1,213 @@
+/* =============================================================================
+   Best Solutions — Design Tokens v1
+   Direction C: Aigocy-true (locked 2026-05-05, ADR 0005)
+   Light theme only. No dark mode tokens.
+
+   All component CSS imports this file as the single source of truth.
+   When migrating to Phase 2 / Tailwind v4, lift these into web/app/globals.css
+   under @theme.
+   ============================================================================= */
+
+:root {
+  /* -------------------------------------------------------------------------
+     Surfaces
+     ------------------------------------------------------------------------- */
+  --color-bg: #F5F3EE;          /* page bg — warm cream (Aigocy-faithful) */
+  --color-surface: #FFFFFF;     /* cards, popovers */
+  --color-surface-alt: #EDEAE2; /* subtle alternate (stat band, etc.) */
+  --color-dark: #161616;        /* the ONE dark rhythm section */
+
+  /* -------------------------------------------------------------------------
+     Text
+     ------------------------------------------------------------------------- */
+  --color-text: #0A0A0A;
+  --color-text-muted: #6B6B6B;
+  --color-text-subtle: #94918A;
+  --color-text-on-dark: #FFFFFF;
+  --color-text-on-dark-muted: rgba(255, 255, 255, 0.72);
+  --color-text-on-dark-subtle: rgba(255, 255, 255, 0.52);
+
+  /* -------------------------------------------------------------------------
+     Orange — warm dominant accent (gradient blob, badges, dark-section CTA)
+     ------------------------------------------------------------------------- */
+  --color-orange-50:  #FFF6EE;
+  --color-orange-100: #FFE4CC;
+  --color-orange-200: #FFCBA1;
+  --color-orange-300: #FFAB6E;
+  --color-orange-400: #FF8740;
+  --color-orange-500: #FF5A1F;  /* primary orange */
+  --color-orange-600: #ED4810;
+  --color-orange-700: #D9410E;
+  --color-orange-800: #A82E08;
+  --color-orange-900: #7A2106;
+  --color-peach:      #FFB347;  /* gradient end */
+
+  /* -------------------------------------------------------------------------
+     Blue — cool secondary accent (outline CTAs, links, 1 card variant)
+     ------------------------------------------------------------------------- */
+  --color-blue-50:  #EEF2FF;
+  --color-blue-100: #E0E7FF;
+  --color-blue-200: #C7D2FE;
+  --color-blue-300: #A5B4FC;
+  --color-blue-400: #6366F1;
+  --color-blue-500: #1E40AF;    /* primary blue */
+  --color-blue-600: #1D4ED8;
+  --color-blue-700: #1E3A8A;
+  --color-blue-800: #172554;
+  --color-blue-900: #0F1736;
+
+  /* -------------------------------------------------------------------------
+     Semantic (extras for forms / states)
+     ------------------------------------------------------------------------- */
+  --color-success: #15803D;
+  --color-success-bg: #F0FDF4;
+  --color-error:   #B91C1C;
+  --color-error-bg: #FEF2F2;
+  --color-warning: #B45309;
+
+  /* -------------------------------------------------------------------------
+     Borders / dividers — never hard #000
+     ------------------------------------------------------------------------- */
+  --hairline:        rgba(0, 0, 0, 0.06);
+  --hairline-strong: rgba(0, 0, 0, 0.10);
+  --hairline-on-dark: rgba(255, 255, 255, 0.10);
+
+  /* -------------------------------------------------------------------------
+     Shadows — soft Aigocy-true (no harsh "press")
+     ------------------------------------------------------------------------- */
+  --shadow-sm: 0 2px 8px -4px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 8px 20px -8px rgba(0, 0, 0, 0.08), 0 4px 10px -4px rgba(0, 0, 0, 0.05);
+  --shadow-card: 0 24px 60px -24px rgba(0, 0, 0, 0.08), 0 8px 24px -8px rgba(0, 0, 0, 0.06);
+  --shadow-card-hover: 0 32px 80px -24px rgba(0, 0, 0, 0.12), 0 12px 28px -8px rgba(0, 0, 0, 0.08);
+  --shadow-pill: 0 12px 32px -12px rgba(0, 0, 0, 0.10), 0 4px 12px -4px rgba(0, 0, 0, 0.06);
+  --shadow-floating-icon: 0 16px 40px -16px rgba(0, 0, 0, 0.18), 0 6px 16px -6px rgba(0, 0, 0, 0.10);
+  --shadow-cta: 0 12px 32px -12px rgba(0, 0, 0, 0.20);
+  --shadow-glow-orange: 0 0 0 6px rgba(255, 90, 31, 0.12);
+  --shadow-glow-blue:   0 0 0 6px rgba(30, 64, 175, 0.12);
+
+  /* -------------------------------------------------------------------------
+     Radii — rounded everything (Aigocy DNA)
+     ------------------------------------------------------------------------- */
+  --r-xs:  8px;
+  --r-sm:  12px;
+  --r-md:  18px;
+  --r-lg:  24px;
+  --r-xl:  28px;
+  --r-2xl: 36px;
+  --r-3xl: 48px;
+  --r-full: 999px;
+
+  /* -------------------------------------------------------------------------
+     Spacing scale (4px grid)
+     ------------------------------------------------------------------------- */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Section padding (generous — Aigocy uses ≥120px desktop) */
+  --section-y: 120px;
+  --section-y-mobile: 72px;
+
+  /* Container widths */
+  --container-max: 1280px;
+  --container-narrow: 960px;
+  --container-prose: 720px;
+
+  /* -------------------------------------------------------------------------
+     Type — font families. Phase 1 prototype loads LINE Seed Sans Thai
+     (T1.4 self-hosts woff2). IBM Plex Sans Thai fallback.
+     ------------------------------------------------------------------------- */
+  --font-display: "LINE Seed Sans Thai", "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-body:    "LINE Seed Sans Thai", "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Type scale — fluid (clamp). Mobile-first values.
+     Display = LINE Seed Heavy 800. Body = 400/600.
+   */
+  --text-xs:      clamp(11px, 0.75vw, 12px);     /* labels, captions */
+  --text-sm:      clamp(13px, 0.85vw, 14px);     /* meta, eyebrow */
+  --text-base:    clamp(15px, 1.05vw, 17px);     /* body */
+  --text-lg:      clamp(17px, 1.2vw, 19px);
+  --text-xl:      clamp(19px, 1.4vw, 22px);
+  --text-2xl:     clamp(22px, 1.7vw, 28px);      /* h4 */
+  --text-3xl:     clamp(28px, 2.4vw, 36px);      /* h3 */
+  --text-4xl:     clamp(36px, 3.6vw, 52px);      /* h2 */
+  --text-5xl:     clamp(48px, 5vw, 72px);
+  --text-display: clamp(56px, 8vw, 120px);       /* h1 hero */
+
+  /* Line-heights — Thai needs more leading than Latin */
+  --leading-tight:   1.05;
+  --leading-snug:    1.2;
+  --leading-normal:  1.5;
+  --leading-body:    1.7;     /* Thai body */
+  --leading-loose:   1.9;
+
+  /* Tracking */
+  --tracking-tight:  -0.02em;
+  --tracking-normal: 0;
+  --tracking-wide:   0.04em;
+  --tracking-eyebrow: 0.12em;  /* uppercase eyebrow */
+
+  /* Weights — when LINE Seed Sans Thai is loaded, Heavy=800 is available.
+     Fallback IBM Plex Sans Thai max = 700 (Bold). */
+  --weight-regular: 400;
+  --weight-medium:  500;
+  --weight-bold:    700;
+  --weight-heavy:   800;
+
+  /* -------------------------------------------------------------------------
+     Motion (no snappy "press" — smooth Aigocy ease)
+     ------------------------------------------------------------------------- */
+  --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  --t-fast: 180ms;
+  --t-base: 220ms;
+  --t-slow: 320ms;
+  --t-blob: 15s;          /* hero gradient drift loop */
+
+  /* -------------------------------------------------------------------------
+     Z-index ladder
+     ------------------------------------------------------------------------- */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-sticky:  50;
+  --z-overlay: 100;
+  --z-modal:   200;
+  --z-toast:   300;
+
+  /* -------------------------------------------------------------------------
+     Gradient blob (hero)
+     ------------------------------------------------------------------------- */
+  --blob-gradient: radial-gradient(
+    closest-side at 60% 50%,
+    var(--color-orange-500) 0%,
+    var(--color-peach) 35%,
+    transparent 70%
+  );
+  --blob-blur: 70px;
+}
+
+/* =============================================================================
+   prefers-reduced-motion
+   ============================================================================= */
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 0ms;
+    --t-base: 0ms;
+    --t-slow: 0ms;
+    --t-blob: 0ms;
+  }
+}

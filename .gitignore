@@ -1,0 +1,55 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+*.tsbuildinfo
+
+# Env / secrets
+.env
+.env.*
+!.env.example
+
+# Vercel
+.vercel/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+
+# Testing
+playwright-report/
+test-results/
+coverage/
+*.lcov
+.lighthouseci/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Local Supabase
+supabase/.branches/
+supabase/.temp/
+
+# Misc
+.cache/
+.parcel-cache/
+.turbo/
+
+# Local-only reference assets (large screenshots dragged in by user)
+screencapture-*.png
+screencapture-*.jpg

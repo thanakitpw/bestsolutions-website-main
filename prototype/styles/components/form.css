@@ -1,0 +1,301 @@
+/* =============================================================================
+   Forms
+   Direction C — Aigocy-true. Soft inputs, blue focus glow, clear states.
+   ============================================================================= */
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.form-field {
+  display: block;
+  margin-bottom: var(--space-5);
+}
+
+.form-field:last-child {
+  margin-bottom: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Field row — side-by-side fields on wider viewports
+   ------------------------------------------------------------------------- */
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-5);
+}
+
+@media (min-width: 640px) {
+  .form-row {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-row .form-field {
+  margin-bottom: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Label
+   ------------------------------------------------------------------------- */
+.form-label {
+  display: block;
+  margin-bottom: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text);
+  letter-spacing: var(--tracking-normal);
+}
+
+.form-label-required::after {
+  content: "*";
+  color: var(--color-orange-500);
+  margin-left: 2px;
+}
+
+/* -------------------------------------------------------------------------
+   Inputs (shared base)
+   ------------------------------------------------------------------------- */
+.form-input,
+.form-textarea,
+.form-select {
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-md);
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-family: inherit;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  transition: border-color var(--t-base) var(--ease),
+              box-shadow var(--t-base) var(--ease),
+              background var(--t-base) var(--ease);
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-text-subtle);
+}
+
+.form-input:hover,
+.form-textarea:hover,
+.form-select:hover {
+  border-color: var(--color-text-subtle);
+}
+
+.form-input:focus,
+.form-textarea:focus,
+.form-select:focus,
+.form-input:focus-visible,
+.form-textarea:focus-visible,
+.form-select:focus-visible {
+  outline: none;
+  border-color: var(--color-blue-500);
+  box-shadow: var(--shadow-glow-blue);
+}
+
+.form-input:disabled,
+.form-textarea:disabled,
+.form-select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background: var(--color-surface-alt);
+}
+
+/* -------------------------------------------------------------------------
+   Textarea
+   ------------------------------------------------------------------------- */
+.form-textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: var(--leading-body);
+}
+
+/* -------------------------------------------------------------------------
+   Select — chevron icon right
+   ------------------------------------------------------------------------- */
+.form-select {
+  padding-right: 44px;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%236B6B6B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='6 9 12 15 18 9'/></svg>");
+  background-repeat: no-repeat;
+  background-position: right 16px center;
+  background-size: 18px 18px;
+  cursor: pointer;
+}
+
+/* -------------------------------------------------------------------------
+   Checkbox — custom 20x20 with rounded corners + orange checked state
+   ------------------------------------------------------------------------- */
+.form-checkbox-wrap {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  cursor: pointer;
+  font-size: var(--text-base);
+  line-height: var(--leading-normal);
+  color: var(--color-text);
+  user-select: none;
+}
+
+.form-checkbox {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: var(--r-xs);
+  background: var(--color-surface);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  margin: 0;
+  margin-top: 2px;
+  transition: background var(--t-fast) var(--ease),
+              border-color var(--t-fast) var(--ease),
+              box-shadow var(--t-fast) var(--ease);
+}
+
+.form-checkbox:hover {
+  border-color: var(--color-text-subtle);
+}
+
+.form-checkbox:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-glow-orange);
+}
+
+.form-checkbox:checked {
+  background: var(--color-orange-500);
+  border-color: var(--color-orange-500);
+}
+
+.form-checkbox:checked::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 6px;
+  height: 10px;
+  border: solid var(--color-text-on-dark);
+  border-width: 0 2px 2px 0;
+  transform: rotate(45deg) translate(-1px, -1px);
+}
+
+/* -------------------------------------------------------------------------
+   Radio
+   ------------------------------------------------------------------------- */
+.form-radio {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid var(--hairline-strong);
+  border-radius: 50%;
+  background: var(--color-surface);
+  cursor: pointer;
+  position: relative;
+  flex-shrink: 0;
+  margin: 0;
+  margin-top: 2px;
+  transition: border-color var(--t-fast) var(--ease),
+              box-shadow var(--t-fast) var(--ease);
+}
+
+.form-radio:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-glow-orange);
+}
+
+.form-radio:checked {
+  border-color: var(--color-orange-500);
+}
+
+.form-radio:checked::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--color-orange-500);
+}
+
+/* -------------------------------------------------------------------------
+   Help / error / success text
+   ------------------------------------------------------------------------- */
+.form-help {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+}
+
+.form-error {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-error);
+  line-height: var(--leading-normal);
+}
+
+.form-success {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: var(--text-sm);
+  color: var(--color-success);
+  line-height: var(--leading-normal);
+}
+
+/* Error state — bumps border + glow color */
+.form-input.has-error,
+.form-textarea.has-error,
+.form-select.has-error {
+  border-color: var(--color-error);
+}
+
+.form-input.has-error:focus,
+.form-textarea.has-error:focus,
+.form-select.has-error:focus,
+.form-input.has-error:focus-visible,
+.form-textarea.has-error:focus-visible,
+.form-select.has-error:focus-visible {
+  border-color: var(--color-error);
+  box-shadow: 0 0 0 6px rgba(185, 28, 28, 0.12);
+}
+
+/* Success state */
+.form-input.has-success,
+.form-textarea.has-success,
+.form-select.has-success {
+  border-color: var(--color-success);
+}
+
+/* -------------------------------------------------------------------------
+   Honeypot — visually hidden field for spam protection
+   ------------------------------------------------------------------------- */
+.form-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* -------------------------------------------------------------------------
+   Form actions row (submit button + supporting note)
+   ------------------------------------------------------------------------- */
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-4);
+  margin-top: var(--space-2);
+}

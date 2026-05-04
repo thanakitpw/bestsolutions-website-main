@@ -1,0 +1,268 @@
+/* =============================================================================
+   Floating pill navbar
+   Direction C — Aigocy-true. Backdrop-blur glass, centered, fixed top.
+   Depends on: button.css (.btn / .btn-primary for CTA).
+   ============================================================================= */
+
+.navbar-wrap {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  justify-content: center;
+  padding: 16px var(--space-4) 0;
+  pointer-events: none;
+}
+
+.navbar {
+  pointer-events: auto;
+  width: min(92%, 1080px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-6);
+  padding: 12px 14px 12px var(--space-6);
+  background: rgba(255, 255, 255, 0.70);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+  backdrop-filter: saturate(160%) blur(16px);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-full);
+  box-shadow: var(--shadow-pill);
+}
+
+@media (min-width: 768px) {
+  .navbar {
+    width: min(82%, 1080px);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Brand
+   ------------------------------------------------------------------------- */
+.navbar-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-base);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  text-decoration: none;
+}
+
+.navbar-brand::before {
+  content: "";
+  display: inline-block;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,
+    var(--color-orange-500) 0%,
+    var(--color-orange-700) 65%,
+    var(--color-orange-900) 100%);
+  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.18);
+  flex-shrink: 0;
+}
+
+/* -------------------------------------------------------------------------
+   Desktop nav links (hidden < 900px)
+   ------------------------------------------------------------------------- */
+.navbar-nav {
+  display: none;
+  align-items: center;
+  gap: var(--space-8);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-nav a {
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--t-base) var(--ease);
+}
+
+.navbar-nav a:hover {
+  color: var(--color-text);
+}
+
+.navbar-nav a:focus-visible {
+  outline: none;
+  color: var(--color-text);
+  box-shadow: var(--shadow-glow-orange);
+  border-radius: var(--r-full);
+}
+
+@media (min-width: 900px) {
+  .navbar-nav {
+    display: inline-flex;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   CTA — uses .btn .btn-primary .btn-sm classes from button.css
+   ------------------------------------------------------------------------- */
+.navbar-cta {
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .navbar-cta {
+    display: inline-flex;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Mobile toggle (hamburger) — visible < 900px
+   ------------------------------------------------------------------------- */
+.navbar-mobile-toggle {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  width: 44px;
+  height: 44px;
+  background: transparent;
+  border: none;
+  border-radius: var(--r-full);
+  cursor: pointer;
+  padding: 0;
+  transition: background var(--t-base) var(--ease);
+}
+
+.navbar-mobile-toggle:hover {
+  background: var(--color-surface-alt);
+}
+
+.navbar-mobile-toggle:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-glow-orange);
+}
+
+.navbar-mobile-toggle span {
+  display: block;
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--color-text);
+  transition: transform var(--t-base) var(--ease),
+              opacity var(--t-base) var(--ease);
+}
+
+@media (min-width: 900px) {
+  .navbar-mobile-toggle {
+    display: none;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Drawer (full-screen slide-in from right)
+   State: [data-open="true"] toggled (no JS in Phase 1 prototype yet —
+   used as a CSS-driven preview)
+   ------------------------------------------------------------------------- */
+.navbar-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(86%, 380px);
+  background: var(--color-surface);
+  z-index: var(--z-overlay);
+  padding: 96px var(--space-6) var(--space-8);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+  transform: translateX(100%);
+  transition: transform var(--t-slow) var(--ease-out);
+  box-shadow: -24px 0 60px -24px rgba(0, 0, 0, 0.18);
+}
+
+.navbar-drawer[data-open="true"] {
+  transform: translateX(0);
+}
+
+.navbar-drawer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.navbar-drawer-nav a {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  text-decoration: none;
+  letter-spacing: var(--tracking-tight);
+  transition: color var(--t-base) var(--ease);
+}
+
+.navbar-drawer-nav a:hover {
+  color: var(--color-orange-700);
+}
+
+.navbar-drawer-cta {
+  margin-top: auto;
+}
+
+.navbar-drawer-close {
+  position: absolute;
+  top: 24px;
+  right: 24px;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid var(--hairline-strong);
+  background: var(--color-surface);
+  cursor: pointer;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--color-text);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background var(--t-base) var(--ease),
+              transform var(--t-base) var(--ease);
+}
+
+.navbar-drawer-close:hover {
+  background: var(--color-surface-alt);
+  transform: rotate(90deg);
+}
+
+.navbar-drawer-close:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-glow-orange);
+}
+
+/* Drawer scrim */
+.navbar-scrim {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: calc(var(--z-overlay) - 1);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-base) var(--ease);
+}
+
+.navbar-scrim[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (min-width: 900px) {
+  .navbar-drawer,
+  .navbar-scrim {
+    display: none;
+  }
+}
