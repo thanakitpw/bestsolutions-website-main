@@ -308,12 +308,15 @@
 - T8.7 Redirect verification (`redirect-map.csv` → 301)
 
 ### G — Phase 9 launch
-- T9.1 Vercel project setup ← **IN PROGRESS**
+- ✅ T9.1 Vercel project setup (commit 704d5f6)
   - Vercel MCP connected (claude mcp add --transport http vercel https://mcp.vercel.com)
-  - env vars set บน project `bestsolutions-website`: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, SUPABASE_SERVICE_ROLE_KEY, IP_HASH_SALT, NEXT_PUBLIC_SITE_URL (production+preview+development)
-  - ⚠️ ยังไม่ได้ vercel link project ใหม่แยกจากเว็บเก่า — ต้อง run `vercel link` จาก `web/` เลือก N (ไม่ link อันเดิม) ชื่อ `bestsolutions-website-redesign`
-  - vercel.json: เพิ่ม buildCommand/outputDirectory/installCommand (commit 6b17ac9)
-- T9.2 Staging deploy — ยังไม่ได้ทำ
+  - Project: `bestsolutions-website-main` (recreated หลังจาก project เดิมเจอ `Builds: . [0ms]` ปัญหา framework detection)
+  - vercel.json: `framework: "nextjs"` + cache headers (no buildCommand/outputDirectory ให้ Vercel auto-detect)
+  - env vars 5 × 3 envs = 15 entries: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, SUPABASE_SERVICE_ROLE_KEY, IP_HASH_SALT, NEXT_PUBLIC_SITE_URL
+  - ⚠️ Deploy ครั้งนี้ผ่าน CLI — ยังไม่ได้เชื่อม GitHub auto-deploy (ทำต่อใน Dashboard ได้)
+- ✅ T9.2 Staging deploy — Live ที่ https://bestsolutions-website-main.vercel.app
+  - ทุก route ตอบ 200 (`/th`, `/th/about`, `/th/services`, `/th/portfolio`, `/th/blog`, `/th/contact`, `/admin/login`, `/sitemap.xml`, `/robots.txt`)
+  - `/` → 307 redirect ไป `/th` ตาม next-intl routing
 - T9.3 G3 founder review on staging
 - T9.4 DNS plan ADR
 - T9.5 Production env vars
