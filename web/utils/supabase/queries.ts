@@ -139,3 +139,23 @@ export async function getPortfolioSlugs(): Promise<string[]> {
     .eq("status", "published");
   return (data ?? []).map((r) => r.slug);
 }
+
+export type SitemapEntry = { slug: string; updated_at: string };
+
+/** For sitemap.ts — cookie-free, build-time safe. */
+export async function getArticleSitemapEntries(): Promise<SitemapEntry[]> {
+  const { data } = await staticDb()
+    .from("articles")
+    .select("slug, updated_at")
+    .eq("status", "published");
+  return (data ?? []).map((r) => ({ slug: r.slug, updated_at: r.updated_at }));
+}
+
+/** For sitemap.ts — cookie-free, build-time safe. */
+export async function getPortfolioSitemapEntries(): Promise<SitemapEntry[]> {
+  const { data } = await staticDb()
+    .from("portfolio_items")
+    .select("slug, updated_at")
+    .eq("status", "published");
+  return (data ?? []).map((r) => ({ slug: r.slug, updated_at: r.updated_at }));
+}

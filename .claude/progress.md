@@ -142,7 +142,9 @@
 ### C — SEO Phase 5 ← **IN PROGRESS**
 - ✅ T5.1 `generateMetadata` per route (title ≤60, desc ≤160, canonical, OG, hreflang th/en)
 - ✅ T5.2 JSON-LD components (Organization, LocalBusiness, Service, Article, CreativeWork, Breadcrumb)
-- **← NEXT** T5.3 `web/app/sitemap.ts` (pulls article + portfolio slugs from Supabase)
+- ✅ T5.3 `web/app/sitemap.ts` (38 URLs, hreflang th/en/x-default)
+- ✅ T5.4 `web/app/robots.ts` (allow / + Disallow /admin/, /api/, sitemap ref)
+- **← NEXT** T5.5 OG image generation (`opengraph-image.tsx` with LINE Seed font)
 - T5.4 `web/app/robots.ts`
 - T5.5 OG image generation (`opengraph-image.tsx` with LINE Seed font)
 - T5.6 Image audit — `next/image`, alt text ภาษาไทย, `priority` on above-fold
