@@ -1,0 +1,253 @@
+@import "tailwindcss";
+
+/* =============================================================================
+   Self-hosted LINE Seed Sans Thai (SIL OFL 1.1)
+   Source: https://github.com/line/seed
+   Phase 2 TODO: migrate to next/font/local for build-time optimization (T2.5)
+   ============================================================================= */
+
+@font-face {
+  font-family: "LINE Seed Sans Thai";
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/LINESeedSansTH-Regular.woff2") format("woff2");
+}
+@font-face {
+  font-family: "LINE Seed Sans Thai";
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/LINESeedSansTH-Bold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "LINE Seed Sans Thai";
+  font-weight: 800;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/LINESeedSansTH-ExtraBold.woff2") format("woff2");
+}
+@font-face {
+  font-family: "LINE Seed Sans Thai";
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+  src: url("/fonts/LINESeedSansTH-Black.woff2") format("woff2");
+}
+
+/* =============================================================================
+   Design tokens — Tailwind v4 @theme
+   Bridged from prototype/styles/tokens.css (Direction C "Aigocy-true", ADR 0005)
+   Light theme only.
+   ============================================================================= */
+
+@theme {
+  /* === Surfaces === */
+  --color-bg: #F5F3EE;
+  --color-surface: #FFFFFF;
+  --color-surface-alt: #EDEAE2;
+  --color-dark: #161616;
+
+  /* === Text === */
+  --color-text: #0A0A0A;
+  --color-text-muted: #6B6B6B;
+  --color-text-subtle: #94918A;
+  --color-text-on-dark: #FFFFFF;
+  --color-text-on-dark-muted: rgb(255 255 255 / 0.72);
+  --color-text-on-dark-subtle: rgb(255 255 255 / 0.52);
+
+  /* === Orange (warm dominant) === */
+  --color-orange-50:  #FFF6EE;
+  --color-orange-100: #FFE4CC;
+  --color-orange-200: #FFCBA1;
+  --color-orange-300: #FFAB6E;
+  --color-orange-400: #FF8740;
+  --color-orange-500: #FF5A1F;
+  --color-orange-600: #ED4810;
+  --color-orange-700: #D9410E;
+  --color-orange-800: #A82E08;
+  --color-orange-900: #7A2106;
+  --color-peach:      #FFB347;
+
+  /* === Blue (cool secondary) === */
+  --color-blue-50:  #EEF2FF;
+  --color-blue-100: #E0E7FF;
+  --color-blue-200: #C7D2FE;
+  --color-blue-300: #A5B4FC;
+  --color-blue-400: #6366F1;
+  --color-blue-500: #1E40AF;
+  --color-blue-600: #1D4ED8;
+  --color-blue-700: #1E3A8A;
+  --color-blue-800: #172554;
+  --color-blue-900: #0F1736;
+
+  /* === Semantic === */
+  --color-success:    #15803D;
+  --color-success-bg: #F0FDF4;
+  --color-error:      #B91C1C;
+  --color-error-bg:   #FEF2F2;
+  --color-warning:    #B45309;
+
+  /* === Fonts === */
+  --font-display: "LINE Seed Sans Thai", "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-body:    "LINE Seed Sans Thai", "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* === Type scale (fluid) === */
+  --text-xs:      clamp(11px, 0.75vw, 12px);
+  --text-sm:      clamp(13px, 0.85vw, 14px);
+  --text-base:    clamp(15px, 1.05vw, 17px);
+  --text-lg:      clamp(17px, 1.2vw, 19px);
+  --text-xl:      clamp(19px, 1.4vw, 22px);
+  --text-2xl:     clamp(20px, 1.5vw, 22px);
+  --text-3xl:     clamp(26px, 2.2vw, 32px);
+  --text-4xl:     clamp(32px, 5vw, 60px);
+  --text-5xl:     clamp(40px, 6vw, 80px);
+  --text-display: clamp(48px, 9vw, 104px);
+
+  /* === Spacing — 4px base, generates p-1..p-32 etc. === */
+  --spacing: 0.25rem;
+
+  /* === Radii === */
+  --radius-xs:  8px;
+  --radius-sm:  12px;
+  --radius-md:  18px;
+  --radius-lg:  24px;
+  --radius-xl:  28px;
+  --radius-2xl: 36px;
+  --radius-3xl: 48px;
+  --radius-full: 999px;
+
+  /* === Shadows (soft Aigocy-true) === */
+  --shadow-sm:            0 2px 8px -4px rgb(0 0 0 / 0.06), 0 1px 3px rgb(0 0 0 / 0.04);
+  --shadow-md:            0 8px 20px -8px rgb(0 0 0 / 0.08), 0 4px 10px -4px rgb(0 0 0 / 0.05);
+  --shadow-card:          0 24px 60px -24px rgb(0 0 0 / 0.08), 0 8px 24px -8px rgb(0 0 0 / 0.06);
+  --shadow-card-hover:    0 32px 80px -24px rgb(0 0 0 / 0.12), 0 12px 28px -8px rgb(0 0 0 / 0.08);
+  --shadow-pill:          0 12px 32px -12px rgb(0 0 0 / 0.10), 0 4px 12px -4px rgb(0 0 0 / 0.06);
+  --shadow-floating-icon: 0 16px 40px -16px rgb(0 0 0 / 0.18), 0 6px 16px -6px rgb(0 0 0 / 0.10);
+  --shadow-cta:           0 12px 32px -12px rgb(0 0 0 / 0.20);
+  --shadow-glow-orange:   0 0 0 6px rgb(255 90 31 / 0.12);
+  --shadow-glow-blue:     0 0 0 6px rgb(30 64 175 / 0.12);
+
+  /* === Easing === */
+  --ease:        cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-out:    cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+
+  /* === Container widths === */
+  --container-prose:  45rem;
+  --container-narrow: 60rem;
+  --container-3xl:    80rem;
+}
+
+/* =============================================================================
+   Custom properties — not mapped to Tailwind utility classes
+   Use via var(--foo) in styled components or arbitrary values.
+   ============================================================================= */
+
+:root {
+  --section-y: 120px;
+  --section-y-mobile: 72px;
+
+  --hairline:         rgb(0 0 0 / 0.06);
+  --hairline-strong:  rgb(0 0 0 / 0.10);
+  --hairline-on-dark: rgb(255 255 255 / 0.10);
+
+  --t-fast: 180ms;
+  --t-base: 220ms;
+  --t-slow: 320ms;
+  --t-blob: 15s;
+
+  --tracking-tight:   -0.02em;
+  --tracking-normal:  0;
+  --tracking-wide:    0.04em;
+  --tracking-eyebrow: 0.12em;
+
+  --leading-tight:  1.04;
+  --leading-snug:   1.2;
+  --leading-normal: 1.5;
+  --leading-body:   1.7;
+
+  --weight-regular:  400;
+  --weight-medium:   500;
+  --weight-semibold: 600;
+  --weight-bold:     700;
+  --weight-heavy:    800;
+
+  --blob-gradient: radial-gradient(
+    closest-side at 60% 50%,
+    var(--color-orange-500) 0%,
+    var(--color-peach) 35%,
+    transparent 70%
+  );
+  --blob-blur: 70px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --t-fast: 0ms;
+    --t-base: 0ms;
+    --t-slow: 0ms;
+    --t-blob: 0ms;
+  }
+}
+
+/* =============================================================================
+   Base styles
+   ============================================================================= */
+
+body {
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-weight: var(--weight-regular);
+  font-size: var(--text-base);
+  line-height: var(--leading-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  font-feature-settings: "kern" 1, "liga" 1;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  color: var(--color-text);
+  margin: 0;
+  letter-spacing: var(--tracking-tight);
+}
+
+h1 {
+  font-size: var(--text-display);
+  font-weight: var(--weight-bold);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+}
+h2 {
+  font-size: var(--text-4xl);
+  font-weight: var(--weight-bold);
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+}
+h3 {
+  font-size: var(--text-3xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+}
+h4 {
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  line-height: var(--leading-snug);
+}
+h5 {
+  font-size: var(--text-xl);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-snug);
+}
+h6 {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  line-height: var(--leading-normal);
+}
+
+p { margin: 0 0 1em; }
+small { font-size: var(--text-sm); }
