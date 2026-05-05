@@ -1,9 +1,28 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getArticles } from "@/utils/supabase/queries";
+import { BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
+import { MediaImage } from "@/components/media-image";
 import { formatThaiDate, pickLocale } from "@/utils/format";
+import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/blog.css";
+
+export const revalidate = 60;
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Blog" });
+  return buildPageMetadata({
+    locale,
+    path: "/blog",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+  });
+}
 
 const CATEGORY_TONE: Record<string, string> = {
   "Digital Marketing": "is-blue",
@@ -19,12 +38,6 @@ const CARD_GRADIENTS = [
   "linear-gradient(135deg, var(--color-peach), var(--color-orange-500))",
 ];
 
-export const metadata: Metadata = {
-  title: "บล็อก · Best Solutions — บทความ AI, Digital Marketing, SEO ภาษาไทย",
-  description:
-    "บทความและไอเดียจากทีม Best Solutions — เขียนเฉพาะที่ลงมือทำจริง ครอบคลุม AI Automation, Digital Marketing, SEO ภาษาไทย, Web Design และเคส SME",
-};
-
 export default async function BlogPage({
   params,
 }: {
@@ -38,6 +51,13 @@ export default async function BlogPage({
 
   return (
     <main id="main">
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Blog" : "บทความ", path: "/blog" },
+        ]}
+      />
 
       {/* ============================================================ HERO */}
       <section className="page-hero" aria-labelledby="hero-title">
@@ -68,13 +88,15 @@ export default async function BlogPage({
 
           {/* Featured */}
           {featured && (
+            <Reveal>
             <Link href={`/blog/${featured.slug}`} className="featured-card" aria-labelledby="featured-title">
-              <div
+              <MediaImage
                 className="featured-media"
-                role="img"
-                aria-label={`ภาพประกอบบทความ${pickLocale(locale, featured.title_th, featured.title_en ?? featured.title_th)}`}
-                style={featured.cover_image ? { backgroundImage: `url(${featured.cover_image})`, backgroundSize: "cover" } : undefined}
-              ></div>
+                src={featured.cover_image}
+                alt={`ภาพประกอบบทความ ${pickLocale(locale, featured.title_th, featured.title_en ?? featured.title_th)}`}
+                sizes="(min-width: 1280px) 800px, 100vw"
+                priority
+              />
               <div className="featured-body">
                 <span className="featured-cat">Featured · {featured.category}</span>
                 <h3 className="featured-title" id="featured-title">
@@ -92,10 +114,11 @@ export default async function BlogPage({
                 </div>
               </div>
             </Link>
+            </Reveal>
           )}
 
           {/* Grid */}
-          <div className="grid-blog">
+          <Reveal className="grid-blog" delay={0.1}>
             {rest.map((a, i) => {
               const title = pickLocale(locale, a.title_th, a.title_en ?? a.title_th);
               const excerpt = pickLocale(locale, a.excerpt_th, a.excerpt_en ?? a.excerpt_th ?? "");
@@ -103,12 +126,13 @@ export default async function BlogPage({
               const bg = CARD_GRADIENTS[i % CARD_GRADIENTS.length];
               return (
                 <Link key={a.slug} href={`/blog/${a.slug}`} className="card card-blog">
-                  <div
+                  <MediaImage
                     className="card-media"
-                    role="img"
-                    aria-label={`ภาพประกอบบทความ${title}`}
-                    style={a.cover_image ? { backgroundImage: `url(${a.cover_image})`, backgroundSize: "cover" } : { background: bg }}
-                  ></div>
+                    src={a.cover_image}
+                    alt={`ภาพประกอบบทความ ${title}`}
+                    gradient={bg}
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                  />
                   <div className="card-body">
                     <span className={`card-category ${tone}`}>{a.category}</span>
                     <h3 className="card-title">{title}</h3>
@@ -122,7 +146,7 @@ export default async function BlogPage({
                 </Link>
               );
             })}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -131,15 +155,15 @@ export default async function BlogPage({
       <div className="section section-dark-pre" aria-hidden="true"></div>
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● พร้อมเริ่ม</span>
             <h2 id="cta-title">อยากให้เราช่วยปรับใช้กับธุรกิจคุณ?</h2>
             <p className="lead">เนื้อหาในบล็อกเป็นแค่ส่วนหนึ่งของสิ่งที่เราทำให้ลูกค้า — ทักมาเล่าโจทย์ดู เราจะช่วยปรับให้เหมาะกับเคสคุณ</p>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          </Reveal>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>
             <Link href="/services" className="btn btn-on-dark btn-lg"><span className="btn-label">ดูบริการ</span></Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 

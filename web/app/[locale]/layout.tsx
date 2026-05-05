@@ -7,6 +7,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { lineSeedSansThai } from "@/lib/fonts";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { LenisProvider } from "@/components/lenis-provider";
 import "../globals.css";
 
 export const viewport: Viewport = {
@@ -86,9 +87,11 @@ export default async function LocaleLayout({
         <a href="#main" className="skip-link">{t("skipToMain")}</a>
 
         <NextIntlClientProvider messages={messages} locale={locale}>
-          <Navbar />
-          {children}
-          <Footer />
+          <LenisProvider>
+            <Navbar />
+            {children}
+            <Footer />
+          </LenisProvider>
         </NextIntlClientProvider>
 
         <Script src="/scripts/motion.js" strategy="afterInteractive" />

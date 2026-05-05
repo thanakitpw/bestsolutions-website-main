@@ -1,9 +1,27 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getSiteSetting } from "@/utils/supabase/queries";
 import { ContactForm } from "@/components/contact-form";
+import { BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
+import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/contact.css";
+
+export const revalidate = 3600;
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Contact" });
+  return buildPageMetadata({
+    locale,
+    path: "/contact",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+  });
+}
 
 type ContactSetting = {
   phone: string;
@@ -11,12 +29,6 @@ type ContactSetting = {
   line: string;
   facebook: string;
   hours: string;
-};
-
-export const metadata: Metadata = {
-  title: "ติดต่อเรา · Best Solutions — นัดคุยฟรี 30 นาที ทักไลน์ได้ทันที",
-  description:
-    "ติดต่อ Best Solutions Corp กรุงเทพฯ — ฟอร์มขอใบเสนอราคา / โทร 095-385-7029 / LINE @bestsolutions / อีเมล info@bestsolutionscorp.com — ตอบกลับใน 1 วันทำการ",
 };
 
 const DEFAULT_CONTACT: ContactSetting = {
@@ -40,6 +52,13 @@ export default async function ContactPage({
 
   return (
     <main id="main">
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Contact" : "ติดต่อเรา", path: "/contact" },
+        ]}
+      />
 
       {/* ============================================================ HERO */}
       <section className="page-hero" aria-labelledby="hero-title">
@@ -118,12 +137,12 @@ export default async function ContactPage({
               </div>
 
               <div className="info-card">
-                <h4>เวลาทำการ</h4>
+                <h3>เวลาทำการ</h3>
                 <p>{contact.hours}<br />เสาร์-อาทิตย์: ทักไลน์ทิ้งไว้ได้ ตอบเช้าวันจันทร์</p>
               </div>
 
               <div className="info-card">
-                <h4>ที่ตั้ง</h4>
+                <h3>ที่ตั้ง</h3>
                 <p>กรุงเทพมหานคร, ประเทศไทย<br />(นัดคุยทาง Google Meet เป็นหลัก — ออฟฟิศนัดล่วงหน้า)</p>
               </div>
 
@@ -141,12 +160,12 @@ export default async function ContactPage({
       {/* ============================================================ FAQ */}
       <section className="section section-tight" id="faq" aria-labelledby="faq-title">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <span className="eyebrow-chip">● คำถามที่พบบ่อย</span>
             <h2 id="faq-title" style={{ marginTop: "var(--space-4)" }}>เรื่องที่ลูกค้าถามก่อนตัดสินใจ</h2>
-          </div>
+          </Reveal>
 
-          <div className="faq-list">
+          <Reveal className="faq-list" delay={0.1}>
             <details className="faq-item">
               <summary>นัดคุยฟรี 30 นาที จริง ๆ ฟรีไหม? มีเงื่อนไขอะไรไหม?</summary>
               <p>ฟรีจริง ไม่มีเงื่อนไข — เราใช้ 30 นาทีนี้ทำความรู้จักธุรกิจคุณ ฟังโจทย์ และเสนอแนวทาง ไม่ต้องเซ็นอะไร ไม่ต้องจองเวลาขั้นต่ำ ไม่ขายตรงระหว่างคุย ถ้าโจทย์ของคุณเราดูแล้วไม่ตรงกับสิ่งที่เราเก่ง เราแนะนำเอเจนซีอื่นให้</p>
@@ -167,7 +186,7 @@ export default async function ContactPage({
               <summary>มีตัวอย่างสัญญาให้ดูก่อนได้ไหม?</summary>
               <p>ได้ครับ ขอตัวอย่าง MSA + SOW ผ่านอีเมลก่อนตัดสินใจได้เลย — สัญญาเรียบง่าย ไม่ผูกขาดยาว ไม่มีค่าปรับซ่อน ทุกข้อชัดเจน</p>
             </details>
-          </div>
+          </Reveal>
         </div>
       </section>
 

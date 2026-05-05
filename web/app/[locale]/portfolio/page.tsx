@@ -1,9 +1,28 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getPortfolioItems, getSiteSetting } from "@/utils/supabase/queries";
+import { BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
+import { MediaImage } from "@/components/media-image";
 import { pickLocale } from "@/utils/format";
+import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/portfolio.css";
+
+export const revalidate = 60;
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Portfolio" });
+  return buildPageMetadata({
+    locale,
+    path: "/portfolio",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+  });
+}
 
 type StatsSetting = { projects: string; years: string; roas: string; seo_days: string };
 
@@ -18,12 +37,6 @@ const CARD_GRADIENTS = [
   "linear-gradient(135deg, var(--color-peach), var(--color-orange-300))",
   "linear-gradient(135deg, var(--color-orange-500), var(--color-blue-500))",
 ];
-
-export const metadata: Metadata = {
-  title: "ผลงานของเรา · Best Solutions — Web Design, E-Commerce, SEO, Branding",
-  description:
-    "100+ โปรเจคที่ Best Solutions ส่งมอบให้ลูกค้า — รวมเว็บไซต์ ระบบ e-commerce แคมเปญ ads, SEO และ Production จากธุรกิจหลากหลายประเภทในไทย",
-};
 
 export default async function PortfolioPage({
   params,
@@ -40,6 +53,13 @@ export default async function PortfolioPage({
 
   return (
     <main id="main">
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Portfolio" : "ผลงาน", path: "/portfolio" },
+        ]}
+      />
 
       {/* ============================================================ HERO */}
       <section className="page-hero" aria-labelledby="hero-title">
@@ -69,18 +89,20 @@ export default async function PortfolioPage({
             <button className="filter-chip" type="button" role="tab" aria-selected={false}>Video &amp; Content</button>
           </div>
 
-          <div className="grid-portfolio">
+          <Reveal className="grid-portfolio">
             {items.map((p, i) => {
               const summary = pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th);
               const bg = CARD_GRADIENTS[i % CARD_GRADIENTS.length];
               return (
                 <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
-                  <div
+                  <MediaImage
                     className="card-media"
-                    role="img"
-                    aria-label={`ภาพผลงาน${p.title}`}
-                    style={p.cover_image ? { backgroundImage: `url(${p.cover_image})`, backgroundSize: "cover" } : { background: bg }}
-                  ></div>
+                    src={p.cover_image}
+                    alt={`ภาพผลงาน ${p.title}`}
+                    gradient={bg}
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                    priority={i < 3}
+                  />
                   <div className="card-body">
                     <span className="card-meta">
                       <span>{p.category}</span>
@@ -92,7 +114,7 @@ export default async function PortfolioPage({
                 </Link>
               );
             })}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -100,7 +122,7 @@ export default async function PortfolioPage({
       {/* ============================================================ STATS */}
       <section className="section section-tight" aria-labelledby="stats-title">
         <div className="container">
-          <div className="stats-band">
+          <Reveal className="stats-band">
             <div className="section-header-center" style={{ marginBottom: "var(--space-12)" }}>
               <span className="eyebrow-chip">● ภาพรวม</span>
               <h2 id="stats-title" style={{ marginTop: "var(--space-4)" }}>8 ปี ของการลงมือทำจริง</h2>
@@ -110,7 +132,7 @@ export default async function PortfolioPage({
               <div className="card card-stat"><span className="card-eyebrow is-blue" aria-hidden="true">◆</span><p className="card-stat-num tabular">{stats?.years ?? "8"}<span className="unit">ปี</span></p><p className="card-stat-label">ประสบการณ์ในวงการดิจิทัล</p></div>
               <div className="card card-stat"><span className="card-eyebrow is-orange" aria-hidden="true">↗</span><p className="card-stat-num tabular"><span className="accent">{stats?.roas ?? "5.2×"}</span></p><p className="card-stat-label">ROAS เฉลี่ยของลูกค้า</p></div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -119,15 +141,15 @@ export default async function PortfolioPage({
       <div className="section section-dark-pre" aria-hidden="true"></div>
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● พร้อมเริ่ม</span>
             <h2 id="cta-title">อยากให้ธุรกิจคุณเป็นเคสต่อไป?</h2>
             <p className="lead">นัดคุยฟรี 30 นาที — เล่าโจทย์ให้ฟัง เราจะแนะนำแนวทางที่เคยใช้ได้ผลกับธุรกิจคล้าย ๆ คุณ</p>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          </Reveal>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>
             <Link href="/services" className="btn btn-on-dark btn-lg"><span className="btn-label">ดูบริการ</span></Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 

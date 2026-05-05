@@ -5,11 +5,17 @@ import { Link } from "@/i18n/navigation";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import { getPortfolioItemBySlug, getPortfolioItems, getPortfolioSlugs } from "@/utils/supabase/queries";
+import { buildAlternates, buildOg } from "@/utils/metadata";
+import { PortfolioJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
+import { MediaImage } from "@/components/media-image";
 import { pickLocale } from "@/utils/format";
 import type { PortfolioResult } from "@/utils/supabase/types";
 import "@/styles/pages/sample-case.css";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
+
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const slugs = await getPortfolioSlugs();
@@ -23,10 +29,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const item = await getPortfolioItemBySlug(slug);
   if (!item) return {};
-  const summary = pickLocale(locale, item.summary_th, item.summary_en ?? item.summary_th);
+  const description = item.seo_description ?? pickLocale(locale, item.summary_th, item.summary_en ?? item.summary_th);
+  const fullTitle = item.seo_title ?? `${item.title} · Case Study · Best Solutions`;
   return {
-    title: item.seo_title ?? `${item.title} · Case Study · Best Solutions`,
-    description: item.seo_description ?? summary,
+    title: { absolute: fullTitle },
+    description,
+    alternates: buildAlternates(locale, `/portfolio/${slug}`),
+    openGraph: buildOg({
+      locale,
+      title: fullTitle,
+      description,
+      path: `/portfolio/${slug}`,
+      ...(item.cover_image ? { image: item.cover_image } : {}),
+    }),
+    twitter: { card: "summary_large_image", title: fullTitle, description },
   };
 }
 
@@ -53,6 +69,15 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
   return (
     <main id="main">
+      <PortfolioJsonLd item={item} locale={locale} />
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Portfolio" : "ผลงาน", path: "/portfolio" },
+          { name: item.title, path: `/portfolio/${slug}` },
+        ]}
+      />
 
       {/* ============================================================ HERO */}
       <section className="case-hero">
@@ -76,16 +101,17 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
       <section className="section section-tight">
         <div className="container">
-          <div
+          <MediaImage
             className="case-cover"
-            role="img"
-            aria-label={`ภาพผลงาน${item.title}`}
-            style={item.cover_image ? { backgroundImage: `url(${item.cover_image})`, backgroundSize: "cover" } : undefined}
-          ></div>
+            src={item.cover_image}
+            alt={`ภาพผลงาน ${item.title}`}
+            sizes="(min-width: 1280px) 1280px, 100vw"
+            priority
+          />
 
           {/* Results band */}
           {(item.results ?? []).length > 0 && (
-            <div className="results-band" style={{ marginBottom: "var(--space-16)" }}>
+            <Reveal className="results-band" style={{ marginBottom: "var(--space-16)" }}>
               <div className="section-header-center" style={{ marginBottom: "var(--space-10)" }}>
                 <span className="eyebrow-chip">● ผลลัพธ์</span>
                 <h2 style={{ marginTop: "var(--space-4)", fontSize: "var(--text-3xl)" }}>ตัวเลขจากระบบ Analytics จริง</h2>
@@ -98,7 +124,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                   </div>
                 ))}
               </div>
-            </div>
+            </Reveal>
           )}
 
           {/* Body */}
@@ -129,19 +155,20 @@ export default async function PortfolioDetailPage({ params }: Props) {
       {related.length > 0 && (
         <section className="section section-tight">
           <div className="container">
-            <div className="section-header-center">
+            <Reveal className="section-header-center">
               <span className="eyebrow-chip is-blue">● เคสที่คล้ายกัน</span>
               <h2 style={{ marginTop: "var(--space-4)" }}>ผลงานอื่นที่อาจสนใจ</h2>
-            </div>
-            <div className="grid-3">
+            </Reveal>
+            <Reveal className="grid-3" delay={0.1}>
               {related.map((p, i) => (
                 <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
-                  <div
+                  <MediaImage
                     className="card-media"
-                    role="img"
-                    aria-label={`ภาพผลงาน${p.title}`}
-                    style={p.cover_image ? { backgroundImage: `url(${p.cover_image})`, backgroundSize: "cover" } : { background: RELATED_GRADIENTS[i] }}
-                  ></div>
+                    src={p.cover_image}
+                    alt={`ภาพผลงาน ${p.title}`}
+                    gradient={RELATED_GRADIENTS[i]}
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                  />
                   <div className="card-body">
                     <span className="card-meta">
                       <span>{p.category}</span>
@@ -152,7 +179,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                   </div>
                 </Link>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       )}
@@ -162,15 +189,16 @@ export default async function PortfolioDetailPage({ params }: Props) {
       <div className="section section-dark-pre" aria-hidden="true"></div>
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● พร้อมเริ่ม</span>
             <h2 id="cta-title">อยากให้เคสของคุณ เป็นเคสต่อไปที่เราภูมิใจ</h2>
             <p className="lead">นัดคุยฟรี 30 นาที — เล่าโจทย์ให้ฟัง เราจะเสนอแนวทางที่ปรับใช้กับธุรกิจคุณได้</p>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          </Reveal>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>
+            <Link href="/services" className="btn btn-on-dark btn-lg"><span className="btn-label">ดูบริการทั้งหมด</span></Link>
             <Link href="/portfolio" className="btn btn-on-dark btn-lg"><span className="btn-label">ผลงานทั้งหมด</span></Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 

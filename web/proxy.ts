@@ -1,15 +1,34 @@
 import createIntlMiddleware from "next-intl/middleware";
-import type { NextRequest } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { routing } from "./i18n/routing";
-import { updateSession as supabaseUpdateSession } from "./utils/supabase/middleware";
+import {
+  getUser,
+  updateSession as supabaseUpdateSession,
+} from "./utils/supabase/middleware";
 
 const intlMiddleware = createIntlMiddleware(routing);
 
-export default async function proxy(request: NextRequest) {
-  // Refresh Supabase auth session cookies (no-op if no session set)
-  await supabaseUpdateSession(request);
+const ADMIN_EMAIL = "agency.bestsolutions@gmail.com";
 
-  // Then handle locale routing — its response carries through
+export default async function proxy(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Admin routes — session refresh + allowlist guard, skip locale routing
+  if (pathname.startsWith("/admin")) {
+    const supabaseResponse = await supabaseUpdateSession(request);
+
+    if (!pathname.startsWith("/admin/login")) {
+      const user = await getUser(request);
+      if (!user || user.email !== ADMIN_EMAIL) {
+        return NextResponse.redirect(new URL("/admin/login", request.url));
+      }
+    }
+
+    return supabaseResponse;
+  }
+
+  // Public routes — session refresh + locale routing
+  await supabaseUpdateSession(request);
   return intlMiddleware(request);
 }
 

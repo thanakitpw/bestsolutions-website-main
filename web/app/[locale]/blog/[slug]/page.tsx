@@ -5,10 +5,16 @@ import { Link } from "@/i18n/navigation";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import { getArticleBySlug, getArticles, getArticleSlugs } from "@/utils/supabase/queries";
+import { buildAlternates, buildOg } from "@/utils/metadata";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
+import { MediaImage } from "@/components/media-image";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import "@/styles/pages/sample-post.css";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
+
+export const revalidate = 300;
 
 export async function generateStaticParams() {
   const slugs = await getArticleSlugs();
@@ -22,9 +28,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article) return {};
+  const title = pickLocale(locale, article.title_th, article.title_en ?? article.title_th);
+  const description = (article.seo_description ?? pickLocale(locale, article.excerpt_th, article.excerpt_en ?? article.excerpt_th ?? "")) ?? "";
+  const fullTitle = article.seo_title ?? `${title} · Best Solutions`;
   return {
-    title: article.seo_title ?? `${pickLocale(locale, article.title_th, article.title_en ?? article.title_th)} · Blog · Best Solutions`,
-    description: article.seo_description ?? pickLocale(locale, article.excerpt_th, article.excerpt_en ?? article.excerpt_th ?? ""),
+    title: { absolute: fullTitle },
+    description,
+    alternates: buildAlternates(locale, `/blog/${slug}`),
+    openGraph: buildOg({
+      locale,
+      title: fullTitle,
+      description,
+      path: `/blog/${slug}`,
+      type: "article",
+      ...(article.cover_image ? { image: article.cover_image } : {}),
+    }),
+    twitter: { card: "summary_large_image", title: fullTitle, description },
   };
 }
 
@@ -51,6 +70,15 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main id="main">
+      <ArticleJsonLd article={article} locale={locale} />
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Blog" : "บทความ", path: "/blog" },
+          { name: title, path: `/blog/${slug}` },
+        ]}
+      />
 
       {/* ============================================================ HEADER */}
       <header className="post-header">
@@ -74,18 +102,19 @@ export default async function BlogPostPage({ params }: Props) {
 
       <section className="section section-tight" style={{ paddingTop: 0 }}>
         <div className="container">
-          <div
+          <MediaImage
             className="post-cover"
-            role="img"
-            aria-label={`ภาพประกอบบทความ${title}`}
-            style={article.cover_image ? { backgroundImage: `url(${article.cover_image})`, backgroundSize: "cover" } : undefined}
-          ></div>
+            src={article.cover_image}
+            alt={`ภาพประกอบบทความ ${title}`}
+            sizes="(min-width: 1280px) 1280px, 100vw"
+            priority
+          />
 
           <div className="post-layout">
 
             {/* TOC placeholder — populated by client-side JS in future */}
             <nav className="post-toc" aria-label="สารบัญบทความ">
-              <h4>สารบัญ</h4>
+              <h2>สารบัญ</h2>
             </nav>
 
             {/* BODY */}
@@ -111,19 +140,20 @@ export default async function BlogPostPage({ params }: Props) {
       {related.length > 0 && (
         <section className="section section-tight">
           <div className="container">
-            <div className="section-header-center">
+            <Reveal className="section-header-center">
               <span className="eyebrow-chip is-blue">● บทความที่เกี่ยวข้อง</span>
               <h2 style={{ marginTop: "var(--space-4)" }}>บทความอื่นที่อาจสนใจ</h2>
-            </div>
-            <div className="grid-3">
+            </Reveal>
+            <Reveal className="grid-3" delay={0.1}>
               {related.map((a, i) => (
                 <Link key={a.slug} href={`/blog/${a.slug}`} className="card card-blog">
-                  <div
+                  <MediaImage
                     className="card-media"
-                    role="img"
-                    aria-label={`ภาพประกอบ${a.title_th}`}
-                    style={a.cover_image ? { backgroundImage: `url(${a.cover_image})`, backgroundSize: "cover" } : { background: RELATED_GRADIENTS[i] }}
-                  ></div>
+                    src={a.cover_image}
+                    alt={`ภาพประกอบบทความ ${pickLocale(locale, a.title_th, a.title_en ?? a.title_th)}`}
+                    gradient={RELATED_GRADIENTS[i]}
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                  />
                   <div className="card-body">
                     <span className="card-category">{a.category}</span>
                     <h3 className="card-title">{pickLocale(locale, a.title_th, a.title_en ?? a.title_th)}</h3>
@@ -132,7 +162,7 @@ export default async function BlogPostPage({ params }: Props) {
                   </div>
                 </Link>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       )}
@@ -142,15 +172,15 @@ export default async function BlogPostPage({ params }: Props) {
       <div className="section section-dark-pre" aria-hidden="true"></div>
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● ปรับใช้กับธุรกิจคุณ</span>
             <h2 id="cta-title">อยากให้เราช่วย setup ให้ธุรกิจคุณ?</h2>
             <p className="lead">นัดคุยฟรี 30 นาที — เราจะดู use case ที่เหมาะกับคุณและประมาณราคาให้ก่อนเซ็น</p>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          </Reveal>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>
             <Link href="/services" className="btn btn-on-dark btn-lg"><span className="btn-label">ดูบริการ</span></Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 
