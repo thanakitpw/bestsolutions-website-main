@@ -14,6 +14,8 @@ import "@/styles/pages/sample-post.css";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
+export const revalidate = 300;
+
 export async function generateStaticParams() {
   const slugs = await getArticleSlugs();
   return slugs.flatMap((slug) => [

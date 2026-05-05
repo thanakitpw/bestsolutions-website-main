@@ -15,6 +15,8 @@ import "@/styles/pages/sample-case.css";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
 
+export const revalidate = 300;
+
 export async function generateStaticParams() {
   const slugs = await getPortfolioSlugs();
   return slugs.flatMap((slug) => [

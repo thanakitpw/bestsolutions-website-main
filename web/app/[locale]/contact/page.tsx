@@ -8,6 +8,8 @@ import { Reveal } from "@/components/reveal";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/contact.css";
 
+export const revalidate = 3600;
+
 type Props = { params: Promise<{ locale: string }> };
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

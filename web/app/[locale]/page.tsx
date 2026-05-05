@@ -58,6 +58,8 @@ const BLOG_CATEGORY_TONE: Record<string, string> = {
   "Digital Marketing": "is-blue",
 };
 
+export const revalidate = 60;
+
 function serviceHref(slug: string) {
   return SERVICES_WITH_DETAIL.has(slug) ? `/services/${slug}` : "/services";
 }
