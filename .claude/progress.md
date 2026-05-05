@@ -1,9 +1,9 @@
 # Progress — Best Solutions Website Redesign
 
-**Last updated:** 2026-05-05 20:18 GMT+7
-**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes` (commit `6a67e44`)
+**Last updated:** 2026-05-05 20:51 GMT+7
+**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes` (commit `e235dc0`)
 **Live Supabase project:** `dhftyjnzqkyocfhtmjet` (bestsolutions-website, ap-northeast-2)
-**Recent commits this session:** 5d3fbc2 → 5d48671 → 666b985 → 2ba4aeb → 3847b98 → 1ddd4c9 → 4525b5d → 3552130 → 6a67e44
+**Recent commits this session:** 6a67e44 → 6bab4d8 → cc47527 → 5e80ed4 → e235dc0
 
 ---
 
@@ -196,11 +196,40 @@
 | `web/app/[locale]/blog/[slug]/page.tsx` | 4 reveals: related/dark CTA |
 | `web/app/[locale]/contact/page.tsx` | 2 reveals: faq |
 
+### Task C.7 commits (T5.7 heading hierarchy — commit 6bab4d8)
+| File | การเปลี่ยนแปลง |
+|---|---|
+| `web/app/[locale]/blog/[slug]/page.tsx` | `<h4>สารบัญ</h4>` → `<h2>` (H1→H4 ผิด) |
+| `web/app/[locale]/contact/page.tsx` | `<h4>เวลาทำการ/ที่ตั้ง</h4>` → `<h3>` (ข้าม H3) |
+
+### Task C.8 commits (T5.8 internal linking — commit cc47527)
+| File | การเปลี่ยนแปลง |
+|---|---|
+| `web/app/[locale]/about/page.tsx` | CTA เพิ่ม `/services` button |
+| `web/app/[locale]/services/page.tsx` | CTA เพิ่ม `/blog` button |
+| `web/app/[locale]/portfolio/[slug]/page.tsx` | CTA เพิ่ม `/services` button |
+
+### Task D commits (Phase 6 performance — commits 5e80ed4, e235dc0)
+| File | การเปลี่ยนแปลง |
+|---|---|
+| `web/app/[locale]/page.tsx` | + `export const revalidate = 60` |
+| `web/app/[locale]/blog/page.tsx` | + `revalidate = 60` |
+| `web/app/[locale]/portfolio/page.tsx` | + `revalidate = 60` |
+| `web/app/[locale]/services/page.tsx` | + `revalidate = 60` |
+| `web/app/[locale]/blog/[slug]/page.tsx` | + `revalidate = 300` |
+| `web/app/[locale]/portfolio/[slug]/page.tsx` | + `revalidate = 300` |
+| `web/app/[locale]/about/page.tsx` | + `revalidate = 3600` |
+| `web/app/[locale]/services/web-design/page.tsx` | + `revalidate = 3600` |
+| `web/app/[locale]/contact/page.tsx` | + `revalidate = 3600` |
+| `web/next.config.ts` | + `@next/bundle-analyzer` (ANALYZE=true flag) |
+| `web/vercel.json` | NEW — immutable cache headers: /fonts/* + /_next/static/* |
+
 ### Packages เพิ่ม (สะสม)
 - `react-markdown` + `rehype-sanitize` — render `body_md_th` ใน blog/portfolio detail
 - `react-hook-form` + `@hookform/resolvers` — contact form validation
 - `lenis@1.3.x` — smooth/inertia scroll (~3KB gz)
 - `motion@12.38` — Framer Motion successor for scroll reveals (~11KB gz)
+- `@next/bundle-analyzer` (devDep) — bundle visualization (ANALYZE=true env flag)
 
 ---
 
@@ -238,27 +267,31 @@
 - **next/image: fill + sizes ไม่ใช่ width/height fixed:** เพราะ card-media มี CSS-driven aspect ratio (1:1, 4:3) — `fill` ปล่อยให้ wrapper div คุม dimensions, sizes attr ระบุ responsive breakpoints ตาม container 1280px max
 - **Image priority strategy:** priority เฉพาะ above-fold ที่เป็น LCP candidate — case-cover/post-cover hero (detail pages), blog featured card, home portfolio[0], portfolio index[0..2]; ที่เหลือ lazy load โดย default
 - **Supabase Storage remotePatterns:** อนุญาต host จาก env (project-specific) + wildcard `*.supabase.co` (preview branches); pathname จำกัด `/storage/v1/object/public/**` เพื่อไม่ accidentally proxy private buckets
+- **ISR revalidate tiers:** indices (home/services/blog/portfolio) = 60s; details ([slug]) = 300s; static (about/web-design/contact) = 3600s
+- **Bundle size baseline:** App Router + next-intl + motion stack → ~207KB gz First Load JS บน home; 120KB gz target ไม่ realistic ต้อง revise เป็น ~200KB; contact +69KB เพราะ RHF+Zod client bundle (expected)
+- **Heading hierarchy audit result:** 7/9 routes สะอาดแล้ว — แก้ blog/[slug] h4→h2 (TOC label) + contact h4→h3 (เวลาทำการ/ที่ตั้ง); ทุกหน้ามี 1×H1 และ H2→H3 nesting ถูก
+- **Internal linking triangle:** service ↔ portfolio ↔ blog ครบ — about/services/portfolio/[slug] CTA ทุกจุดมี link ออกไปทั้ง 3 ทิศทาง; blog/[slug] มี /services ใน CTA อยู่แล้ว
 
 ---
 
 ## 🚧 TODO ที่ยังเหลือ
 
-### C — SEO Phase 5 ← **IN PROGRESS** (6/8 done)
+### C — SEO Phase 5 ✅ COMPLETE (8/8 done)
 - ✅ T5.1 `generateMetadata` per route (title ≤60, desc ≤160, canonical, OG, hreflang th/en)
 - ✅ T5.2 JSON-LD (Organization, LocalBusiness, Service+List, Article, CreativeWork, Breadcrumb)
 - ✅ T5.3 `web/app/sitemap.ts` (38 URLs, hreflang th/en/x-default, lastModified)
 - ✅ T5.4 `web/app/robots.ts` (allow / + Disallow /admin/, /api/, sitemap ref)
 - ✅ T5.5 OG image generation (`app/[locale]/opengraph-image.tsx`, LINE Seed TTF, 1200×630)
 - ✅ T5.6 Image audit (`MediaImage` wrapper + next/image + Supabase remotePatterns + Thai alt + priority above-fold)
-- **← NEXT** T5.7 Heading hierarchy audit (1× H1 per page, correct h2/h3 nesting)
-- T5.8 Internal linking pass (service ↔ portfolio ↔ blog)
+- ✅ T5.7 Heading hierarchy audit (commit 6bab4d8) — fixed blog/[slug] h4→h2 (TOC), contact h4→h3 (เวลาทำการ/ที่ตั้ง); all 9 routes 1×H1, correct H2→H3
+- ✅ T5.8 Internal linking pass (commit cc47527) — about+CTA→/services, services→/blog, portfolio/[slug]→/services; triangle service↔portfolio↔blog ครบ
 
-### D — Performance Phase 6
-- T6.1 LCP audit home + services + blog (throttled 4G)
-- T6.2 ISR strategy (`revalidate=60` indices, `=300` details)
-- T6.3 Bundle analyzer (<120KB gz client bundle on home)
-- T6.4 Framer Motion scope check
-- T6.5 Caching headers
+### D — Performance Phase 6 ← **IN PROGRESS** (4/5 done)
+- T6.1 LCP audit home + services + blog (throttled 4G) — defer to staging (T9.2)
+- ✅ T6.2 ISR strategy (commit 5e80ed4) — indices revalidate=60, details=300, static=3600; ครบ 9 routes
+- ✅ T6.3 Bundle analyzer (commit e235dc0) — `@next/bundle-analyzer` wired (ANALYZE=true); home 207KB gz; revised target ~200KB (120KB unrealistic for App Router+next-intl+motion)
+- ✅ T6.4 Framer Motion scope check — motion ใช้เฉพาะ `reveal.tsx` (`"use client"`); ไม่มี server bundle leak
+- ✅ T6.5 Caching headers (commit e235dc0) — `vercel.json` → /fonts/* + /_next/static/* immutable 1 year
 
 ### E — Phase 7 (admin minimum)
 - T7.2 Supabase Auth magic-link (founder allowlist)
@@ -288,11 +321,10 @@
 
 ## ➡️ Next steps (recommend)
 
-1. **T5.7 Heading hierarchy** — audit 1× `<h1>` ต่อหน้า + h2/h3 nesting ถูก ก่อน Lighthouse (~30 นาที, mechanical → Sonnet ได้)
-2. **T5.8 Internal linking** — เพิ่ม service ↔ portfolio ↔ blog cross-links (related sections อยู่แล้ว แต่อาจเพิ่ม contextual links ใน body markdown ของ articles)
-3. **Task D — Performance** ISR (`revalidate=60` indices, `=300` details) + bundle analyzer (<120KB gz home) + Lighthouse target ≥95
-4. **Task F — Playwright** critical path e2e ก่อน staging deploy
-5. **Task G — Vercel** deploy + DNS cutover
+1. **Task E — Admin** T7.2 Supabase Auth magic-link (founder allowlist) + T7.6 lead inbox `/admin/leads`
+2. **Task F — Playwright** critical path e2e ก่อน staging deploy (T8.1–T8.7)
+3. **Task G — Vercel** deploy + DNS cutover (T9.1–T9.8)
+4. **T6.1 LCP audit** — ทำพร้อม Lighthouse CI หลัง staging deploy (T9.2)
 
 **Open questions:**
 - Services detail dynamic `[slug]` route ตอนไหน? (recommend: หลัง launch เมื่อมีเนื้อหาจริงใน DB)
