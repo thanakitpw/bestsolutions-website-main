@@ -1,9 +1,9 @@
 # Progress — Best Solutions Website Redesign
 
-**Last updated:** 2026-05-05 17:57 GMT+7
-**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes` (commit `1ddd4c9`)
+**Last updated:** 2026-05-05 18:05 GMT+7
+**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes` (commit `4525b5d`)
 **Live Supabase project:** `dhftyjnzqkyocfhtmjet` (bestsolutions-website, ap-northeast-2)
-**Recent commits this session:** 5d3fbc2 → 5d48671 → 666b985 → 2ba4aeb → 3847b98 → 1ddd4c9
+**Recent commits this session:** 5d3fbc2 → 5d48671 → 666b985 → 2ba4aeb → 3847b98 → 1ddd4c9 → 4525b5d
 
 ---
 
@@ -82,6 +82,38 @@
 - ✅ Reveals applied ทุก 9 routes — ~55 wrappers รวม
   - Pattern: section header (Reveal) → grid/content (Reveal delay 0.1s) → cascade เบาๆ
   - Filter bars + form input ไม่ wrap (preserve native a11y attributes)
+
+#### T5.6 — Image audit ⏳ IN PROGRESS (survey done, refactor pending)
+
+**Survey findings** (current state, no commits yet):
+- ❌ ไม่มี `next/image` import ใน `app/` หรือ `components/` เลย
+- ❌ `next.config.ts` ยังไม่มี `images.remotePatterns` (ต้อง add Supabase Storage domain ก่อน)
+- 🔍 **12 จุด** ที่ใช้ `<div role="img" style="backgroundImage">` ต้องแปลง:
+  - `app/[locale]/page.tsx` × 2 (featured portfolio media, blog teaser media)
+  - `app/[locale]/services/web-design/page.tsx` × 1 (related portfolio media)
+  - `app/[locale]/portfolio/page.tsx` × 1 (grid card media)
+  - `app/[locale]/portfolio/[slug]/page.tsx` × 2 (case-cover hero + related card media)
+  - `app/[locale]/blog/page.tsx` × 2 (featured-media + grid card-media)
+  - `app/[locale]/blog/[slug]/page.tsx` × 2 (post-cover hero + related card-media)
+  - `app/[locale]/about/page.tsx` × 1 (founder-photo placeholder)
+  - `app/[locale]/contact/page.tsx` × 1 (map-placeholder — keep as div)
+- 🔍 testimonial avatars (home) — ใช้ `style={{ background: ...url(...) }}` ต้องแปลง
+- 🔍 service hero icons (SVG) — ไม่ต้องแก้
+
+**Plan locked**:
+1. Add Supabase Storage hostname ใน `next.config.ts` `images.remotePatterns`
+2. Create `web/components/media-image.tsx` — reusable wrapper:
+   - prop: `src` (cover_image | null), `alt`, `priority`, `gradientFallback`, `aspectClass`
+   - `cover_image` มี → render `<Image fill sizes={...}>`; ไม่มี → render `<div>` พร้อม gradient
+3. Refactor card-media + cover patterns ทีละหน้า — ใช้ `<MediaImage>` แทน inline div
+4. **Priority above-fold:**
+   - Hero blob/illustration (decorative, ไม่ใช่ photo) — skip
+   - `case-cover` hero (portfolio detail) → `priority`
+   - `post-cover` hero (blog detail) → `priority`
+   - Featured portfolio card #1 บน home → `priority`
+5. **Sizes attr** ตาม container width 1280px:
+   - card-media (3 cols): `(min-width: 768px) 33vw, 100vw`
+   - hero-cover (full width): `(min-width: 1280px) 1280px, 100vw`
 
 ### Task B — Contact form server action ✅ DONE (commit eb94343)
 - ✅ `actions.ts` — Zod v4 validate → honeypot check → IP-hash rate limit (3/hr) → admin client insert
@@ -201,6 +233,7 @@
 - **Reveal pattern:** wrap `section-header` แล้วเอา `Reveal` ครอบ grid container ด้วย `delay={0.1}` cascade เบาๆ; **ไม่ใส่ stagger ต่อ card** เพราะจะต้องเพิ่ม wrapper div ที่ทำลาย CSS grid layout — ทำเป็น single fade-up ทั้ง grid พอ
 - **prefers-reduced-motion:** ทุก motion (Lenis + Reveal) เคารพ media query — disable smoothing + animation ถ้า user ตั้งใน OS
 - **Reveal once-only:** `viewport.once = true` ไม่ retrigger ตอน scroll กลับขึ้น เพื่อ perf + UX (รำคาญถ้า fade ซ้ำ)
+- **Model strategy (Opus vs Sonnet):** งาน execution ซ้ำ (replace pattern, write tests, deploy config) → Sonnet 4.6 พอ ถูก ~5×; Opus 4.7 เก็บไว้ตอน architecture decision / debug แปลก / brainstorm tradeoff / stuck
 
 ---
 
