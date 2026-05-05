@@ -32,3 +32,18 @@ export const updateSession = async (request: NextRequest) => {
 
   return supabaseResponse;
 };
+
+export const getUser = async (request: NextRequest) => {
+  const supabase = createServerClient<Database>(supabaseUrl!, supabaseKey!, {
+    cookies: {
+      getAll() {
+        return request.cookies.getAll();
+      },
+      setAll() {},
+    },
+  });
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+  return user;
+};
