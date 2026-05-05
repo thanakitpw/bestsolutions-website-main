@@ -7,7 +7,7 @@ import type { Database } from "./types";
  * SERVER-ONLY. Never import from client components.
  * Use for: lead notification dispatch, admin ops, scheduled jobs.
  */
-export function createAdminClient() {
+export const createAdminClient = () => {
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
@@ -23,4 +23,4 @@ export function createAdminClient() {
       persistSession: false,
     },
   });
-}
+};
