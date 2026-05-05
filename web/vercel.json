@@ -1,7 +1,4 @@
 {
-  "buildCommand": "pnpm build",
-  "outputDirectory": ".next",
-  "installCommand": "pnpm install",
   "headers": [
     {
       "source": "/fonts/(.*)",
