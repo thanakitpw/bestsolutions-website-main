@@ -1,8 +1,9 @@
 # Progress — Best Solutions Website Redesign
 
-**Last updated:** 2026-05-05 17:25 GMT+7
-**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes`
+**Last updated:** 2026-05-05 17:57 GMT+7
+**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes` (commit `1ddd4c9`)
 **Live Supabase project:** `dhftyjnzqkyocfhtmjet` (bestsolutions-website, ap-northeast-2)
+**Recent commits this session:** 5d3fbc2 → 5d48671 → 666b985 → 2ba4aeb → 3847b98 → 1ddd4c9
 
 ---
 
@@ -34,38 +35,58 @@
 - ✅ **Portfolio `[slug]`** — dynamic route replacing `sample-case/`, results band, `body_md`, tech_stack
 - ✅ **Services/web-design** — hero name/summary + related portfolio ← `getServiceBySlug()`
 
-### Task C — SEO Phase 5 (in progress)
-
-#### T5.2 — JSON-LD structured data ✅ DONE
-- ✅ `web/components/json-ld.tsx` — `JsonLd` base + 7 schema components
-  - `OrganizationJsonLd` (with `sameAs` Facebook/LINE, `contactPoint` w/ E.164 phone)
-  - `LocalBusinessJsonLd` (`ProfessionalService` + address Bangkok TH + opening hours)
-  - `ServiceJsonLd` (single Service ref'd to Org `@id`)
-  - `ServiceListJsonLd` (ItemList of all services)
-  - `ArticleJsonLd` (headline, image, datePublished, author Person, mainEntityOfPage)
-  - `PortfolioJsonLd` (CreativeWork + sourceOrganization client + dateCreated)
-  - `BreadcrumbJsonLd` (helper accepts items + locale)
-- ✅ Wired on home (Org + LocalBusiness)
-- ✅ Wired on services index (ServiceList + Breadcrumb), web-design detail (Service + Breadcrumb)
-- ✅ Wired on blog/[slug] (Article + Breadcrumb), blog index (Breadcrumb)
-- ✅ Wired on portfolio/[slug] (CreativeWork + Breadcrumb), portfolio index (Breadcrumb)
-- ✅ Wired on about + contact (Breadcrumb)
-- ✅ Build clean, dev curl-verified all 9 routes emit valid `application/ld+json`
+### Task C — SEO Phase 5
 
 #### T5.1 — generateMetadata per route ✅ DONE (commit 5d3fbc2)
-- ✅ `web/utils/metadata.ts` — utility ใหม่: `buildPageMetadata`, `buildAlternates`, `buildOg`
-- ✅ 6 static pages — แทน `export const metadata` เก่าด้วย async `generateMetadata` (locale-aware ผ่าน next-intl)
-  - about, services, services/web-design, blog, portfolio, contact
-- ✅ 2 dynamic routes — เพิ่ม canonical, hreflang th/en, OG image (ใช้ `cover_image` จาก DB)
-  - blog/[slug], portfolio/[slug]
-- ✅ th.json + en.json — เพิ่ม meta keys: About, Services, WebDesign, Blog, Portfolio, Contact namespaces
-- ✅ Build clean (11 files, 233 insertions)
+- ✅ `web/utils/metadata.ts` — utility: `buildPageMetadata`, `buildAlternates`, `buildOg`
+- ✅ 6 static pages: about, services, services/web-design, blog, portfolio, contact — async `generateMetadata` (locale-aware ผ่าน next-intl)
+- ✅ 2 dynamic routes (blog/[slug], portfolio/[slug]) — canonical, hreflang th/en, OG image (`cover_image`)
+- ✅ `th.json` + `en.json` — meta namespaces ต่อหน้า
+
+#### T5.2 — JSON-LD structured data ✅ DONE (commit 5d48671)
+- ✅ `web/components/json-ld.tsx` — 7 schema components
+  - `OrganizationJsonLd` (sameAs FB/LINE, contactPoint E.164 phone)
+  - `LocalBusinessJsonLd` (`ProfessionalService` + address Bangkok TH + hours)
+  - `ServiceJsonLd` + `ServiceListJsonLd` (ItemList ของ services)
+  - `ArticleJsonLd` (Article + author Person + mainEntityOfPage)
+  - `PortfolioJsonLd` (CreativeWork + sourceOrganization client)
+  - `BreadcrumbJsonLd` (locale-aware items helper)
+- ✅ Wired ทุก 9 routes — curl-verified emit `application/ld+json` ครบ
+
+#### T5.3 — sitemap.xml ✅ DONE (commit 666b985)
+- ✅ `web/app/sitemap.ts` — 38 URLs (7 static × 2 locales + 3 articles × 2 + 9 portfolio × 2)
+- ✅ hreflang alternates (th, en, x-default) per entry
+- ✅ `lastModified` ดึงจาก `updated_at` สำหรับ dynamic content
+- ✅ `getArticleSitemapEntries` + `getPortfolioSitemapEntries` ใช้ `staticDb()` (build-time safe)
+
+#### T5.4 — robots.txt ✅ DONE (commit 666b985)
+- ✅ `web/app/robots.ts` — allow `/`, disallow `/admin/` + `/api/`, sitemap + host declared
+
+#### T5.5 — OG image generation ✅ DONE (commit 2ba4aeb)
+- ✅ `web/app/[locale]/opengraph-image.tsx` — branded card 1200×630
+- ✅ Direction C visual: warm cream `#F5F3EE` + orange radial blob + LINE Seed Bold/ExtraBold
+- ✅ Locale-aware copy ผ่าน `getTranslations(Home)`
+- ✅ LINE Seed woff2 → TTF (woff2_decompress, brew install woff2) เพราะ satori 16.2.4 reject wOF2
+- ✅ TTFs ใน `public/fonts/og/` (~75KB ต่อไฟล์ × 3 weights)
+- ✅ Auto-injects og:image + width/height/type/alt meta tags
+
+### Smooth Scroll + Scroll Reveals ✅ DONE (commits 3847b98, 1ddd4c9)
+- ✅ `web/components/lenis-provider.tsx` — Lenis ReactLenis wrapper, lerp 0.1 duration 1.2s
+  - Disabled อัตโนมัติเมื่อ `prefers-reduced-motion: reduce`
+  - `syncTouch: false` ป้องกัน mobile gesture แตก
+- ✅ `web/components/reveal.tsx` — `Reveal` + `RevealStagger` + `RevealItem`
+  - Motion `useInView` + `useReducedMotion` guard
+  - cubic-bezier(0.16,1,0.3,1) ease-out, 0.6s duration, viewport amount 0.2
+  - once-only เพื่อ performance (ไม่ retrigger ตอน scroll กลับ)
+- ✅ Wired เข้า `[locale]/layout.tsx` (LenisProvider wraps Navbar + children + Footer)
+- ✅ Reveals applied ทุก 9 routes — ~55 wrappers รวม
+  - Pattern: section header (Reveal) → grid/content (Reveal delay 0.1s) → cascade เบาๆ
+  - Filter bars + form input ไม่ wrap (preserve native a11y attributes)
 
 ### Task B — Contact form server action ✅ DONE (commit eb94343)
 - ✅ `actions.ts` — Zod v4 validate → honeypot check → IP-hash rate limit (3/hr) → admin client insert
 - ✅ `contact-form.tsx` — `"use client"` RHF + zodResolver, inline field errors, loading state, success thank-you card
 - ✅ `contact/page.tsx` — server component fetches contact settings, passes `lineHandle` prop to `ContactForm`
-- ✅ Build clean, HTTP 200 confirmed on `/th/contact`
 
 ---
 
@@ -93,24 +114,61 @@
 | `web/components/contact-form.tsx` | NEW — client component (RHF + zodResolver + success state) |
 | `web/app/[locale]/contact/page.tsx` | แทน `<form>` hardcoded ด้วย `<ContactForm>` |
 
-### Task C.1 commits (T5.1)
+### Task C.1 commits (T5.1 generateMetadata — commit 5d3fbc2)
 | File | การเปลี่ยนแปลง |
 |---|---|
 | `web/utils/metadata.ts` | NEW — `buildPageMetadata`, `buildAlternates`, `buildOg` helpers |
-| `web/messages/th.json` | เพิ่ม About/Services/WebDesign/Blog/Portfolio/Contact meta namespaces |
-| `web/messages/en.json` | เพิ่ม About/Services/WebDesign/Blog/Portfolio/Contact meta namespaces |
-| `web/app/[locale]/about/page.tsx` | ลบ static metadata → async `generateMetadata` |
-| `web/app/[locale]/services/page.tsx` | ลบ static metadata → async `generateMetadata` |
-| `web/app/[locale]/services/web-design/page.tsx` | ลบ static metadata → async `generateMetadata` |
-| `web/app/[locale]/contact/page.tsx` | ลบ static metadata → async `generateMetadata` |
-| `web/app/[locale]/blog/page.tsx` | ลบ static metadata → async `generateMetadata` |
-| `web/app/[locale]/portfolio/page.tsx` | ลบ static metadata → async `generateMetadata` |
-| `web/app/[locale]/blog/[slug]/page.tsx` | เพิ่ม canonical, hreflang, OG (type=article, cover_image) |
-| `web/app/[locale]/portfolio/[slug]/page.tsx` | เพิ่ม canonical, hreflang, OG (cover_image) |
+| `web/messages/{th,en}.json` | เพิ่ม About/Services/WebDesign/Blog/Portfolio/Contact meta namespaces |
+| `web/app/[locale]/{about,services,services/web-design,contact,blog,portfolio}/page.tsx` | static metadata → async `generateMetadata` |
+| `web/app/[locale]/blog/[slug]/page.tsx` | canonical, hreflang, OG type=article + cover_image |
+| `web/app/[locale]/portfolio/[slug]/page.tsx` | canonical, hreflang, OG + cover_image |
 
-### Packages เพิ่ม
+### Task C.2 commits (T5.2 JSON-LD — commit 5d48671)
+| File | การเปลี่ยนแปลง |
+|---|---|
+| `web/components/json-ld.tsx` | NEW — 7 schema components (Org, LocalBusiness, Service, ServiceList, Article, Portfolio CreativeWork, Breadcrumb) |
+| `web/app/[locale]/page.tsx` | + Org + LocalBusiness + ContactInfo fetch |
+| `web/app/[locale]/services/page.tsx` | + ServiceList + Breadcrumb |
+| `web/app/[locale]/services/web-design/page.tsx` | + Service + Breadcrumb |
+| `web/app/[locale]/blog/[slug]/page.tsx` | + Article + Breadcrumb |
+| `web/app/[locale]/portfolio/[slug]/page.tsx` | + CreativeWork + Breadcrumb |
+| `web/app/[locale]/{about,blog,portfolio,contact}/page.tsx` | + Breadcrumb |
+
+### Task C.3+C.4 commits (T5.3 sitemap + T5.4 robots — commit 666b985)
+| File | การเปลี่ยนแปลง |
+|---|---|
+| `web/app/sitemap.ts` | NEW — 38 URLs + hreflang th/en/x-default + lastModified |
+| `web/app/robots.ts` | NEW — Allow / + Disallow /admin/ /api/ + sitemap ref |
+| `web/utils/supabase/queries.ts` | + `getArticleSitemapEntries` + `getPortfolioSitemapEntries` |
+
+### Task C.5 commits (T5.5 OG image — commit 2ba4aeb)
+| File | การเปลี่ยนแปลง |
+|---|---|
+| `web/app/[locale]/opengraph-image.tsx` | NEW — branded 1200×630 PNG via `next/og` ImageResponse |
+| `web/public/fonts/og/LINESeedSansTH-{Regular,Bold,ExtraBold}.ttf` | NEW — woff2_decompress conversion |
+
+### Smooth Scroll commits (3847b98 home reveals; 1ddd4c9 8 more pages)
+| File | การเปลี่ยนแปลง |
+|---|---|
+| `web/components/lenis-provider.tsx` | NEW — Lenis client provider + reduced-motion guard |
+| `web/components/reveal.tsx` | NEW — Reveal + RevealStagger + RevealItem (Motion 12) |
+| `web/app/[locale]/layout.tsx` | wrap children with `<LenisProvider>` |
+| `web/app/globals.css` | `@import "lenis/dist/lenis.css"` |
+| `web/app/[locale]/page.tsx` (home) | 12 reveals: services/portfolio/stats/testi/blog/dark CTA |
+| `web/app/[locale]/about/page.tsx` | 8 reveals: founder/values/process/stats/dark CTA |
+| `web/app/[locale]/services/page.tsx` | 5 reveals |
+| `web/app/[locale]/services/web-design/page.tsx` | 12 reveals: features/ps/process/related/faq/dark CTA |
+| `web/app/[locale]/portfolio/page.tsx` | 4 reveals |
+| `web/app/[locale]/portfolio/[slug]/page.tsx` | 4 reveals: results/related/dark CTA |
+| `web/app/[locale]/blog/page.tsx` | 4 reveals: featured/grid/dark CTA |
+| `web/app/[locale]/blog/[slug]/page.tsx` | 4 reveals: related/dark CTA |
+| `web/app/[locale]/contact/page.tsx` | 2 reveals: faq |
+
+### Packages เพิ่ม (สะสม)
 - `react-markdown` + `rehype-sanitize` — render `body_md_th` ใน blog/portfolio detail
 - `react-hook-form` + `@hookform/resolvers` — contact form validation
+- `lenis@1.3.x` — smooth/inertia scroll (~3KB gz)
+- `motion@12.38` — Framer Motion successor for scroll reveals (~11KB gz)
 
 ---
 
@@ -134,21 +192,27 @@
 - **Metadata architecture:** layout sets `metadataBase` + `title.template` ("%s · Best Solutions") + home defaults; static pages use `getTranslations` → `buildPageMetadata`; dynamic routes use `{ absolute: fullTitle }` เพื่อป้องกัน template ซ้ำซ้อน
 - **exactOptionalPropertyTypes:** optional spread ผ่าน `...(val !== undefined ? { key: val } : {})` — ห้ามส่ง `undefined` ตรงๆ
 - **i18n meta copy:** meta titles/descriptions อยู่ใน `messages/[locale].json` แยก namespace ต่อหน้า ไม่ hardcode ใน component
+- **JSON-LD via dangerouslySetInnerHTML:** escape `</script>` payload ด้วย `<` → `<` ก่อน inject; ทุก schema reference Org @id เพื่อ clean graph
+- **Phone normalization:** Org/LocalBusiness contact phone แปลง `095-385-7029` → E.164 `+66953857029` อัตโนมัติใน json-ld helper
+- **sitemap hreflang:** ทุก URL ใส่ `alternates.languages` ครบ th + en + x-default (default = th)
+- **OG font conversion:** satori ใน `next/og` 16.2.4 reject wOF2 → ต้องแปลงเป็น TTF (`brew install woff2 && woff2_decompress`); เก็บ `.ttf` ใน `public/fonts/og/` แยกจาก `.woff2` runtime fonts
+- **Smooth scroll = Lenis (free MIT) ไม่ใช่ GSAP ScrollSmoother:** lerp 0.1, duration 1.2s, syncTouch off; เลือก Lenis เพราะ free + 3KB + ใช้กับ Framer/Vercel/Linear
+- **Motion (rebranded Framer):** v12.38 import จาก `motion/react`; ใช้ใน Reveal components (`useInView`, `useReducedMotion`, `motion[as]` dynamic component)
+- **Reveal pattern:** wrap `section-header` แล้วเอา `Reveal` ครอบ grid container ด้วย `delay={0.1}` cascade เบาๆ; **ไม่ใส่ stagger ต่อ card** เพราะจะต้องเพิ่ม wrapper div ที่ทำลาย CSS grid layout — ทำเป็น single fade-up ทั้ง grid พอ
+- **prefers-reduced-motion:** ทุก motion (Lenis + Reveal) เคารพ media query — disable smoothing + animation ถ้า user ตั้งใน OS
+- **Reveal once-only:** `viewport.once = true` ไม่ retrigger ตอน scroll กลับขึ้น เพื่อ perf + UX (รำคาญถ้า fade ซ้ำ)
 
 ---
 
 ## 🚧 TODO ที่ยังเหลือ
 
-### C — SEO Phase 5 ← **IN PROGRESS**
+### C — SEO Phase 5 ← **IN PROGRESS** (5/8 done)
 - ✅ T5.1 `generateMetadata` per route (title ≤60, desc ≤160, canonical, OG, hreflang th/en)
-- ✅ T5.2 JSON-LD components (Organization, LocalBusiness, Service, Article, CreativeWork, Breadcrumb)
-- ✅ T5.3 `web/app/sitemap.ts` (38 URLs, hreflang th/en/x-default)
+- ✅ T5.2 JSON-LD (Organization, LocalBusiness, Service+List, Article, CreativeWork, Breadcrumb)
+- ✅ T5.3 `web/app/sitemap.ts` (38 URLs, hreflang th/en/x-default, lastModified)
 - ✅ T5.4 `web/app/robots.ts` (allow / + Disallow /admin/, /api/, sitemap ref)
 - ✅ T5.5 OG image generation (`app/[locale]/opengraph-image.tsx`, LINE Seed TTF, 1200×630)
-- **← NEXT** T5.6 Image audit (next/image, alt th, priority above-fold)
-- T5.4 `web/app/robots.ts`
-- T5.5 OG image generation (`opengraph-image.tsx` with LINE Seed font)
-- T5.6 Image audit — `next/image`, alt text ภาษาไทย, `priority` on above-fold
+- **← NEXT** T5.6 Image audit — `next/image`, alt text ภาษาไทย, `priority` on above-fold, `sizes` attr
 - T5.7 Heading hierarchy audit (1× H1 per page, correct h2/h3 nesting)
 - T5.8 Internal linking pass (service ↔ portfolio ↔ blog)
 
@@ -187,20 +251,20 @@
 
 ## ➡️ Next steps (recommend)
 
-1. **Task C — SEO (ต่อ)** ✅ T5.1 done — ทำต่อที่:
-   - **T5.2** JSON-LD: `OrganizationJsonLd` + `LocalBusinessJsonLd` บน home, `ServiceJsonLd` บน service pages, `ArticleJsonLd` บน blog/[slug], `BreadcrumbJsonLd` ทุกหน้า
-   - T5.3 sitemap.ts (Supabase slugs)
-   - T5.4 robots.ts
-   - T5.5 OG image generation
-   - JSON-LD: Organization + LocalBusiness บน home, Service บน service pages, Article บน blog
-2. **Task D — ISR** เพิ่ม `revalidate` ใน page route config หลัง SEO เสร็จ
-3. **Task F — Playwright** setup + critical path e2e ก่อน staging deploy
-4. **Task G — Vercel** deploy + DNS cutover
+1. **T5.6 Image audit** — replace `<div role="img" style="background-image: url(...)">` patterns ด้วย `<Image>` จาก `next/image` ทุกที่:
+   - card-media (services, portfolio, blog), founder photo, post-cover, case-cover, testi-avatar
+   - alt text ภาษาไทยทุกภาพ + `priority` บน hero/above-fold
+   - `sizes` attribute ตาม container width (1280px max)
+2. **T5.7 Heading hierarchy** — audit 1× `<h1>` ต่อหน้า + h2/h3 nesting ถูก ก่อน Lighthouse
+3. **T5.8 Internal linking** — เพิ่ม service ↔ portfolio ↔ blog cross-links (related sections อยู่แล้ว แต่อาจเพิ่ม contextual links ใน body markdown ของ articles)
+4. **Task D — Performance** ISR (`revalidate=60` indices, `=300` details) + bundle analyzer (<120KB gz home) + Lighthouse target ≥95
+5. **Task F — Playwright** critical path e2e ก่อน staging deploy
+6. **Task G — Vercel** deploy + DNS cutover
 
 **Open questions:**
-- Services detail: ยังเป็น static `web-design` เดียว — ควรทำ dynamic `[slug]` route ตอนไหน? (recommend: หลัง launch เมื่อมีเนื้อหาจริงใน DB)
-- OG image: ใช้ `@vercel/og` (edge runtime) หรือ `satori` โดยตรง?
-- Lead notification: เพิ่ม Resend email alert ตอน lead ใหม่เข้า — ทำใน Task E หรือ Task B extension?
+- Services detail dynamic `[slug]` route ตอนไหน? (recommend: หลัง launch เมื่อมีเนื้อหาจริงใน DB)
+- Lead notification: Resend email alert ตอน lead เข้าใหม่ — Task E หรือ B extension?
+- Smooth scroll ระวัง: ลูกค้ามือถือบางคน iOS Safari momentum ปกติอาจฟีลแย่กว่า Lenis ไหม? — test ก่อน launch
 
 ---
 
