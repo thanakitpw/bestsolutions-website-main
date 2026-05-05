@@ -47,7 +47,7 @@ export async function getPortfolioItems(opts: { featured?: boolean; limit?: numb
   if (opts.limit) query = query.limit(opts.limit);
   const { data, error } = await query;
   if (error) throw error;
-  return data ?? [];
+  return (data ?? []) as unknown as PortfolioItem[];
 }
 
 export async function getPortfolioItemBySlug(slug: string): Promise<PortfolioItem | null> {
@@ -59,7 +59,7 @@ export async function getPortfolioItemBySlug(slug: string): Promise<PortfolioIte
     .eq("status", "published")
     .maybeSingle();
   if (error) throw error;
-  return data;
+  return data as unknown as PortfolioItem | null;
 }
 
 export async function getArticles(opts: { category?: string; limit?: number } = {}): Promise<Article[]> {
