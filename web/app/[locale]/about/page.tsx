@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getSiteSetting } from "@/utils/supabase/queries";
 import { BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/about.css";
 
@@ -78,7 +79,7 @@ export default async function AboutPage({
       {/* ============================================================ FOUNDER STORY */}
       <section className="section section-tight" id="founder" aria-labelledby="founder-title">
         <div className="container">
-          <div className="founder-grid">
+          <Reveal className="founder-grid">
 
             <div className="founder-photo" role="img" aria-label="ภาพ Founder Best Solutions"></div>
 
@@ -115,7 +116,7 @@ export default async function AboutPage({
               </div>
             </div>
 
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -123,13 +124,13 @@ export default async function AboutPage({
       {/* ============================================================ VALUES */}
       <section className="section" id="values" aria-labelledby="values-title">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <span className="eyebrow-chip">● ค่านิยมของทีม</span>
             <h2 id="values-title" style={{ margin: "var(--space-4) 0 var(--space-4)" }}>เราทำงานยังไง</h2>
             <p className="lead">หลัก 4 ข้อที่เราใช้ตัดสินใจในทุกโปรเจค ตั้งแต่ pitch ครั้งแรกจนถึงส่งมอบ</p>
-          </div>
+          </Reveal>
 
-          <div className="grid-values">
+          <Reveal className="grid-values" delay={0.1}>
 
             <article className="value-card">
               <span className="value-num">01</span>
@@ -155,7 +156,7 @@ export default async function AboutPage({
               <p className="value-desc">ทีมในกรุงเทพฯ ไม่ใช่ outsource ต่างประเทศ — เข้าใจตลาด ภาษา และพฤติกรรมคนไทย</p>
             </article>
 
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -163,13 +164,13 @@ export default async function AboutPage({
       {/* ============================================================ PROCESS */}
       <section className="section section-tight" id="process" aria-labelledby="process-title">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <span className="eyebrow-chip">● กระบวนการทำงาน</span>
             <h2 id="process-title" style={{ margin: "var(--space-4) 0 var(--space-4)" }}>4 ขั้นตอน — เริ่มจากเข้าใจคุณ</h2>
             <p className="lead">ไม่มีพิธีรีตอง ไม่บังคับใช้บริการ — เริ่มจากนัดคุยฟรี 30 นาทีก่อน</p>
-          </div>
+          </Reveal>
 
-          <div className="process-list">
+          <Reveal className="process-list" delay={0.1}>
 
             <article className="process-step">
               <div className="process-num" aria-hidden="true">01</div>
@@ -203,7 +204,7 @@ export default async function AboutPage({
               </div>
             </article>
 
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -211,7 +212,7 @@ export default async function AboutPage({
       {/* ============================================================ STATS BAND */}
       <section className="section section-tight" aria-labelledby="stats-title">
         <div className="container">
-          <div className="stats-band">
+          <Reveal className="stats-band">
             <div className="section-header-center" style={{ marginBottom: "var(--space-12)" }}>
               <span className="eyebrow-chip">● ตัวเลขที่เราภูมิใจ</span>
               <h2 id="stats-title" style={{ marginTop: "var(--space-4)" }}>8 ปี ของการลงมือทำจริง</h2>
@@ -236,7 +237,7 @@ export default async function AboutPage({
                 <p className="card-stat-label">ROAS เฉลี่ยของลูกค้า</p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -246,20 +247,20 @@ export default async function AboutPage({
 
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● เริ่มต้นวันนี้</span>
             <h2 id="cta-title">มาคุยกันก่อน — ไม่ผูกมัด</h2>
             <p className="lead">นัดคุยฟรี 30 นาที ฟังโจทย์ก่อน เสนอแนวทาง ไม่กดดันให้เซ็นทันที</p>
-          </div>
+          </Reveal>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow">
               <span className="btn-label">นัดคุยกับทีม</span>
             </Link>
             <Link href="/portfolio" className="btn btn-on-dark btn-lg">
               <span className="btn-label">ดูผลงานก่อน</span>
             </Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 

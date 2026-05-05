@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { getSiteSetting } from "@/utils/supabase/queries";
 import { ContactForm } from "@/components/contact-form";
 import { BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/contact.css";
 
@@ -157,12 +158,12 @@ export default async function ContactPage({
       {/* ============================================================ FAQ */}
       <section className="section section-tight" id="faq" aria-labelledby="faq-title">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <span className="eyebrow-chip">● คำถามที่พบบ่อย</span>
             <h2 id="faq-title" style={{ marginTop: "var(--space-4)" }}>เรื่องที่ลูกค้าถามก่อนตัดสินใจ</h2>
-          </div>
+          </Reveal>
 
-          <div className="faq-list">
+          <Reveal className="faq-list" delay={0.1}>
             <details className="faq-item">
               <summary>นัดคุยฟรี 30 นาที จริง ๆ ฟรีไหม? มีเงื่อนไขอะไรไหม?</summary>
               <p>ฟรีจริง ไม่มีเงื่อนไข — เราใช้ 30 นาทีนี้ทำความรู้จักธุรกิจคุณ ฟังโจทย์ และเสนอแนวทาง ไม่ต้องเซ็นอะไร ไม่ต้องจองเวลาขั้นต่ำ ไม่ขายตรงระหว่างคุย ถ้าโจทย์ของคุณเราดูแล้วไม่ตรงกับสิ่งที่เราเก่ง เราแนะนำเอเจนซีอื่นให้</p>
@@ -183,7 +184,7 @@ export default async function ContactPage({
               <summary>มีตัวอย่างสัญญาให้ดูก่อนได้ไหม?</summary>
               <p>ได้ครับ ขอตัวอย่าง MSA + SOW ผ่านอีเมลก่อนตัดสินใจได้เลย — สัญญาเรียบง่าย ไม่ผูกขาดยาว ไม่มีค่าปรับซ่อน ทุกข้อชัดเจน</p>
             </details>
-          </div>
+          </Reveal>
         </div>
       </section>
 

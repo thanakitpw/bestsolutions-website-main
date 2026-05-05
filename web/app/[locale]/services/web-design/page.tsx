@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getServiceBySlug, getPortfolioItems } from "@/utils/supabase/queries";
 import { ServiceJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
 import { pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/web-design.css";
@@ -95,13 +96,13 @@ export default async function WebDesignPage({
       {/* ============================================================ FEATURES */}
       <section className="section section-tight" id="features" aria-labelledby="features-title">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <span className="eyebrow-chip">● สิ่งที่คุณได้</span>
             <h2 id="features-title" style={{ margin: "var(--space-4) 0 var(--space-4)" }}>ครบทุกอย่างที่เว็บธุรกิจควรมี</h2>
             <p className="lead">ไม่ใช่แค่หน้าเว็บสวย ๆ — แต่เป็นเครื่องมือทำเงินที่วัดผลได้ทุก click</p>
-          </div>
+          </Reveal>
 
-          <div className="features-grid">
+          <Reveal className="features-grid" delay={0.1}>
             <article className="feature-card">
               <div className="feature-icon" aria-hidden="true">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l2.5 5.5L20 10l-5.5 2.5L12 18l-2.5-5.5L4 10l5.5-2.5L12 2z" /></svg>
@@ -149,7 +150,7 @@ export default async function WebDesignPage({
               <h3 className="feature-title">รับประกัน 60 วัน</h3>
               <p className="feature-desc">บั๊กที่เกิดจากการพัฒนา เราซ่อมฟรี 60 วันแรกหลังส่งมอบ ไม่มีคำถาม</p>
             </article>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -157,12 +158,12 @@ export default async function WebDesignPage({
       {/* ============================================================ PROBLEM / SOLUTION */}
       <section className="section" id="ps" aria-labelledby="ps-title">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <span className="eyebrow-chip">● ทำไมต้องรื้อเว็บใหม่</span>
             <h2 id="ps-title" style={{ margin: "var(--space-4) 0 var(--space-4)" }}>เว็บแบบเก่า vs เว็บที่เราทำ</h2>
-          </div>
+          </Reveal>
 
-          <div className="ps-grid">
+          <Reveal className="ps-grid" delay={0.1}>
             <article className="ps-card is-problem">
               <span className="ps-card-label">ปัญหาที่เจอบ่อย</span>
               <h3>เว็บแบบเก่าที่ทำให้คุณเสียลูกค้า</h3>
@@ -188,7 +189,7 @@ export default async function WebDesignPage({
                 <li>Mobile-first จริง — ออกแบบจาก 360px ก่อน</li>
               </ul>
             </article>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -196,13 +197,13 @@ export default async function WebDesignPage({
       {/* ============================================================ PROCESS */}
       <section className="section section-tight" id="process" aria-labelledby="process-title">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <span className="eyebrow-chip">● ขั้นตอนทำงาน</span>
             <h2 id="process-title" style={{ margin: "var(--space-4) 0 var(--space-4)" }}>5 สัปดาห์ จากคุยครั้งแรกถึงเปิดใช้</h2>
             <p className="lead">เว็บไซต์ขนาดกลาง (5-8 หน้า) ใช้เวลาประมาณ 5-6 สัปดาห์ — ทำเป็น Sprint รายสัปดาห์</p>
-          </div>
+          </Reveal>
 
-          <div className="process-list">
+          <Reveal className="process-list" delay={0.1}>
             <article className="process-step">
               <div className="process-num" aria-hidden="true">01</div>
               <div className="process-body">
@@ -238,7 +239,7 @@ export default async function WebDesignPage({
                 <p>ดูแล bug + monitor Core Web Vitals + GSC coverage 60 วันแรก ฟรี</p>
               </div>
             </article>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -246,7 +247,7 @@ export default async function WebDesignPage({
       {/* ============================================================ RELATED PORTFOLIO */}
       <section className="section section-tight" id="related" aria-labelledby="related-title">
         <div className="container">
-          <div className="section-header-center" style={{ textAlign: "left", maxWidth: "none", display: "flex", justifyContent: "space-between", alignItems: "end", flexWrap: "wrap", gap: "var(--space-6)" }}>
+          <Reveal className="section-header-center" style={{ textAlign: "left", maxWidth: "none", display: "flex", justifyContent: "space-between", alignItems: "end", flexWrap: "wrap", gap: "var(--space-6)" }}>
             <div style={{ maxWidth: 720 }}>
               <span className="eyebrow-chip is-blue">● ผลงานเว็บล่าสุด</span>
               <h2 id="related-title" style={{ margin: "var(--space-4) 0 0" }}>เว็บที่เราเพิ่งส่งมอบ</h2>
@@ -254,9 +255,9 @@ export default async function WebDesignPage({
             <Link href="/portfolio" className="btn btn-ghost btn-arrow">
               <span className="btn-label">ผลงานทั้งหมด</span>
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="grid-3">
+          <Reveal className="grid-3" delay={0.1}>
             {(relatedPortfolio.length > 0 ? relatedPortfolio : allPortfolio.slice(0, 3)).map((p, i) => (
               <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
                 <div
@@ -275,7 +276,7 @@ export default async function WebDesignPage({
                 </div>
               </Link>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -283,12 +284,12 @@ export default async function WebDesignPage({
       {/* ============================================================ FAQ */}
       <section className="section section-tight" id="faq" aria-labelledby="faq-title">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <span className="eyebrow-chip">● คำถามที่พบบ่อย</span>
             <h2 id="faq-title" style={{ margin: "var(--space-4) 0 var(--space-4)" }}>FAQ — เรื่องที่ลูกค้าถามบ่อย</h2>
-          </div>
+          </Reveal>
 
-          <div className="faq-list">
+          <Reveal className="faq-list" delay={0.1}>
             <details className="faq-item">
               <summary>ราคาทำเว็บประมาณเท่าไหร่?</summary>
               <p>ขึ้นกับขนาดและฟีเจอร์ — เว็บ landing 1 หน้าเริ่มที่หลักหมื่น เว็บบริษัท 5-8 หน้าหลักแสน ส่วน e-commerce/web app หลักแสนปลาย ๆ ขึ้นไป ปรึกษาฟรี 30 นาที เราจะให้ตัวเลขเฉพาะเคสคุณ</p>
@@ -309,7 +310,7 @@ export default async function WebDesignPage({
               <summary>เว็บที่ทำให้ใช้เทคโนโลยีอะไร?</summary>
               <p>Next.js 15 + TypeScript + Tailwind v4 + Supabase + Vercel — เป็น stack ที่ใช้กันใน startup ระดับโลก เร็ว ปลอดภัย scale ได้ และคุณ migrate ไปทำงานกับทีม dev อื่นได้ถ้าต้องการ ไม่ผูกขาด</p>
             </details>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -319,20 +320,20 @@ export default async function WebDesignPage({
 
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● พร้อมเริ่มแล้ว?</span>
             <h2 id="cta-title">รื้อเว็บเก่า ทำเว็บใหม่ที่ขายของได้</h2>
             <p className="lead">นัดคุยฟรี 30 นาที — เราจะดูเว็บปัจจุบันให้ + เสนอแผน Sprint + ราคาก่อนเซ็น</p>
-          </div>
+          </Reveal>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow">
               <span className="btn-label">ขอใบเสนอราคา</span>
             </Link>
             <Link href="/portfolio" className="btn btn-on-dark btn-lg">
               <span className="btn-label">ดูผลงานเว็บก่อน</span>
             </Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 

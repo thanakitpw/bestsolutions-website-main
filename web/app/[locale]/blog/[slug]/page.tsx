@@ -7,6 +7,7 @@ import rehypeSanitize from "rehype-sanitize";
 import { getArticleBySlug, getArticles, getArticleSlugs } from "@/utils/supabase/queries";
 import { buildAlternates, buildOg } from "@/utils/metadata";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import "@/styles/pages/sample-post.css";
 
@@ -135,11 +136,11 @@ export default async function BlogPostPage({ params }: Props) {
       {related.length > 0 && (
         <section className="section section-tight">
           <div className="container">
-            <div className="section-header-center">
+            <Reveal className="section-header-center">
               <span className="eyebrow-chip is-blue">● บทความที่เกี่ยวข้อง</span>
               <h2 style={{ marginTop: "var(--space-4)" }}>บทความอื่นที่อาจสนใจ</h2>
-            </div>
-            <div className="grid-3">
+            </Reveal>
+            <Reveal className="grid-3" delay={0.1}>
               {related.map((a, i) => (
                 <Link key={a.slug} href={`/blog/${a.slug}`} className="card card-blog">
                   <div
@@ -156,7 +157,7 @@ export default async function BlogPostPage({ params }: Props) {
                   </div>
                 </Link>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       )}
@@ -166,15 +167,15 @@ export default async function BlogPostPage({ params }: Props) {
       <div className="section section-dark-pre" aria-hidden="true"></div>
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● ปรับใช้กับธุรกิจคุณ</span>
             <h2 id="cta-title">อยากให้เราช่วย setup ให้ธุรกิจคุณ?</h2>
             <p className="lead">นัดคุยฟรี 30 นาที — เราจะดู use case ที่เหมาะกับคุณและประมาณราคาให้ก่อนเซ็น</p>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          </Reveal>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>
             <Link href="/services" className="btn btn-on-dark btn-lg"><span className="btn-label">ดูบริการ</span></Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 

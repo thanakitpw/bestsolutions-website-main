@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { getServices } from "@/utils/supabase/queries";
 import { ServiceIcon } from "@/components/service-icon";
 import { ServiceListJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
 import { pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/services.css";
@@ -69,7 +70,7 @@ export default async function ServicesPage({
         <div className="container">
           <h2 id="services-title" className="visually-hidden">บริการทั้งหมดของเรา</h2>
 
-          <div className="grid-services-7">
+          <Reveal className="grid-services-7">
             {services.map((s, i) => {
               const href = SERVICES_WITH_DETAIL.has(s.slug) ? `/services/${s.slug}` : "/services";
               const tone = SERVICE_TONES[i % SERVICE_TONES.length];
@@ -90,7 +91,7 @@ export default async function ServicesPage({
                 </Link>
               );
             })}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -98,13 +99,13 @@ export default async function ServicesPage({
       {/* ============================================================ PROCESS */}
       <section className="section" id="process" aria-labelledby="process-title">
         <div className="container">
-          <div className="section-header-center">
+          <Reveal className="section-header-center">
             <span className="eyebrow-chip">● กระบวนการทำงาน</span>
             <h2 id="process-title" style={{ margin: "var(--space-4) 0 var(--space-4)" }}>วิธีที่เราทำงานกับลูกค้า</h2>
             <p className="lead">ทุกบริการเริ่มจาก 4 ขั้นตอนเหมือนกัน — ฟังก่อน ค่อยเสนอ</p>
-          </div>
+          </Reveal>
 
-          <div className="process-list">
+          <Reveal className="process-list" delay={0.1}>
             <article className="process-step">
               <div className="process-num" aria-hidden="true">01</div>
               <div className="process-body">
@@ -136,7 +137,7 @@ export default async function ServicesPage({
                 <p>สรุปผลลัพธ์เทียบ KPI ที่วางไว้ ส่งมอบงานพร้อมแผนดูแลต่อเนื่อง</p>
               </div>
             </article>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -146,20 +147,20 @@ export default async function ServicesPage({
 
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● เริ่มต้นวันนี้</span>
             <h2 id="cta-title">ไม่แน่ใจว่าจะใช้บริการไหน? เราช่วยเลือกให้</h2>
             <p className="lead">เล่าโจทย์ให้ฟัง 15 นาที เราจะแนะนำบริการที่เหมาะกับธุรกิจของคุณ — ฟรี ไม่ผูกมัด</p>
-          </div>
+          </Reveal>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow">
               <span className="btn-label">นัดคุยกับทีม</span>
             </Link>
             <Link href="/portfolio" className="btn btn-on-dark btn-lg">
               <span className="btn-label">ดูผลงานก่อน</span>
             </Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 

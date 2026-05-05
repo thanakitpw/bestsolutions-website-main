@@ -7,6 +7,7 @@ import rehypeSanitize from "rehype-sanitize";
 import { getPortfolioItemBySlug, getPortfolioItems, getPortfolioSlugs } from "@/utils/supabase/queries";
 import { buildAlternates, buildOg } from "@/utils/metadata";
 import { PortfolioJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
 import { pickLocale } from "@/utils/format";
 import type { PortfolioResult } from "@/utils/supabase/types";
 import "@/styles/pages/sample-case.css";
@@ -106,7 +107,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
           {/* Results band */}
           {(item.results ?? []).length > 0 && (
-            <div className="results-band" style={{ marginBottom: "var(--space-16)" }}>
+            <Reveal className="results-band" style={{ marginBottom: "var(--space-16)" }}>
               <div className="section-header-center" style={{ marginBottom: "var(--space-10)" }}>
                 <span className="eyebrow-chip">● ผลลัพธ์</span>
                 <h2 style={{ marginTop: "var(--space-4)", fontSize: "var(--text-3xl)" }}>ตัวเลขจากระบบ Analytics จริง</h2>
@@ -119,7 +120,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                   </div>
                 ))}
               </div>
-            </div>
+            </Reveal>
           )}
 
           {/* Body */}
@@ -150,11 +151,11 @@ export default async function PortfolioDetailPage({ params }: Props) {
       {related.length > 0 && (
         <section className="section section-tight">
           <div className="container">
-            <div className="section-header-center">
+            <Reveal className="section-header-center">
               <span className="eyebrow-chip is-blue">● เคสที่คล้ายกัน</span>
               <h2 style={{ marginTop: "var(--space-4)" }}>ผลงานอื่นที่อาจสนใจ</h2>
-            </div>
-            <div className="grid-3">
+            </Reveal>
+            <Reveal className="grid-3" delay={0.1}>
               {related.map((p, i) => (
                 <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
                   <div
@@ -173,7 +174,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
                   </div>
                 </Link>
               ))}
-            </div>
+            </Reveal>
           </div>
         </section>
       )}
@@ -183,15 +184,15 @@ export default async function PortfolioDetailPage({ params }: Props) {
       <div className="section section-dark-pre" aria-hidden="true"></div>
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● พร้อมเริ่ม</span>
             <h2 id="cta-title">อยากให้เคสของคุณ เป็นเคสต่อไปที่เราภูมิใจ</h2>
             <p className="lead">นัดคุยฟรี 30 นาที — เล่าโจทย์ให้ฟัง เราจะเสนอแนวทางที่ปรับใช้กับธุรกิจคุณได้</p>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          </Reveal>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>
             <Link href="/portfolio" className="btn btn-on-dark btn-lg"><span className="btn-label">ผลงานทั้งหมด</span></Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 

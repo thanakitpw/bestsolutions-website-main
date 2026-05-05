@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getArticles } from "@/utils/supabase/queries";
 import { BreadcrumbJsonLd } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/blog.css";
@@ -84,6 +85,7 @@ export default async function BlogPage({
 
           {/* Featured */}
           {featured && (
+            <Reveal>
             <Link href={`/blog/${featured.slug}`} className="featured-card" aria-labelledby="featured-title">
               <div
                 className="featured-media"
@@ -108,10 +110,11 @@ export default async function BlogPage({
                 </div>
               </div>
             </Link>
+            </Reveal>
           )}
 
           {/* Grid */}
-          <div className="grid-blog">
+          <Reveal className="grid-blog" delay={0.1}>
             {rest.map((a, i) => {
               const title = pickLocale(locale, a.title_th, a.title_en ?? a.title_th);
               const excerpt = pickLocale(locale, a.excerpt_th, a.excerpt_en ?? a.excerpt_th ?? "");
@@ -138,7 +141,7 @@ export default async function BlogPage({
                 </Link>
               );
             })}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -147,15 +150,15 @@ export default async function BlogPage({
       <div className="section section-dark-pre" aria-hidden="true"></div>
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● พร้อมเริ่ม</span>
             <h2 id="cta-title">อยากให้เราช่วยปรับใช้กับธุรกิจคุณ?</h2>
             <p className="lead">เนื้อหาในบล็อกเป็นแค่ส่วนหนึ่งของสิ่งที่เราทำให้ลูกค้า — ทักมาเล่าโจทย์ดู เราจะช่วยปรับให้เหมาะกับเคสคุณ</p>
-          </div>
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          </Reveal>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>
             <Link href="/services" className="btn btn-on-dark btn-lg"><span className="btn-label">ดูบริการ</span></Link>
-          </div>
+          </Reveal>
         </div>
       </section>
 
