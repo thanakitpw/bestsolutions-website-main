@@ -144,7 +144,8 @@
 - ✅ T5.2 JSON-LD components (Organization, LocalBusiness, Service, Article, CreativeWork, Breadcrumb)
 - ✅ T5.3 `web/app/sitemap.ts` (38 URLs, hreflang th/en/x-default)
 - ✅ T5.4 `web/app/robots.ts` (allow / + Disallow /admin/, /api/, sitemap ref)
-- **← NEXT** T5.5 OG image generation (`opengraph-image.tsx` with LINE Seed font)
+- ✅ T5.5 OG image generation (`app/[locale]/opengraph-image.tsx`, LINE Seed TTF, 1200×630)
+- **← NEXT** T5.6 Image audit (next/image, alt th, priority above-fold)
 - T5.4 `web/app/robots.ts`
 - T5.5 OG image generation (`opengraph-image.tsx` with LINE Seed font)
 - T5.6 Image audit — `next/image`, alt text ภาษาไทย, `priority` on above-fold
