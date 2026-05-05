@@ -1,19 +1,27 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getServices } from "@/utils/supabase/queries";
 import { ServiceIcon } from "@/components/service-icon";
 import { pickLocale } from "@/utils/format";
+import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/services.css";
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Services" });
+  return buildPageMetadata({
+    locale,
+    path: "/services",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+  });
+}
 
 const SERVICE_TONES = ["is-orange", "is-blue", "is-cream", "is-orange", "is-blue", "is-cream", "is-orange"] as const;
 const SERVICES_WITH_DETAIL = new Set(["web-design"]);
-
-export const metadata: Metadata = {
-  title: "บริการของเรา · Best Solutions — รับทำเว็บ ยิงแอด SEO AI Automation",
-  description:
-    "7 บริการครบวงจรของ Best Solutions — รับทำเว็บไซต์ ยิงแอด Meta &amp; Google ทำ SEO ดูแลโซเชียล AI Automation AI ตอบอีเมล และ Production ทุกอย่างในทีมเดียว",
-};
 
 export default async function ServicesPage({
   params,

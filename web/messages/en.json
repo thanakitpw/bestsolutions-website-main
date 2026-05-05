@@ -30,5 +30,29 @@
   "Home": {
     "metaTitle": "Best Solutions — Full-Service Digital Agency · Bangkok",
     "metaDescription": "Web design, paid ads, SEO, social, and AI automation — all in one team that works in Sprints with measurable results"
+  },
+  "About": {
+    "metaTitle": "About Us — Bangkok Digital Agency",
+    "metaDescription": "Meet the team behind Best Solutions, Bangkok's full-service digital agency specializing in web design, paid ads, SEO, and AI automation."
+  },
+  "Services": {
+    "metaTitle": "Digital Services — Web, Ads, SEO & AI Bangkok",
+    "metaDescription": "7 digital services from Best Solutions Bangkok: web design, paid ads, social media, SEO, AI automation, email AI, and video production."
+  },
+  "WebDesign": {
+    "metaTitle": "Professional Web Design Bangkok — UX/UI & SEO Ready",
+    "metaDescription": "Custom website design in Bangkok: beautiful UX/UI, fast loading, mobile-first, SEO-ready structure, and high conversion rates. Free consult."
+  },
+  "Blog": {
+    "metaTitle": "Digital Marketing Blog — SEO, Ads & Web Tips",
+    "metaDescription": "Digital marketing articles from Best Solutions Bangkok: SEO tips, Facebook/Google ads, web design, and AI automation — updated weekly."
+  },
+  "Portfolio": {
+    "metaTitle": "Portfolio — Web, SEO, Branding & Ads Bangkok",
+    "metaDescription": "9+ projects from Best Solutions Bangkok: websites, e-commerce, SEO, online marketing, branding, and video content for Thai businesses."
+  },
+  "Contact": {
+    "metaTitle": "Contact Best Solutions — Free Consultation Bangkok",
+    "metaDescription": "Contact Best Solutions via LINE @bestsolutions, call +66 95-385-7029, or fill in our form. Free consultation, reply within 24 hours."
   }
 }

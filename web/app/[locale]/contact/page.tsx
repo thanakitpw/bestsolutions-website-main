@@ -1,9 +1,23 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getSiteSetting } from "@/utils/supabase/queries";
 import { ContactForm } from "@/components/contact-form";
+import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/contact.css";
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Contact" });
+  return buildPageMetadata({
+    locale,
+    path: "/contact",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+  });
+}
 
 type ContactSetting = {
   phone: string;
@@ -11,12 +25,6 @@ type ContactSetting = {
   line: string;
   facebook: string;
   hours: string;
-};
-
-export const metadata: Metadata = {
-  title: "ติดต่อเรา · Best Solutions — นัดคุยฟรี 30 นาที ทักไลน์ได้ทันที",
-  description:
-    "ติดต่อ Best Solutions Corp กรุงเทพฯ — ฟอร์มขอใบเสนอราคา / โทร 095-385-7029 / LINE @bestsolutions / อีเมล info@bestsolutionscorp.com — ตอบกลับใน 1 วันทำการ",
 };
 
 const DEFAULT_CONTACT: ContactSetting = {

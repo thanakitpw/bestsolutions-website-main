@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import { getArticleBySlug, getArticles, getArticleSlugs } from "@/utils/supabase/queries";
+import { buildAlternates, buildOg } from "@/utils/metadata";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import "@/styles/pages/sample-post.css";
 
@@ -22,9 +23,22 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const article = await getArticleBySlug(slug);
   if (!article) return {};
+  const title = pickLocale(locale, article.title_th, article.title_en ?? article.title_th);
+  const description = (article.seo_description ?? pickLocale(locale, article.excerpt_th, article.excerpt_en ?? article.excerpt_th ?? "")) ?? "";
+  const fullTitle = article.seo_title ?? `${title} · Best Solutions`;
   return {
-    title: article.seo_title ?? `${pickLocale(locale, article.title_th, article.title_en ?? article.title_th)} · Blog · Best Solutions`,
-    description: article.seo_description ?? pickLocale(locale, article.excerpt_th, article.excerpt_en ?? article.excerpt_th ?? ""),
+    title: { absolute: fullTitle },
+    description,
+    alternates: buildAlternates(locale, `/blog/${slug}`),
+    openGraph: buildOg({
+      locale,
+      title: fullTitle,
+      description,
+      path: `/blog/${slug}`,
+      type: "article",
+      ...(article.cover_image ? { image: article.cover_image } : {}),
+    }),
+    twitter: { card: "summary_large_image", title: fullTitle, description },
   };
 }
 

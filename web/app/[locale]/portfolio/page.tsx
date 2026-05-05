@@ -1,9 +1,23 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getPortfolioItems, getSiteSetting } from "@/utils/supabase/queries";
 import { pickLocale } from "@/utils/format";
+import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/portfolio.css";
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Portfolio" });
+  return buildPageMetadata({
+    locale,
+    path: "/portfolio",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+  });
+}
 
 type StatsSetting = { projects: string; years: string; roas: string; seo_days: string };
 
@@ -18,12 +32,6 @@ const CARD_GRADIENTS = [
   "linear-gradient(135deg, var(--color-peach), var(--color-orange-300))",
   "linear-gradient(135deg, var(--color-orange-500), var(--color-blue-500))",
 ];
-
-export const metadata: Metadata = {
-  title: "ผลงานของเรา · Best Solutions — Web Design, E-Commerce, SEO, Branding",
-  description:
-    "100+ โปรเจคที่ Best Solutions ส่งมอบให้ลูกค้า — รวมเว็บไซต์ ระบบ e-commerce แคมเปญ ads, SEO และ Production จากธุรกิจหลากหลายประเภทในไทย",
-};
 
 export default async function PortfolioPage({
   params,

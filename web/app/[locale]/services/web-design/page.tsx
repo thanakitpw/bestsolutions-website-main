@@ -1,21 +1,29 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getServiceBySlug, getPortfolioItems } from "@/utils/supabase/queries";
 import { pickLocale } from "@/utils/format";
+import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/web-design.css";
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "WebDesign" });
+  return buildPageMetadata({
+    locale,
+    path: "/services/web-design",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+  });
+}
 
 const RELATED_GRADIENTS = [
   "linear-gradient(135deg, var(--color-orange-500), var(--color-peach))",
   "linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700))",
   "linear-gradient(135deg, var(--color-text), var(--color-orange-700))",
 ];
-
-export const metadata: Metadata = {
-  title: "รับทำเว็บไซต์ · Best Solutions — เว็บที่ขายของได้จริง พร้อม SEO",
-  description:
-    "บริการรับทำเว็บไซต์ของ Best Solutions — ออกแบบ UX/UI ตามแบรนด์ โหลดเร็ว SEO-ready แก้แอดมินเองได้ พร้อม Lighthouse ≥ 95 ทุกเว็บที่ส่งมอบ",
-};
 
 export default async function WebDesignPage({
   params,

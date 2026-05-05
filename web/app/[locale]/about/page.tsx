@@ -1,8 +1,22 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getSiteSetting } from "@/utils/supabase/queries";
+import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/about.css";
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "About" });
+  return buildPageMetadata({
+    locale,
+    path: "/about",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+  });
+}
 
 type StatsSetting = {
   projects: string;
@@ -15,12 +29,6 @@ type FounderSetting = {
   name: string;
   role: string;
   bio_th?: string;
-};
-
-export const metadata: Metadata = {
-  title: "เกี่ยวกับเรา · Best Solutions — เอเจนซีดิจิทัลกรุงเทพฯ",
-  description:
-    "ทำไมเริ่มต้น Best Solutions — 8 ปีในวงการดิจิทัล เราเห็น pain เดิม ๆ ของ SME ไทย แล้วตั้งใจลบล้างมันด้วยทีมที่โปร่งใส วัดผลได้ และทำงานแบบ Sprint",
 };
 
 export default async function AboutPage({

@@ -1,9 +1,23 @@
 import type { Metadata } from "next";
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getArticles } from "@/utils/supabase/queries";
 import { formatThaiDate, pickLocale } from "@/utils/format";
+import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/blog.css";
+
+type Props = { params: Promise<{ locale: string }> };
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Blog" });
+  return buildPageMetadata({
+    locale,
+    path: "/blog",
+    title: t("metaTitle"),
+    description: t("metaDescription"),
+  });
+}
 
 const CATEGORY_TONE: Record<string, string> = {
   "Digital Marketing": "is-blue",
@@ -18,12 +32,6 @@ const CARD_GRADIENTS = [
   "linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700))",
   "linear-gradient(135deg, var(--color-peach), var(--color-orange-500))",
 ];
-
-export const metadata: Metadata = {
-  title: "บล็อก · Best Solutions — บทความ AI, Digital Marketing, SEO ภาษาไทย",
-  description:
-    "บทความและไอเดียจากทีม Best Solutions — เขียนเฉพาะที่ลงมือทำจริง ครอบคลุม AI Automation, Digital Marketing, SEO ภาษาไทย, Web Design และเคส SME",
-};
 
 export default async function BlogPage({
   params,

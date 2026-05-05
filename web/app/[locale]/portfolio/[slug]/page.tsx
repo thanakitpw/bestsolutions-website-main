@@ -5,6 +5,7 @@ import { Link } from "@/i18n/navigation";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import { getPortfolioItemBySlug, getPortfolioItems, getPortfolioSlugs } from "@/utils/supabase/queries";
+import { buildAlternates, buildOg } from "@/utils/metadata";
 import { pickLocale } from "@/utils/format";
 import type { PortfolioResult } from "@/utils/supabase/types";
 import "@/styles/pages/sample-case.css";
@@ -23,10 +24,20 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const item = await getPortfolioItemBySlug(slug);
   if (!item) return {};
-  const summary = pickLocale(locale, item.summary_th, item.summary_en ?? item.summary_th);
+  const description = item.seo_description ?? pickLocale(locale, item.summary_th, item.summary_en ?? item.summary_th);
+  const fullTitle = item.seo_title ?? `${item.title} · Case Study · Best Solutions`;
   return {
-    title: item.seo_title ?? `${item.title} · Case Study · Best Solutions`,
-    description: item.seo_description ?? summary,
+    title: { absolute: fullTitle },
+    description,
+    alternates: buildAlternates(locale, `/portfolio/${slug}`),
+    openGraph: buildOg({
+      locale,
+      title: fullTitle,
+      description,
+      path: `/portfolio/${slug}`,
+      ...(item.cover_image ? { image: item.cover_image } : {}),
+    }),
+    twitter: { card: "summary_large_image", title: fullTitle, description },
   };
 }
 
