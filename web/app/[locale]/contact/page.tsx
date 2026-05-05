@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getSiteSetting } from "@/utils/supabase/queries";
+import { ContactForm } from "@/components/contact-form";
 import "@/styles/pages/contact.css";
 
 type ContactSetting = {
@@ -61,76 +62,7 @@ export default async function ContactPage({
           <div className="contact-grid">
 
             {/* LEFT: form */}
-            <form className="form card" style={{ padding: "var(--space-10)" }}>
-              <div style={{ marginBottom: "var(--space-6)" }}>
-                <span className="eyebrow-chip">● ฟอร์มขอใบเสนอ</span>
-                <h2 style={{ margin: "var(--space-3) 0 var(--space-2)", fontSize: "var(--text-2xl)" }}>เล่าให้ฟังก่อนได้</h2>
-                <p style={{ margin: 0, fontSize: "var(--text-sm)", color: "var(--color-text-muted)" }}>เราจะติดต่อกลับภายใน 1 วันทำการ</p>
-              </div>
-
-              <div className="form-row">
-                <div className="form-field">
-                  <label className="form-label form-label-required" htmlFor="lead-name">ชื่อ-นามสกุล</label>
-                  <input className="form-input" id="lead-name" type="text" name="name" placeholder="เช่น ธนกิจ ใจทอง" required />
-                </div>
-                <div className="form-field">
-                  <label className="form-label form-label-required" htmlFor="lead-phone">เบอร์โทร</label>
-                  <input className="form-input" id="lead-phone" type="tel" name="phone" placeholder="095-385-7029" required />
-                </div>
-              </div>
-
-              <div className="form-field">
-                <label className="form-label form-label-required" htmlFor="lead-email">อีเมล</label>
-                <input className="form-input" id="lead-email" type="email" name="email" placeholder="you@example.com" required />
-              </div>
-
-              <div className="form-field">
-                <label className="form-label" htmlFor="lead-service">บริการที่สนใจ</label>
-                <select className="form-select" id="lead-service" name="service">
-                  <option>ยังไม่แน่ใจ — ขอคำปรึกษา</option>
-                  <option>รับทำเว็บไซต์</option>
-                  <option>ยิงแอด Meta &amp; Google</option>
-                  <option>SEO</option>
-                  <option>ดูแลเพจโซเชียล</option>
-                  <option>AI Automation</option>
-                  <option>AI ตอบอีเมล</option>
-                  <option>Production (Video &amp; Content)</option>
-                </select>
-              </div>
-
-              <div className="form-field">
-                <label className="form-label" htmlFor="lead-budget">งบประมาณคร่าว ๆ (ไม่บังคับ)</label>
-                <select className="form-select" id="lead-budget" name="budget">
-                  <option>ยังไม่แน่ใจ</option>
-                  <option>ต่ำกว่า 50,000 บาท</option>
-                  <option>50,000 - 150,000 บาท</option>
-                  <option>150,000 - 500,000 บาท</option>
-                  <option>มากกว่า 500,000 บาท</option>
-                </select>
-              </div>
-
-              <div className="form-field">
-                <label className="form-label" htmlFor="lead-message">รายละเอียดโจทย์</label>
-                <textarea className="form-textarea" id="lead-message" name="message" placeholder="เล่าให้ฟังว่าธุรกิจคุณกำลังเจอโจทย์อะไร — ยิ่งละเอียดเรายิ่งช่วยได้ตรงจุด"></textarea>
-                <span className="form-help">ไม่จำเป็นต้องครบ — เริ่มเล่าเท่าที่นึกออก เราถามต่อในการคุยได้</span>
-              </div>
-
-              <div className="form-field">
-                <label className="form-checkbox-wrap">
-                  <input className="form-checkbox" type="checkbox" name="consent" required />
-                  <span>ยินยอมให้ Best Solutions เก็บข้อมูลตามนโยบายความเป็นส่วนตัว เพื่อใช้ติดต่อกลับเรื่องโปรเจคเท่านั้น</span>
-                </label>
-              </div>
-
-              <div className="form-honeypot" aria-hidden="true">
-                <label>เว็บไซต์ <input type="text" name="website" tabIndex={-1} autoComplete="off" /></label>
-              </div>
-
-              <div className="form-actions">
-                <button className="btn btn-primary btn-arrow" type="submit"><span className="btn-label">ส่งข้อมูล</span></button>
-                <span className="form-help" style={{ marginTop: 0 }}>หรือทักไลน์ <strong>{contact.line}</strong> ก็ได้</span>
-              </div>
-            </form>
+            <ContactForm lineHandle={contact.line} />
 
 
             {/* RIGHT: info panel */}
