@@ -1,9 +1,9 @@
 # Progress — Best Solutions Website Redesign
 
-**Last updated:** 2026-05-05 18:05 GMT+7
-**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes` (commit `4525b5d`)
+**Last updated:** 2026-05-05 20:18 GMT+7
+**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes` (commit `6a67e44`)
 **Live Supabase project:** `dhftyjnzqkyocfhtmjet` (bestsolutions-website, ap-northeast-2)
-**Recent commits this session:** 5d3fbc2 → 5d48671 → 666b985 → 2ba4aeb → 3847b98 → 1ddd4c9 → 4525b5d
+**Recent commits this session:** 5d3fbc2 → 5d48671 → 666b985 → 2ba4aeb → 3847b98 → 1ddd4c9 → 4525b5d → 3552130 → 6a67e44
 
 ---
 
@@ -83,37 +83,25 @@
   - Pattern: section header (Reveal) → grid/content (Reveal delay 0.1s) → cascade เบาๆ
   - Filter bars + form input ไม่ wrap (preserve native a11y attributes)
 
-#### T5.6 — Image audit ⏳ IN PROGRESS (survey done, refactor pending)
-
-**Survey findings** (current state, no commits yet):
-- ❌ ไม่มี `next/image` import ใน `app/` หรือ `components/` เลย
-- ❌ `next.config.ts` ยังไม่มี `images.remotePatterns` (ต้อง add Supabase Storage domain ก่อน)
-- 🔍 **12 จุด** ที่ใช้ `<div role="img" style="backgroundImage">` ต้องแปลง:
-  - `app/[locale]/page.tsx` × 2 (featured portfolio media, blog teaser media)
-  - `app/[locale]/services/web-design/page.tsx` × 1 (related portfolio media)
-  - `app/[locale]/portfolio/page.tsx` × 1 (grid card media)
-  - `app/[locale]/portfolio/[slug]/page.tsx` × 2 (case-cover hero + related card media)
-  - `app/[locale]/blog/page.tsx` × 2 (featured-media + grid card-media)
-  - `app/[locale]/blog/[slug]/page.tsx` × 2 (post-cover hero + related card-media)
-  - `app/[locale]/about/page.tsx` × 1 (founder-photo placeholder)
-  - `app/[locale]/contact/page.tsx` × 1 (map-placeholder — keep as div)
-- 🔍 testimonial avatars (home) — ใช้ `style={{ background: ...url(...) }}` ต้องแปลง
-- 🔍 service hero icons (SVG) — ไม่ต้องแก้
-
-**Plan locked**:
-1. Add Supabase Storage hostname ใน `next.config.ts` `images.remotePatterns`
-2. Create `web/components/media-image.tsx` — reusable wrapper:
-   - prop: `src` (cover_image | null), `alt`, `priority`, `gradientFallback`, `aspectClass`
-   - `cover_image` มี → render `<Image fill sizes={...}>`; ไม่มี → render `<div>` พร้อม gradient
-3. Refactor card-media + cover patterns ทีละหน้า — ใช้ `<MediaImage>` แทน inline div
-4. **Priority above-fold:**
-   - Hero blob/illustration (decorative, ไม่ใช่ photo) — skip
-   - `case-cover` hero (portfolio detail) → `priority`
-   - `post-cover` hero (blog detail) → `priority`
-   - Featured portfolio card #1 บน home → `priority`
-5. **Sizes attr** ตาม container width 1280px:
-   - card-media (3 cols): `(min-width: 768px) 33vw, 100vw`
-   - hero-cover (full width): `(min-width: 1280px) 1280px, 100vw`
+#### T5.6 — Image audit ✅ DONE (commit 6a67e44)
+- ✅ `web/components/media-image.tsx` — wrapper รองรับ 2 mode:
+  - `src` มี → `<Image fill sizes priority style={{objectFit:cover}}>` (next/image optimizer → AVIF/WebP)
+  - `src` null → `<div role="img" aria-label={alt}>` พร้อม gradient fallback
+- ✅ `next.config.ts` — `images.remotePatterns`:
+  - Supabase Storage host (จาก `NEXT_PUBLIC_SUPABASE_URL`) + wildcard `*.supabase.co`
+  - `formats: ["image/avif", "image/webp"]`
+- ✅ Refactor 11 inline divs ใน 6 routes:
+  - home (featured portfolio[0] + blog teaser)
+  - portfolio index (first 3 priority)
+  - portfolio/[slug] (case-cover hero priority + related)
+  - blog index (featured priority + grid)
+  - blog/[slug] (post-cover hero priority + related)
+  - services/web-design (related portfolio)
+- ✅ Priority above-fold: case-cover, post-cover, blog featured, home portfolio[0], portfolio index[0..2]
+- ✅ Sizes attr ตาม container 1280px + 3-col grid: `(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw`
+- ✅ Thai alt text จาก title จริงใน DB (`ภาพผลงาน {title}`, `ภาพประกอบบทความ {title}`)
+- 🚫 ไม่แปลง: founder-photo + map-placeholder (ไม่มี src จริง), testi-avatar 60×60 (decorative + aria-hidden)
+- ✅ Build clean, dev verified — DB ทุกแถว `cover_image: null` → render gradient ทั้งหมด (ตามแผน); upload จริงตอนหลังจะ optimize อัตโนมัติ
 
 ### Task B — Contact form server action ✅ DONE (commit eb94343)
 - ✅ `actions.ts` — Zod v4 validate → honeypot check → IP-hash rate limit (3/hr) → admin client insert
@@ -179,6 +167,18 @@
 | `web/app/[locale]/opengraph-image.tsx` | NEW — branded 1200×630 PNG via `next/og` ImageResponse |
 | `web/public/fonts/og/LINESeedSansTH-{Regular,Bold,ExtraBold}.ttf` | NEW — woff2_decompress conversion |
 
+### Task C.6 commits (T5.6 Image audit — commit 6a67e44)
+| File | การเปลี่ยนแปลง |
+|---|---|
+| `web/components/media-image.tsx` | NEW — `<MediaImage>` wrapper (next/image fill + gradient fallback + Thai alt) |
+| `web/next.config.ts` | + `images.remotePatterns` (Supabase Storage + AVIF/WebP) |
+| `web/app/[locale]/page.tsx` | featured portfolio + blog teaser → MediaImage |
+| `web/app/[locale]/portfolio/page.tsx` | grid → MediaImage (priority i<3) |
+| `web/app/[locale]/portfolio/[slug]/page.tsx` | case-cover hero + related → MediaImage |
+| `web/app/[locale]/blog/page.tsx` | featured + grid → MediaImage |
+| `web/app/[locale]/blog/[slug]/page.tsx` | post-cover hero + related → MediaImage |
+| `web/app/[locale]/services/web-design/page.tsx` | related portfolio → MediaImage |
+
 ### Smooth Scroll commits (3847b98 home reveals; 1ddd4c9 8 more pages)
 | File | การเปลี่ยนแปลง |
 |---|---|
@@ -234,19 +234,23 @@
 - **prefers-reduced-motion:** ทุก motion (Lenis + Reveal) เคารพ media query — disable smoothing + animation ถ้า user ตั้งใน OS
 - **Reveal once-only:** `viewport.once = true` ไม่ retrigger ตอน scroll กลับขึ้น เพื่อ perf + UX (รำคาญถ้า fade ซ้ำ)
 - **Model strategy (Opus vs Sonnet):** งาน execution ซ้ำ (replace pattern, write tests, deploy config) → Sonnet 4.6 พอ ถูก ~5×; Opus 4.7 เก็บไว้ตอน architecture decision / debug แปลก / brainstorm tradeoff / stuck
+- **MediaImage two-mode pattern:** real `<Image fill>` เมื่อ `src` มี / `<div role="img">` gradient fallback เมื่อ null — ป้องกัน LCP regression ตอน DB ยังไม่มีรูป + ไม่ต้องแก้ component pages ตอน founder upload จริง
+- **next/image: fill + sizes ไม่ใช่ width/height fixed:** เพราะ card-media มี CSS-driven aspect ratio (1:1, 4:3) — `fill` ปล่อยให้ wrapper div คุม dimensions, sizes attr ระบุ responsive breakpoints ตาม container 1280px max
+- **Image priority strategy:** priority เฉพาะ above-fold ที่เป็น LCP candidate — case-cover/post-cover hero (detail pages), blog featured card, home portfolio[0], portfolio index[0..2]; ที่เหลือ lazy load โดย default
+- **Supabase Storage remotePatterns:** อนุญาต host จาก env (project-specific) + wildcard `*.supabase.co` (preview branches); pathname จำกัด `/storage/v1/object/public/**` เพื่อไม่ accidentally proxy private buckets
 
 ---
 
 ## 🚧 TODO ที่ยังเหลือ
 
-### C — SEO Phase 5 ← **IN PROGRESS** (5/8 done)
+### C — SEO Phase 5 ← **IN PROGRESS** (6/8 done)
 - ✅ T5.1 `generateMetadata` per route (title ≤60, desc ≤160, canonical, OG, hreflang th/en)
 - ✅ T5.2 JSON-LD (Organization, LocalBusiness, Service+List, Article, CreativeWork, Breadcrumb)
 - ✅ T5.3 `web/app/sitemap.ts` (38 URLs, hreflang th/en/x-default, lastModified)
 - ✅ T5.4 `web/app/robots.ts` (allow / + Disallow /admin/, /api/, sitemap ref)
 - ✅ T5.5 OG image generation (`app/[locale]/opengraph-image.tsx`, LINE Seed TTF, 1200×630)
-- **← NEXT** T5.6 Image audit — `next/image`, alt text ภาษาไทย, `priority` on above-fold, `sizes` attr
-- T5.7 Heading hierarchy audit (1× H1 per page, correct h2/h3 nesting)
+- ✅ T5.6 Image audit (`MediaImage` wrapper + next/image + Supabase remotePatterns + Thai alt + priority above-fold)
+- **← NEXT** T5.7 Heading hierarchy audit (1× H1 per page, correct h2/h3 nesting)
 - T5.8 Internal linking pass (service ↔ portfolio ↔ blog)
 
 ### D — Performance Phase 6
@@ -284,15 +288,11 @@
 
 ## ➡️ Next steps (recommend)
 
-1. **T5.6 Image audit** — replace `<div role="img" style="background-image: url(...)">` patterns ด้วย `<Image>` จาก `next/image` ทุกที่:
-   - card-media (services, portfolio, blog), founder photo, post-cover, case-cover, testi-avatar
-   - alt text ภาษาไทยทุกภาพ + `priority` บน hero/above-fold
-   - `sizes` attribute ตาม container width (1280px max)
-2. **T5.7 Heading hierarchy** — audit 1× `<h1>` ต่อหน้า + h2/h3 nesting ถูก ก่อน Lighthouse
-3. **T5.8 Internal linking** — เพิ่ม service ↔ portfolio ↔ blog cross-links (related sections อยู่แล้ว แต่อาจเพิ่ม contextual links ใน body markdown ของ articles)
-4. **Task D — Performance** ISR (`revalidate=60` indices, `=300` details) + bundle analyzer (<120KB gz home) + Lighthouse target ≥95
-5. **Task F — Playwright** critical path e2e ก่อน staging deploy
-6. **Task G — Vercel** deploy + DNS cutover
+1. **T5.7 Heading hierarchy** — audit 1× `<h1>` ต่อหน้า + h2/h3 nesting ถูก ก่อน Lighthouse (~30 นาที, mechanical → Sonnet ได้)
+2. **T5.8 Internal linking** — เพิ่ม service ↔ portfolio ↔ blog cross-links (related sections อยู่แล้ว แต่อาจเพิ่ม contextual links ใน body markdown ของ articles)
+3. **Task D — Performance** ISR (`revalidate=60` indices, `=300` details) + bundle analyzer (<120KB gz home) + Lighthouse target ≥95
+4. **Task F — Playwright** critical path e2e ก่อน staging deploy
+5. **Task G — Vercel** deploy + DNS cutover
 
 **Open questions:**
 - Services detail dynamic `[slug]` route ตอนไหน? (recommend: หลัง launch เมื่อมีเนื้อหาจริงใน DB)
