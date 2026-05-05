@@ -13,6 +13,7 @@ import {
   LocalBusinessJsonLd,
   type ContactInfo,
 } from "@/components/json-ld";
+import { Reveal } from "@/components/reveal";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import "@/styles/pages/home.css";
 
@@ -173,7 +174,7 @@ export default async function HomePage({
       {/* ============================================================ SERVICES */}
       <section className="section" id="services" aria-labelledby="services-title">
         <div className="container">
-          <div className="section-header-row">
+          <Reveal className="section-header-row">
             <div className="section-header">
               <span className="eyebrow-chip">● บริการของเรา</span>
               <h2 id="services-title">ครบทุกบริการที่ธุรกิจต้องการ</h2>
@@ -182,9 +183,9 @@ export default async function HomePage({
             <Link href="/services" className="btn btn-ghost btn-arrow">
               <span className="btn-label">ดูบริการทั้งหมด</span>
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="grid-services">
+          <Reveal className="grid-services" delay={0.1}>
             {homeServices.map((s, i) => (
               <Link
                 key={s.id}
@@ -203,7 +204,7 @@ export default async function HomePage({
                 <span className="card-link">ดูรายละเอียด</span>
               </Link>
             ))}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -211,7 +212,7 @@ export default async function HomePage({
       {/* ============================================================ FEATURED PORTFOLIO */}
       <section className="section section-tight" id="featured" aria-labelledby="featured-title">
         <div className="container">
-          <div className="section-header-row">
+          <Reveal className="section-header-row">
             <div className="section-header">
               <span className="eyebrow-chip is-blue">● ผลงานล่าสุด</span>
               <h2 id="featured-title">โปรเจคที่ส่งมอบล่าสุด</h2>
@@ -220,9 +221,9 @@ export default async function HomePage({
             <Link href="/portfolio" className="btn btn-ghost btn-arrow">
               <span className="btn-label">ดูผลงานทั้งหมด</span>
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="grid-3">
+          <Reveal className="grid-3" delay={0.1}>
             {featuredPortfolio.map((p, i) => {
               const summary = pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th);
               return (
@@ -249,7 +250,7 @@ export default async function HomePage({
                 </Link>
               );
             })}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -257,7 +258,7 @@ export default async function HomePage({
       {/* ============================================================ STATS BAND */}
       <section className="section section-tight" aria-labelledby="stats-title">
         <div className="container">
-          <div className="stats-band">
+          <Reveal className="stats-band">
             <div className="section-header" style={{ textAlign: "center", marginBottom: "var(--space-12)" }}>
               <span className="eyebrow-chip">● ตัวเลขที่เราภูมิใจ</span>
               <h2 id="stats-title">{heroYears} ปี ของการลงมือทำจริง</h2>
@@ -282,7 +283,7 @@ export default async function HomePage({
                 <p className="card-stat-label">ROAS เฉลี่ยของลูกค้า</p>
               </div>
             </div>
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -290,12 +291,12 @@ export default async function HomePage({
       {/* ============================================================ TESTIMONIALS */}
       <section className="section" id="testimonials" aria-labelledby="testi-title">
         <div className="container">
-          <div className="section-header" style={{ marginBottom: "var(--space-12)", maxWidth: 720 }}>
+          <Reveal className="section-header" style={{ marginBottom: "var(--space-12)", maxWidth: 720 }}>
             <span className="eyebrow-chip">● เสียงจากลูกค้า</span>
             <h2 id="testi-title">ทำไมลูกค้าถึงกลับมาใช้บริการต่อ</h2>
-          </div>
+          </Reveal>
 
-          <div className="grid-3">
+          <Reveal className="grid-3" delay={0.1}>
             {testimonials.map((t, i) => {
               const quote = pickLocale(locale, t.quote_th, t.quote_en ?? t.quote_th);
               const role = [t.client_role, t.client_company].filter(Boolean).join(" · ");
@@ -324,7 +325,7 @@ export default async function HomePage({
                 </article>
               );
             })}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -332,7 +333,7 @@ export default async function HomePage({
       {/* ============================================================ BLOG TEASER */}
       <section className="section section-tight" id="blog" aria-labelledby="blog-title">
         <div className="container">
-          <div className="section-header-row">
+          <Reveal className="section-header-row">
             <div className="section-header">
               <span className="eyebrow-chip is-blue">● บทความล่าสุด</span>
               <h2 id="blog-title">เทคนิคและไอเดียจากทีม</h2>
@@ -341,9 +342,9 @@ export default async function HomePage({
             <Link href="/blog" className="btn btn-ghost btn-arrow">
               <span className="btn-label">บทความทั้งหมด</span>
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="grid-3">
+          <Reveal className="grid-3" delay={0.1}>
             {articles.map((a, i) => {
               const title = pickLocale(locale, a.title_th, a.title_en ?? a.title_th);
               const excerpt = pickLocale(locale, a.excerpt_th, a.excerpt_en ?? a.excerpt_th);
@@ -377,7 +378,7 @@ export default async function HomePage({
                 </Link>
               );
             })}
-          </div>
+          </Reveal>
         </div>
       </section>
 
@@ -387,22 +388,22 @@ export default async function HomePage({
 
       <section className="section section-dark" aria-labelledby="cta-title">
         <div className="container">
-          <div className="section-header section-header-center">
+          <Reveal className="section-header section-header-center">
             <span className="eyebrow">● เริ่มต้นวันนี้</span>
             <h2 id="cta-title">พร้อมเริ่มต้นกับเราหรือยัง?</h2>
             <p className="lead">นัดคุยฟรี 30 นาที — ไม่มีพิธีรีตอง ไม่ขายตรง แค่ฟังว่าธุรกิจคุณกำลังเจอโจทย์อะไร แล้วเสนอทางออกให้</p>
-          </div>
+          </Reveal>
 
-          <div style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }}>
+          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.05}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow">
               <span className="btn-label">นัดคุยกับทีม</span>
             </Link>
             <Link href="/portfolio" className="btn btn-on-dark btn-lg">
               <span className="btn-label">ดูผลงานก่อน</span>
             </Link>
-          </div>
+          </Reveal>
 
-          <div className="grid-3" style={{ marginTop: "var(--space-16)" }}>
+          <Reveal className="grid-3" style={{ marginTop: "var(--space-16)" }} delay={0.1}>
             <article className="card card-dark">
               <div
                 className="card-icon is-dark"
@@ -444,7 +445,7 @@ export default async function HomePage({
               <h3 className="card-title">ทีมในไทย คุยกันรู้เรื่อง</h3>
               <p className="card-desc">ไม่ใช่ outsource ต่างประเทศ — เข้าใจตลาดและพฤติกรรมคนไทย</p>
             </article>
-          </div>
+          </Reveal>
         </div>
       </section>
     </main>
