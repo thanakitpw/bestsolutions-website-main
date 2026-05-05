@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { getPortfolioItems, getSiteSetting } from "@/utils/supabase/queries";
 import { BreadcrumbJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
+import { MediaImage } from "@/components/media-image";
 import { pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/portfolio.css";
@@ -92,12 +93,14 @@ export default async function PortfolioPage({
               const bg = CARD_GRADIENTS[i % CARD_GRADIENTS.length];
               return (
                 <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
-                  <div
+                  <MediaImage
                     className="card-media"
-                    role="img"
-                    aria-label={`ภาพผลงาน${p.title}`}
-                    style={p.cover_image ? { backgroundImage: `url(${p.cover_image})`, backgroundSize: "cover" } : { background: bg }}
-                  ></div>
+                    src={p.cover_image}
+                    alt={`ภาพผลงาน ${p.title}`}
+                    gradient={bg}
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                    priority={i < 3}
+                  />
                   <div className="card-body">
                     <span className="card-meta">
                       <span>{p.category}</span>

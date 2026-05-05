@@ -8,6 +8,7 @@ import { getArticleBySlug, getArticles, getArticleSlugs } from "@/utils/supabase
 import { buildAlternates, buildOg } from "@/utils/metadata";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
+import { MediaImage } from "@/components/media-image";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import "@/styles/pages/sample-post.css";
 
@@ -99,12 +100,13 @@ export default async function BlogPostPage({ params }: Props) {
 
       <section className="section section-tight" style={{ paddingTop: 0 }}>
         <div className="container">
-          <div
+          <MediaImage
             className="post-cover"
-            role="img"
-            aria-label={`ภาพประกอบบทความ${title}`}
-            style={article.cover_image ? { backgroundImage: `url(${article.cover_image})`, backgroundSize: "cover" } : undefined}
-          ></div>
+            src={article.cover_image}
+            alt={`ภาพประกอบบทความ ${title}`}
+            sizes="(min-width: 1280px) 1280px, 100vw"
+            priority
+          />
 
           <div className="post-layout">
 
@@ -143,12 +145,13 @@ export default async function BlogPostPage({ params }: Props) {
             <Reveal className="grid-3" delay={0.1}>
               {related.map((a, i) => (
                 <Link key={a.slug} href={`/blog/${a.slug}`} className="card card-blog">
-                  <div
+                  <MediaImage
                     className="card-media"
-                    role="img"
-                    aria-label={`ภาพประกอบ${a.title_th}`}
-                    style={a.cover_image ? { backgroundImage: `url(${a.cover_image})`, backgroundSize: "cover" } : { background: RELATED_GRADIENTS[i] }}
-                  ></div>
+                    src={a.cover_image}
+                    alt={`ภาพประกอบบทความ ${pickLocale(locale, a.title_th, a.title_en ?? a.title_th)}`}
+                    gradient={RELATED_GRADIENTS[i]}
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                  />
                   <div className="card-body">
                     <span className="card-category">{a.category}</span>
                     <h3 className="card-title">{pickLocale(locale, a.title_th, a.title_en ?? a.title_th)}</h3>

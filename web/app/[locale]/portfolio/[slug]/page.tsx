@@ -8,6 +8,7 @@ import { getPortfolioItemBySlug, getPortfolioItems, getPortfolioSlugs } from "@/
 import { buildAlternates, buildOg } from "@/utils/metadata";
 import { PortfolioJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
+import { MediaImage } from "@/components/media-image";
 import { pickLocale } from "@/utils/format";
 import type { PortfolioResult } from "@/utils/supabase/types";
 import "@/styles/pages/sample-case.css";
@@ -98,12 +99,13 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
       <section className="section section-tight">
         <div className="container">
-          <div
+          <MediaImage
             className="case-cover"
-            role="img"
-            aria-label={`ภาพผลงาน${item.title}`}
-            style={item.cover_image ? { backgroundImage: `url(${item.cover_image})`, backgroundSize: "cover" } : undefined}
-          ></div>
+            src={item.cover_image}
+            alt={`ภาพผลงาน ${item.title}`}
+            sizes="(min-width: 1280px) 1280px, 100vw"
+            priority
+          />
 
           {/* Results band */}
           {(item.results ?? []).length > 0 && (
@@ -158,12 +160,13 @@ export default async function PortfolioDetailPage({ params }: Props) {
             <Reveal className="grid-3" delay={0.1}>
               {related.map((p, i) => (
                 <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
-                  <div
+                  <MediaImage
                     className="card-media"
-                    role="img"
-                    aria-label={`ภาพผลงาน${p.title}`}
-                    style={p.cover_image ? { backgroundImage: `url(${p.cover_image})`, backgroundSize: "cover" } : { background: RELATED_GRADIENTS[i] }}
-                  ></div>
+                    src={p.cover_image}
+                    alt={`ภาพผลงาน ${p.title}`}
+                    gradient={RELATED_GRADIENTS[i]}
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                  />
                   <div className="card-body">
                     <span className="card-meta">
                       <span>{p.category}</span>

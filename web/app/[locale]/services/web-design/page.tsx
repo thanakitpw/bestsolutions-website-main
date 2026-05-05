@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { getServiceBySlug, getPortfolioItems } from "@/utils/supabase/queries";
 import { ServiceJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
+import { MediaImage } from "@/components/media-image";
 import { pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/web-design.css";
@@ -260,12 +261,13 @@ export default async function WebDesignPage({
           <Reveal className="grid-3" delay={0.1}>
             {(relatedPortfolio.length > 0 ? relatedPortfolio : allPortfolio.slice(0, 3)).map((p, i) => (
               <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
-                <div
+                <MediaImage
                   className="card-media"
-                  role="img"
-                  aria-label={`ภาพผลงาน${p.title}`}
-                  style={p.cover_image ? { backgroundImage: `url(${p.cover_image})`, backgroundSize: "cover" } : { background: RELATED_GRADIENTS[i % RELATED_GRADIENTS.length] }}
-                ></div>
+                  src={p.cover_image}
+                  alt={`ภาพผลงาน ${p.title}`}
+                  gradient={RELATED_GRADIENTS[i % RELATED_GRADIENTS.length]}
+                  sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                />
                 <div className="card-body">
                   <span className="card-meta">
                     <span>{p.category}</span>

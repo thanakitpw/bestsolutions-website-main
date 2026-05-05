@@ -14,6 +14,7 @@ import {
   type ContactInfo,
 } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
+import { MediaImage } from "@/components/media-image";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import "@/styles/pages/home.css";
 
@@ -228,16 +229,14 @@ export default async function HomePage({
               const summary = pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th);
               return (
                 <Link key={p.id} href={`/portfolio/${p.slug}`} className="card card-portfolio">
-                  <div
+                  <MediaImage
                     className="card-media"
-                    role="img"
-                    aria-label={p.title}
-                    style={{
-                      background: p.cover_image
-                        ? `center/cover no-repeat url("${p.cover_image}")`
-                        : PORTFOLIO_GRADIENTS[i % PORTFOLIO_GRADIENTS.length],
-                    }}
-                  ></div>
+                    src={p.cover_image}
+                    alt={`ภาพผลงาน ${p.title}`}
+                    gradient={PORTFOLIO_GRADIENTS[i % PORTFOLIO_GRADIENTS.length]}
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                    priority={i === 0}
+                  />
                   <div className="card-body">
                     <span className="card-meta">
                       <span>{p.category}</span>
@@ -351,16 +350,13 @@ export default async function HomePage({
               const tone = BLOG_CATEGORY_TONE[a.category] ?? "";
               return (
                 <Link key={a.id} href={`/blog/${a.slug}`} className="card card-blog">
-                  <div
+                  <MediaImage
                     className="card-media"
-                    role="img"
-                    aria-label={`ภาพประกอบบทความ ${a.category}`}
-                    style={{
-                      background: a.cover_image
-                        ? `center/cover no-repeat url("${a.cover_image}")`
-                        : BLOG_GRADIENTS[i % BLOG_GRADIENTS.length],
-                    }}
-                  ></div>
+                    src={a.cover_image}
+                    alt={`ภาพประกอบบทความ ${title}`}
+                    gradient={BLOG_GRADIENTS[i % BLOG_GRADIENTS.length]}
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                  />
                   <div className="card-body">
                     <span className={`card-category ${tone}`}>{a.category}</span>
                     <h3 className="card-title">{title}</h3>

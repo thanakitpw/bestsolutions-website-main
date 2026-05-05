@@ -4,6 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { getArticles } from "@/utils/supabase/queries";
 import { BreadcrumbJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
+import { MediaImage } from "@/components/media-image";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/blog.css";
@@ -87,12 +88,13 @@ export default async function BlogPage({
           {featured && (
             <Reveal>
             <Link href={`/blog/${featured.slug}`} className="featured-card" aria-labelledby="featured-title">
-              <div
+              <MediaImage
                 className="featured-media"
-                role="img"
-                aria-label={`ภาพประกอบบทความ${pickLocale(locale, featured.title_th, featured.title_en ?? featured.title_th)}`}
-                style={featured.cover_image ? { backgroundImage: `url(${featured.cover_image})`, backgroundSize: "cover" } : undefined}
-              ></div>
+                src={featured.cover_image}
+                alt={`ภาพประกอบบทความ ${pickLocale(locale, featured.title_th, featured.title_en ?? featured.title_th)}`}
+                sizes="(min-width: 1280px) 800px, 100vw"
+                priority
+              />
               <div className="featured-body">
                 <span className="featured-cat">Featured · {featured.category}</span>
                 <h3 className="featured-title" id="featured-title">
@@ -122,12 +124,13 @@ export default async function BlogPage({
               const bg = CARD_GRADIENTS[i % CARD_GRADIENTS.length];
               return (
                 <Link key={a.slug} href={`/blog/${a.slug}`} className="card card-blog">
-                  <div
+                  <MediaImage
                     className="card-media"
-                    role="img"
-                    aria-label={`ภาพประกอบบทความ${title}`}
-                    style={a.cover_image ? { backgroundImage: `url(${a.cover_image})`, backgroundSize: "cover" } : { background: bg }}
-                  ></div>
+                    src={a.cover_image}
+                    alt={`ภาพประกอบบทความ ${title}`}
+                    gradient={bg}
+                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                  />
                   <div className="card-body">
                     <span className={`card-category ${tone}`}>{a.category}</span>
                     <h3 className="card-title">{title}</h3>
