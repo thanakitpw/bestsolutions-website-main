@@ -257,6 +257,9 @@ export default async function AboutPage({
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow">
               <span className="btn-label">นัดคุยกับทีม</span>
             </Link>
+            <Link href="/services" className="btn btn-on-dark btn-lg">
+              <span className="btn-label">ดูบริการทั้งหมด</span>
+            </Link>
             <Link href="/portfolio" className="btn btn-on-dark btn-lg">
               <span className="btn-label">ดูผลงานก่อน</span>
             </Link>

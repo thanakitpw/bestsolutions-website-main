@@ -194,6 +194,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
           </Reveal>
           <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>
+            <Link href="/services" className="btn btn-on-dark btn-lg"><span className="btn-label">ดูบริการทั้งหมด</span></Link>
             <Link href="/portfolio" className="btn btn-on-dark btn-lg"><span className="btn-label">ผลงานทั้งหมด</span></Link>
           </Reveal>
         </div>

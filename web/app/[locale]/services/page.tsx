@@ -160,6 +160,9 @@ export default async function ServicesPage({
             <Link href="/portfolio" className="btn btn-on-dark btn-lg">
               <span className="btn-label">ดูผลงานก่อน</span>
             </Link>
+            <Link href="/blog" className="btn btn-on-dark btn-lg">
+              <span className="btn-label">อ่านบทความจากทีม</span>
+            </Link>
           </Reveal>
         </div>
       </section>
