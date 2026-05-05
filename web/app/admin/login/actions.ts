@@ -1,24 +1,23 @@
 "use server";
 
 import { createServerClient } from "@supabase/ssr";
-import { cookies, headers } from "next/headers";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 
 const ALLOWED_EMAIL = "agency.bestsolutions@gmail.com";
 
-export async function sendMagicLink(
-  _prev: { error?: string; success?: boolean } | null,
+export async function signIn(
+  _prev: { error?: string } | null,
   formData: FormData,
 ) {
-  const email = formData.get("email")?.toString().trim().toLowerCase();
+  const email = formData.get("email")?.toString().trim().toLowerCase() ?? "";
+  const password = formData.get("password")?.toString() ?? "";
 
-  if (!email || email !== ALLOWED_EMAIL) {
+  if (email !== ALLOWED_EMAIL) {
     return { error: "ไม่มีสิทธิ์เข้าใช้งาน" };
   }
 
   const cookieStore = await cookies();
-  const headersList = await headers();
-  const origin = headersList.get("origin") ?? "http://localhost:3000";
-
   const supabase = createServerClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL!,
     process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
@@ -36,17 +35,11 @@ export async function sendMagicLink(
     },
   );
 
-  const { error } = await supabase.auth.signInWithOtp({
-    email,
-    options: {
-      shouldCreateUser: true,
-      emailRedirectTo: `${origin}/api/auth/callback`,
-    },
-  });
+  const { error } = await supabase.auth.signInWithPassword({ email, password });
 
   if (error) {
-    return { error: error.message };
+    return { error: "อีเมลหรือรหัสผ่านไม่ถูกต้อง" };
   }
 
-  return { success: true };
+  redirect("/admin/leads");
 }

@@ -5,11 +5,7 @@ export const metadata = {
   robots: { index: false, follow: false },
 };
 
-export default function AdminLoginPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ error?: string }>;
-}) {
+export default function AdminLoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-[#F5F3EE]">
       <div className="w-full max-w-sm">
@@ -34,7 +30,7 @@ export default function AdminLoginPage({
         </div>
 
         <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8">
-          <LoginForm searchParams={searchParams} />
+          <LoginForm />
         </div>
       </div>
     </div>
