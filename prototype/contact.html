@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ติดต่อเรา · Best Solutions — นัดคุยฟรี 30 นาที ทักไลน์ได้ทันที</title>
+  <meta name="description" content="ติดต่อ Best Solutions Corp กรุงเทพฯ — ฟอร์มขอใบเสนอราคา / โทร 095-385-7029 / LINE @bestsolutions / อีเมล info@bestsolutionscorp.com — ตอบกลับใน 1 วันทำการ">
+
+  <link rel="preload" href="fonts/LINESeedSansTH-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/LINESeedSansTH-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/typography.css">
+  <link rel="stylesheet" href="styles/components/section.css">
+  <link rel="stylesheet" href="styles/components/button.css">
+  <link rel="stylesheet" href="styles/components/card.css">
+  <link rel="stylesheet" href="styles/components/navbar.css">
+  <link rel="stylesheet" href="styles/components/form.css">
+  <link rel="stylesheet" href="styles/components/footer.css">
+  <link rel="stylesheet" href="styles/components/motion.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--color-bg); color: var(--color-text); }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    .skip-link { position: absolute; top: -100px; left: 16px; padding: var(--space-3) var(--space-4); background: var(--color-text); color: var(--color-text-on-dark); border-radius: var(--r-sm); z-index: 1000; text-decoration: none; font-weight: var(--weight-medium); }
+    .skip-link:focus { top: 16px; }
+
+    .page-hero { position: relative; padding-top: 140px; padding-bottom: var(--space-16); overflow: hidden; }
+    @media (min-width: 768px) { .page-hero { padding-top: 200px; padding-bottom: var(--space-20); } }
+    .page-hero-blob { position: absolute; top: 10%; right: -16%; width: 600px; height: 600px; max-width: 90vw; background: var(--blob-gradient); filter: blur(var(--blob-blur)); opacity: 0.55; pointer-events: none; animation: blob-drift var(--t-blob) ease-in-out infinite alternate; z-index: 0; }
+    @keyframes blob-drift { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-30px, 20px) scale(1.05); } 100% { transform: translate(15px, -15px) scale(0.97); } }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; text-align: center; }
+    .page-hero h1 { max-width: 22ch; margin: var(--space-6) auto var(--space-6); }
+    .page-hero p.lead { max-width: 640px; margin: 0 auto; }
+
+    /* Contact 2-col */
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-10);
+    }
+    @media (min-width: 960px) { .contact-grid { grid-template-columns: 1fr 1fr; gap: var(--space-16); align-items: start; } }
+
+    /* Contact info side panel */
+    .contact-info { display: flex; flex-direction: column; gap: var(--space-6); }
+    .contact-channels { display: flex; flex-direction: column; gap: var(--space-3); }
+    .contact-channel {
+      display: flex; align-items: center; gap: var(--space-4);
+      padding: var(--space-5) var(--space-6);
+      background: var(--color-surface);
+      border-radius: var(--r-2xl);
+      box-shadow: var(--shadow-sm);
+      transition: all var(--t-base) var(--ease-out);
+      text-decoration: none;
+      color: var(--color-text);
+    }
+    .contact-channel:hover { transform: translateY(-2px); box-shadow: var(--shadow-md); }
+    .contact-channel-icon {
+      width: 48px; height: 48px; flex: 0 0 auto;
+      border-radius: var(--r-md);
+      background: var(--color-orange-50);
+      color: var(--color-orange-700);
+      display: flex; align-items: center; justify-content: center;
+    }
+    .contact-channel-icon.is-blue { background: var(--color-blue-50); color: var(--color-blue-700); }
+    .contact-channel-icon.is-line { background: #06C755; color: #fff; }
+    .contact-channel-icon svg { width: 22px; height: 22px; }
+    .contact-channel-label { font-size: var(--text-xs); letter-spacing: var(--tracking-eyebrow); text-transform: uppercase; color: var(--color-text-subtle); margin-bottom: 2px; }
+    .contact-channel-value { font-weight: var(--weight-bold); font-size: var(--text-base); }
+
+    .info-card {
+      padding: var(--space-6);
+      background: var(--color-surface);
+      border-radius: var(--r-2xl);
+      box-shadow: var(--shadow-sm);
+    }
+    .info-card h4 { margin: 0 0 var(--space-3); font-size: var(--text-base); font-weight: var(--weight-bold); }
+    .info-card p { margin: 0; font-size: var(--text-sm); line-height: var(--leading-normal); color: var(--color-text-muted); }
+
+    /* Map placeholder */
+    .map-placeholder {
+      aspect-ratio: 16 / 9;
+      border-radius: var(--r-2xl);
+      background:
+        repeating-linear-gradient(45deg, var(--color-orange-50), var(--color-orange-50) 12px, var(--color-bg) 12px, var(--color-bg) 24px);
+      box-shadow: var(--shadow-sm);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      font-weight: var(--weight-bold);
+    }
+
+    /* FAQ */
+    .faq-list { display: flex; flex-direction: column; gap: var(--space-3); max-width: 880px; margin: 0 auto; }
+    .faq-item { background: var(--color-surface); border-radius: var(--r-2xl); box-shadow: var(--shadow-sm); overflow: hidden; }
+    .faq-item summary { list-style: none; cursor: pointer; padding: var(--space-6) var(--space-8); display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-lg); line-height: 1.3; color: var(--color-text); }
+    .faq-item summary::-webkit-details-marker { display: none; }
+    .faq-item summary::after { content: "+"; font-size: var(--text-2xl); font-weight: var(--weight-regular); color: var(--color-orange-500); transition: transform var(--t-base) var(--ease-out); flex: 0 0 auto; }
+    .faq-item[open] summary::after { transform: rotate(45deg); }
+    .faq-item p { padding: 0 var(--space-8) var(--space-6); margin: 0; font-size: var(--text-base); line-height: var(--leading-normal); color: var(--color-text-muted); }
+
+    .section-header-center { text-align: center; max-width: 720px; margin: 0 auto var(--space-12); }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <div class="navbar-wrap">
+    <nav class="navbar" aria-label="หลัก">
+      <a href="index.html" class="navbar-brand">Best Solutions</a>
+      <ul class="navbar-nav">
+        <li><a href="services.html">บริการ</a></li>
+        <li><a href="portfolio.html">ผลงาน</a></li>
+        <li><a href="blog.html">บล็อก</a></li>
+        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-arrow navbar-cta" aria-current="page"><span class="btn-label">ปรึกษาฟรี</span></a>
+      <button class="navbar-mobile-toggle" type="button" aria-label="เปิดเมนู" aria-controls="primary-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+
+  <div class="navbar-scrim" data-open="false" aria-hidden="true"></div>
+  <aside class="navbar-drawer" id="primary-drawer" data-open="false" aria-label="เมนูมือถือ">
+    <button class="navbar-drawer-close" type="button" aria-label="ปิดเมนู">×</button>
+    <ul class="navbar-drawer-nav">
+      <li><a href="services.html">บริการ</a></li>
+      <li><a href="portfolio.html">ผลงาน</a></li>
+      <li><a href="blog.html">บล็อก</a></li>
+      <li><a href="about.html">เกี่ยวกับเรา</a></li>
+      <li><a href="contact.html" aria-current="page">ติดต่อเรา</a></li>
+    </ul>
+    <a href="contact.html" class="btn btn-primary btn-arrow navbar-drawer-cta"><span class="btn-label">ปรึกษาฟรี</span></a>
+  </aside>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="page-hero" aria-labelledby="hero-title">
+      <div class="page-hero-blob" aria-hidden="true"></div>
+      <div class="container">
+        <div class="page-hero-inner">
+          <span class="eyebrow-pill"><span class="star">✦</span><span>Contact · ตอบใน 1 วันทำการ</span></span>
+          <h1 id="hero-title">นัดคุยฟรี 30 นาที — ไม่กดดัน ไม่ผูกมัด</h1>
+          <p class="lead">เล่าโจทย์ให้ฟัง เราจะแนะนำแนวทางที่เคยใช้ได้ผลกับธุรกิจคล้าย ๆ คุณ — ถ้าไม่ตรงโจทย์เรา เราจะแนะนำเอเจนซีอื่นที่เหมาะให้</p>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- FORM + INFO -->
+    <section class="section section-tight" id="form" aria-labelledby="form-title">
+      <div class="container">
+        <h2 id="form-title" style="position: absolute; clip: rect(0 0 0 0); width: 1px; height: 1px; overflow: hidden;">ฟอร์มและช่องทางติดต่อ</h2>
+
+        <div class="contact-grid">
+
+          <!-- LEFT: form -->
+          <form class="form card" style="padding: var(--space-10);" onsubmit="event.preventDefault();">
+            <div style="margin-bottom: var(--space-6);">
+              <span class="eyebrow-chip">● ฟอร์มขอใบเสนอ</span>
+              <h2 style="margin: var(--space-3) 0 var(--space-2); font-size: var(--text-2xl);">เล่าให้ฟังก่อนได้</h2>
+              <p style="margin: 0; font-size: var(--text-sm); color: var(--color-text-muted);">เราจะติดต่อกลับภายใน 1 วันทำการ</p>
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label class="form-label form-label-required" for="lead-name">ชื่อ-นามสกุล</label>
+                <input class="form-input" id="lead-name" type="text" name="name" placeholder="เช่น ธนกิจ ใจทอง" required>
+              </div>
+              <div class="form-field">
+                <label class="form-label form-label-required" for="lead-phone">เบอร์โทร</label>
+                <input class="form-input" id="lead-phone" type="tel" name="phone" placeholder="095-385-7029" required>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label form-label-required" for="lead-email">อีเมล</label>
+              <input class="form-input" id="lead-email" type="email" name="email" placeholder="you@example.com" required>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="lead-service">บริการที่สนใจ</label>
+              <select class="form-select" id="lead-service" name="service">
+                <option>ยังไม่แน่ใจ — ขอคำปรึกษา</option>
+                <option>รับทำเว็บไซต์</option>
+                <option>ยิงแอด Meta &amp; Google</option>
+                <option>SEO</option>
+                <option>ดูแลเพจโซเชียล</option>
+                <option>AI Automation</option>
+                <option>AI ตอบอีเมล</option>
+                <option>Production (Video &amp; Content)</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="lead-budget">งบประมาณคร่าว ๆ (ไม่บังคับ)</label>
+              <select class="form-select" id="lead-budget" name="budget">
+                <option>ยังไม่แน่ใจ</option>
+                <option>ต่ำกว่า 50,000 บาท</option>
+                <option>50,000 - 150,000 บาท</option>
+                <option>150,000 - 500,000 บาท</option>
+                <option>มากกว่า 500,000 บาท</option>
+              </select>
+            </div>
+
+            <div class="form-field">
+              <label class="form-label" for="lead-message">รายละเอียดโจทย์</label>
+              <textarea class="form-textarea" id="lead-message" name="message" placeholder="เล่าให้ฟังว่าธุรกิจคุณกำลังเจอโจทย์อะไร — ยิ่งละเอียดเรายิ่งช่วยได้ตรงจุด"></textarea>
+              <span class="form-help">ไม่จำเป็นต้องครบ — เริ่มเล่าเท่าที่นึกออก เราถามต่อในการคุยได้</span>
+            </div>
+
+            <div class="form-field">
+              <label class="form-checkbox-wrap">
+                <input class="form-checkbox" type="checkbox" name="consent" required>
+                <span>ยินยอมให้ Best Solutions เก็บข้อมูลตามนโยบายความเป็นส่วนตัว เพื่อใช้ติดต่อกลับเรื่องโปรเจคเท่านั้น</span>
+              </label>
+            </div>
+
+            <div class="form-honeypot" aria-hidden="true">
+              <label>เว็บไซต์ <input type="text" name="website" tabindex="-1" autocomplete="off"></label>
+            </div>
+
+            <div class="form-actions">
+              <button class="btn btn-primary btn-arrow" type="submit"><span class="btn-label">ส่งข้อมูล</span></button>
+              <span class="form-help" style="margin-top: 0;">หรือทักไลน์ <strong>@bestsolutions</strong> ก็ได้</span>
+            </div>
+          </form>
+
+
+          <!-- RIGHT: info panel -->
+          <aside class="contact-info">
+            <div>
+              <span class="eyebrow-chip is-blue">● ช่องทางติดต่อ</span>
+              <h2 style="margin: var(--space-3) 0 var(--space-2); font-size: var(--text-2xl);">หรือทักช่องทางอื่นได้</h2>
+              <p style="margin: 0; font-size: var(--text-sm); color: var(--color-text-muted);">เลือกที่สะดวกสุด — ทุกช่องเข้าทีมเดียวกัน</p>
+            </div>
+
+            <div class="contact-channels">
+
+              <a href="https://line.me/" target="_blank" rel="noopener" class="contact-channel">
+                <div class="contact-channel-icon is-line" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h2v3l4-3h8a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zM7 13H5v-3h1v2h1v1zm3 0H8.5v-3H10v3zm5-1.5L13 13h-1V10h1v1.5L14.5 10H15v3zm3.5 0H17V11h-1v-1h1v-1h1.5v3z"/></svg></div>
+                <div>
+                  <div class="contact-channel-label">LINE Official</div>
+                  <div class="contact-channel-value">@bestsolutions</div>
+                </div>
+              </a>
+
+              <a href="tel:0953857029" class="contact-channel">
+                <div class="contact-channel-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+                <div>
+                  <div class="contact-channel-label">โทรศัพท์</div>
+                  <div class="contact-channel-value">095-385-7029</div>
+                </div>
+              </a>
+
+              <a href="mailto:info@bestsolutionscorp.com" class="contact-channel">
+                <div class="contact-channel-icon is-blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+                <div>
+                  <div class="contact-channel-label">อีเมล</div>
+                  <div class="contact-channel-value">info@bestsolutionscorp.com</div>
+                </div>
+              </a>
+
+              <a href="https://facebook.com/" target="_blank" rel="noopener" class="contact-channel">
+                <div class="contact-channel-icon is-blue" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.55 9.88v-7H8v-2.88h2.45v-2.2c0-2.42 1.44-3.76 3.65-3.76 1.06 0 2.16.18 2.16.18v2.38h-1.22c-1.2 0-1.58.75-1.58 1.51v1.81h2.69l-.43 2.88h-2.26v7A10 10 0 0 0 22 12z"/></svg></div>
+                <div>
+                  <div class="contact-channel-label">Facebook Page</div>
+                  <div class="contact-channel-value">@bestsolutionsagency</div>
+                </div>
+              </a>
+
+            </div>
+
+            <div class="info-card">
+              <h4>เวลาทำการ</h4>
+              <p>จันทร์-ศุกร์ 9:00 - 18:00<br>เสาร์-อาทิตย์: ทักไลน์ทิ้งไว้ได้ ตอบเช้าวันจันทร์</p>
+            </div>
+
+            <div class="info-card">
+              <h4>ที่ตั้ง</h4>
+              <p>กรุงเทพมหานคร, ประเทศไทย<br>(นัดคุยทาง Google Meet เป็นหลัก — ออฟฟิศนัดล่วงหน้า)</p>
+            </div>
+
+            <div class="map-placeholder" role="img" aria-label="แผนที่ที่ตั้ง — แสดงเมื่อมีพิกัดจริง">
+              MAP · กรุงเทพฯ
+            </div>
+
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- FAQ -->
+    <section class="section section-tight" id="faq" aria-labelledby="faq-title">
+      <div class="container">
+        <div class="section-header-center">
+          <span class="eyebrow-chip">● คำถามที่พบบ่อย</span>
+          <h2 id="faq-title" style="margin-top: var(--space-4);">เรื่องที่ลูกค้าถามก่อนตัดสินใจ</h2>
+        </div>
+
+        <div class="faq-list">
+          <details class="faq-item">
+            <summary>นัดคุยฟรี 30 นาที จริง ๆ ฟรีไหม? มีเงื่อนไขอะไรไหม?</summary>
+            <p>ฟรีจริง ไม่มีเงื่อนไข — เราใช้ 30 นาทีนี้ทำความรู้จักธุรกิจคุณ ฟังโจทย์ และเสนอแนวทาง ไม่ต้องเซ็นอะไร ไม่ต้องจองเวลาขั้นต่ำ ไม่ขายตรงระหว่างคุย ถ้าโจทย์ของคุณเราดูแล้วไม่ตรงกับสิ่งที่เราเก่ง เราแนะนำเอเจนซีอื่นให้</p>
+          </details>
+          <details class="faq-item">
+            <summary>ตอบกลับเร็วแค่ไหน?</summary>
+            <p>ทุกฟอร์ม + ไลน์ที่ส่งเข้ามาในเวลาทำการ (จันทร์-ศุกร์ 9:00-18:00) เราตอบกลับภายใน 1 ชั่วโมง สำหรับวันหยุด/นอกเวลา ตอบกลับเช้าวันถัดไป (สูงสุด 1 วันทำการ)</p>
+          </details>
+          <details class="faq-item">
+            <summary>ราคาประมาณเท่าไหร่?</summary>
+            <p>ขึ้นกับขนาดและฟีเจอร์ — เว็บ landing เริ่มที่หลักหมื่นปลาย ๆ เว็บบริษัท 5-8 หน้าหลักแสน e-commerce / web app หลักแสนปลาย ๆ ขึ้นไป ส่วนแอด/SEO มีแพ็กเกจรายเดือน เริ่ม 15,000 บาท หรือทักมาเล่าโจทย์ เราจะให้ตัวเลขเฉพาะเคสคุณ</p>
+          </details>
+          <details class="faq-item">
+            <summary>ทำงานกับลูกค้าต่างจังหวัดได้ไหม?</summary>
+            <p>ได้ — ลูกค้าเราอยู่ครบทุกภาค ทำงานกับทีมผ่าน Google Meet + Slack + Notion เห็นความคืบหน้าได้ทุกวัน ไม่ต้องเดินทางมากรุงเทพฯ</p>
+          </details>
+          <details class="faq-item">
+            <summary>มีตัวอย่างสัญญาให้ดูก่อนได้ไหม?</summary>
+            <p>ได้ครับ ขอตัวอย่าง MSA + SOW ผ่านอีเมลก่อนตัดสินใจได้เลย — สัญญาเรียบง่าย ไม่ผูกขาดยาว ไม่มีค่าปรับซ่อน ทุกข้อชัดเจน</p>
+          </details>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="footer-brand">Best Solutions</a>
+          <p class="footer-tagline">เอเจนซีดิจิทัลเต็มรูปแบบในกรุงเทพฯ — ดูแลตั้งแต่ออกแบบเว็บ ยิงแอด ทำ SEO จนถึง AI Automation ครบในทีมเดียว</p>
+        </div>
+        <div class="footer-col"><h4>บริการ</h4><ul><li><a href="services/web-design.html">รับทำเว็บไซต์</a></li><li><a href="services.html">ยิงแอด</a></li><li><a href="services.html">SEO</a></li><li><a href="services.html">AI Automation</a></li><li><a href="services.html">Production</a></li></ul></div>
+        <div class="footer-col"><h4>บริษัท</h4><ul><li><a href="about.html">เกี่ยวกับเรา</a></li><li><a href="portfolio.html">ผลงาน</a></li><li><a href="blog.html">บล็อก</a></li><li><a href="contact.html" aria-current="page">ร่วมงานกับเรา</a></li></ul></div>
+        <div class="footer-col"><h4>ติดต่อ</h4><ul><li><a href="tel:0953857029">095-385-7029</a></li><li><a href="mailto:info@bestsolutionscorp.com">info@bestsolutionscorp.com</a></li><li><a href="https://line.me/" target="_blank" rel="noopener">LINE @bestsolutions</a></li><li><a href="https://facebook.com/" target="_blank" rel="noopener">FB @bestsolutionsagency</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Best Solutions Corp · กรุงเทพมหานคร, ประเทศไทย</span><ul class="footer-bottom-links"><li><a href="#">นโยบายความเป็นส่วนตัว</a></li><li><a href="#">ข้อตกลงการใช้งาน</a></li><li><a href="#">Sitemap</a></li></ul></div>
+    </div>
+  </footer>
+
+  <script src="scripts/motion.js" defer></script>
+</body>
+</html>

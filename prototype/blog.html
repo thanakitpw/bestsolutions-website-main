@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บล็อก · Best Solutions — บทความ AI, Digital Marketing, SEO ภาษาไทย</title>
+  <meta name="description" content="บทความและไอเดียจากทีม Best Solutions — เขียนเฉพาะที่ลงมือทำจริง ครอบคลุม AI Automation, Digital Marketing, SEO ภาษาไทย, Web Design และเคส SME">
+
+  <link rel="preload" href="fonts/LINESeedSansTH-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/LINESeedSansTH-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/typography.css">
+  <link rel="stylesheet" href="styles/components/section.css">
+  <link rel="stylesheet" href="styles/components/button.css">
+  <link rel="stylesheet" href="styles/components/card.css">
+  <link rel="stylesheet" href="styles/components/navbar.css">
+  <link rel="stylesheet" href="styles/components/footer.css">
+  <link rel="stylesheet" href="styles/components/motion.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--color-bg); color: var(--color-text); }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    .skip-link { position: absolute; top: -100px; left: 16px; padding: var(--space-3) var(--space-4); background: var(--color-text); color: var(--color-text-on-dark); border-radius: var(--r-sm); z-index: 1000; text-decoration: none; font-weight: var(--weight-medium); }
+    .skip-link:focus { top: 16px; }
+
+    .page-hero { position: relative; padding-top: 140px; padding-bottom: var(--space-16); overflow: hidden; }
+    @media (min-width: 768px) { .page-hero { padding-top: 200px; padding-bottom: var(--space-20); } }
+    .page-hero-blob { position: absolute; top: 10%; right: -16%; width: 600px; height: 600px; max-width: 90vw; background: var(--blob-gradient); filter: blur(var(--blob-blur)); opacity: 0.55; pointer-events: none; animation: blob-drift var(--t-blob) ease-in-out infinite alternate; z-index: 0; }
+    @keyframes blob-drift { 0% { transform: translate(0, 0) scale(1); } 50% { transform: translate(-30px, 20px) scale(1.05); } 100% { transform: translate(15px, -15px) scale(0.97); } }
+    .page-hero-inner { position: relative; z-index: 1; max-width: 880px; margin: 0 auto; text-align: center; }
+    .page-hero h1 { max-width: 22ch; margin: var(--space-6) auto var(--space-6); }
+    .page-hero p.lead { max-width: 640px; margin: 0 auto; }
+
+    /* Filter chips */
+    .filter-bar { display: flex; flex-wrap: wrap; gap: var(--space-2); justify-content: center; margin-bottom: var(--space-12); }
+    .filter-chip { display: inline-flex; align-items: center; padding: 10px 18px; background: var(--color-surface); border-radius: var(--r-full); font-size: var(--text-sm); font-weight: var(--weight-bold); color: var(--color-text-muted); box-shadow: var(--shadow-sm); cursor: pointer; border: none; transition: all var(--t-base) var(--ease-out); }
+    .filter-chip:hover { color: var(--color-text); transform: translateY(-1px); box-shadow: var(--shadow-md); }
+    .filter-chip.is-active { background: var(--color-text); color: var(--color-text-on-dark); }
+
+    /* Featured (large) */
+    .featured-card {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 0;
+      background: var(--color-surface);
+      border-radius: var(--r-3xl);
+      box-shadow: var(--shadow-card);
+      overflow: hidden;
+      margin-bottom: var(--space-16);
+      transition: box-shadow var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
+    }
+    .featured-card:hover { box-shadow: var(--shadow-card-hover); transform: translateY(-4px); }
+    @media (min-width: 768px) { .featured-card { grid-template-columns: 1.2fr 1fr; } }
+    .featured-media {
+      aspect-ratio: 16 / 10;
+      background: linear-gradient(135deg, var(--color-orange-500), var(--color-peach));
+    }
+    @media (min-width: 768px) { .featured-media { aspect-ratio: auto; } }
+    .featured-body { padding: var(--space-10); display: flex; flex-direction: column; gap: var(--space-4); justify-content: center; }
+    .featured-cat { display: inline-flex; padding: 6px 14px; background: var(--color-orange-50); color: var(--color-orange-700); font-size: var(--text-sm); font-weight: var(--weight-bold); letter-spacing: 0.04em; border-radius: var(--r-full); align-self: flex-start; }
+    .featured-title { font-family: var(--font-display); font-weight: var(--weight-bold); font-size: clamp(24px, 3vw, 36px); line-height: 1.2; letter-spacing: -0.015em; margin: 0; }
+    .featured-excerpt { font-size: var(--text-base); line-height: var(--leading-normal); color: var(--color-text-muted); margin: 0; }
+    .featured-meta { display: flex; align-items: center; gap: var(--space-4); font-size: var(--text-sm); color: var(--color-text-muted); margin-top: var(--space-2); }
+    .featured-meta strong { color: var(--color-text); font-weight: var(--weight-bold); }
+
+    .grid-blog {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    @media (min-width: 640px) { .grid-blog { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid-blog { grid-template-columns: repeat(3, 1fr); } }
+
+    .section-header-center { text-align: center; max-width: 720px; margin: 0 auto var(--space-12); }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <div class="navbar-wrap">
+    <nav class="navbar" aria-label="หลัก">
+      <a href="index.html" class="navbar-brand">Best Solutions</a>
+      <ul class="navbar-nav">
+        <li><a href="services.html">บริการ</a></li>
+        <li><a href="portfolio.html">ผลงาน</a></li>
+        <li><a href="blog.html" aria-current="page">บล็อก</a></li>
+        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-arrow navbar-cta"><span class="btn-label">ปรึกษาฟรี</span></a>
+      <button class="navbar-mobile-toggle" type="button" aria-label="เปิดเมนู" aria-controls="primary-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+
+  <div class="navbar-scrim" data-open="false" aria-hidden="true"></div>
+  <aside class="navbar-drawer" id="primary-drawer" data-open="false" aria-label="เมนูมือถือ">
+    <button class="navbar-drawer-close" type="button" aria-label="ปิดเมนู">×</button>
+    <ul class="navbar-drawer-nav">
+      <li><a href="services.html">บริการ</a></li>
+      <li><a href="portfolio.html">ผลงาน</a></li>
+      <li><a href="blog.html" aria-current="page">บล็อก</a></li>
+      <li><a href="about.html">เกี่ยวกับเรา</a></li>
+      <li><a href="contact.html">ติดต่อเรา</a></li>
+    </ul>
+    <a href="contact.html" class="btn btn-primary btn-arrow navbar-drawer-cta"><span class="btn-label">ปรึกษาฟรี</span></a>
+  </aside>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="page-hero" aria-labelledby="hero-title">
+      <div class="page-hero-blob" aria-hidden="true"></div>
+      <div class="container">
+        <div class="page-hero-inner">
+          <span class="eyebrow-pill"><span class="star">✦</span><span>Blog · Insights from the team</span></span>
+          <h1 id="hero-title">บทความและไอเดียจากทีม</h1>
+          <p class="lead">เราเขียนเฉพาะที่ลงมือทำจริง — ไม่ก๊อปจาก ChatGPT ทุกบทความผ่านการ verify โดยทีมที่ดูแลเคสในระบบจริง</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- LIST -->
+    <section class="section section-tight" id="posts" aria-labelledby="posts-title">
+      <div class="container">
+        <h2 id="posts-title" style="position: absolute; clip: rect(0 0 0 0); width: 1px; height: 1px; overflow: hidden;">บทความทั้งหมด</h2>
+
+        <div class="filter-bar" role="tablist" aria-label="กรองตามหมวดหมู่">
+          <button class="filter-chip is-active" type="button" role="tab" aria-selected="true">ทั้งหมด</button>
+          <button class="filter-chip" type="button" role="tab">AI</button>
+          <button class="filter-chip" type="button" role="tab">Digital Marketing</button>
+          <button class="filter-chip" type="button" role="tab">SEO</button>
+          <button class="filter-chip" type="button" role="tab">Web Design</button>
+          <button class="filter-chip" type="button" role="tab">Case Studies</button>
+        </div>
+
+        <!-- Featured -->
+        <a href="blog/sample-post.html" class="featured-card" aria-labelledby="featured-title">
+          <div class="featured-media" role="img" aria-label="ภาพประกอบบทความ AI ตอบลูกค้า"></div>
+          <div class="featured-body">
+            <span class="featured-cat">Featured · AI</span>
+            <h3 class="featured-title" id="featured-title">5 วิธีใช้ AI ลดเวลาตอบลูกค้าใน SME ไทย — ทำได้จริงใน 2 สัปดาห์</h3>
+            <p class="featured-excerpt">รวม use case ที่เราใช้กับลูกค้าจริง ทั้ง chatbot Facebook + LINE OA + อีเมล ปรับแล้วเห็นผลตั้งแต่สัปดาห์แรก พร้อมตัวอย่างต้นทุนที่ใช้จริง</p>
+            <div class="featured-meta">
+              <span><strong>ทีม Best Solutions</strong></span>
+              <span>·</span>
+              <span>5 พ.ค. 2026</span>
+              <span>·</span>
+              <span>อ่าน 8 นาที</span>
+            </div>
+          </div>
+        </a>
+
+        <!-- Grid -->
+        <div class="grid-blog">
+
+          <a href="blog/sample-post.html" class="card card-blog">
+            <div class="card-media" role="img" aria-label="ภาพประกอบบทความยิงแอด" style="background: linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500));"></div>
+            <div class="card-body">
+              <span class="card-category is-blue">Digital Marketing</span>
+              <h3 class="card-title">ยิงแอด Meta ปี 2026 ต้องรู้อะไรบ้าง</h3>
+              <p class="card-excerpt">อัปเดตอัลกอริทึมล่าสุด พร้อมโครงสร้างแคมเปญที่ใช้ได้จริง</p>
+              <span class="card-meta"><span>3 พ.ค. 2026</span><span class="card-meta-dot"></span><span>ธนกิจ ใจทอง</span></span>
+            </div>
+          </a>
+
+          <a href="blog/sample-post.html" class="card card-blog">
+            <div class="card-media" role="img" aria-label="ภาพประกอบบทความ SEO" style="background: linear-gradient(135deg, var(--color-orange-500), var(--color-orange-700));"></div>
+            <div class="card-body">
+              <span class="card-category">SEO</span>
+              <h3 class="card-title">ทำ SEO ภาษาไทยให้ติดหน้าแรกใน 90 วัน</h3>
+              <p class="card-excerpt">checklist ที่ใช้กับลูกค้าจริง 30+ เคส — เน้นโครงสร้างก่อนเขียน</p>
+              <span class="card-meta"><span>1 พ.ค. 2026</span><span class="card-meta-dot"></span><span>SEO Team</span></span>
+            </div>
+          </a>
+
+          <a href="blog/sample-post.html" class="card card-blog">
+            <div class="card-media" role="img" aria-label="ภาพประกอบบทความ Web Design" style="background: linear-gradient(135deg, var(--color-text), var(--color-orange-700));"></div>
+            <div class="card-body">
+              <span class="card-category">Web Design</span>
+              <h3 class="card-title">7 ข้อผิดพลาดที่เจอบ่อยในเว็บ SME ไทย</h3>
+              <p class="card-excerpt">ปัญหาที่ทำให้ลูกค้าหลุด และวิธีแก้ที่ใช้เวลาไม่ถึงสัปดาห์</p>
+              <span class="card-meta"><span>28 เม.ย. 2026</span><span class="card-meta-dot"></span><span>ทีม Design</span></span>
+            </div>
+          </a>
+
+          <a href="blog/sample-post.html" class="card card-blog">
+            <div class="card-media" role="img" aria-label="ภาพประกอบบทความ AI" style="background: linear-gradient(135deg, var(--color-orange-300), var(--color-peach));"></div>
+            <div class="card-body">
+              <span class="card-category">AI</span>
+              <h3 class="card-title">n8n vs Zapier vs Make — เลือกตัวไหนสำหรับ SME ไทย</h3>
+              <p class="card-excerpt">เปรียบเทียบ 3 เครื่องมือ automation ที่ใช้กันบ่อย พร้อมราคาจริง</p>
+              <span class="card-meta"><span>22 เม.ย. 2026</span><span class="card-meta-dot"></span><span>ทีม AI</span></span>
+            </div>
+          </a>
+
+          <a href="blog/sample-post.html" class="card card-blog">
+            <div class="card-media" role="img" aria-label="ภาพประกอบบทความ SEO" style="background: linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700));"></div>
+            <div class="card-body">
+              <span class="card-category is-blue">SEO</span>
+              <h3 class="card-title">สลัก URL ภาษาไทย ทำได้ไหม + กระทบ SEO หรือเปล่า</h3>
+              <p class="card-excerpt">คำถามยอดฮิตของลูกค้า — มีคำตอบจาก case จริง 12 เคส</p>
+              <span class="card-meta"><span>18 เม.ย. 2026</span><span class="card-meta-dot"></span><span>SEO Team</span></span>
+            </div>
+          </a>
+
+          <a href="blog/sample-post.html" class="card card-blog">
+            <div class="card-media" role="img" aria-label="ภาพประกอบบทความเคสลูกค้า" style="background: linear-gradient(135deg, var(--color-peach), var(--color-orange-500));"></div>
+            <div class="card-body">
+              <span class="card-category">Case Studies</span>
+              <h3 class="card-title">วิเคราะห์เคส SportLab — ทำไมยอดขายขึ้น 220%</h3>
+              <p class="card-excerpt">เจาะรายละเอียด funnel + page speed + retention ที่ทำให้เปลี่ยนตัวเลข</p>
+              <span class="card-meta"><span>15 เม.ย. 2026</span><span class="card-meta-dot"></span><span>ธนกิจ ใจทอง</span></span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- DARK CTA -->
+    <div class="section section-dark-pre" aria-hidden="true"></div>
+    <section class="section section-dark" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="section-header section-header-center">
+          <span class="eyebrow">● พร้อมเริ่ม</span>
+          <h2 id="cta-title">อยากให้เราช่วยปรับใช้กับธุรกิจคุณ?</h2>
+          <p class="lead">เนื้อหาในบล็อกเป็นแค่ส่วนหนึ่งของสิ่งที่เราทำให้ลูกค้า — ทักมาเล่าโจทย์ดู เราจะช่วยปรับให้เหมาะกับเคสคุณ</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; margin-top: var(--space-10);">
+          <a href="contact.html" class="btn btn-orange btn-lg btn-arrow"><span class="btn-label">นัดคุยกับทีม</span></a>
+          <a href="services.html" class="btn btn-on-dark btn-lg"><span class="btn-label">ดูบริการ</span></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="index.html" class="footer-brand">Best Solutions</a>
+          <p class="footer-tagline">เอเจนซีดิจิทัลเต็มรูปแบบในกรุงเทพฯ — ดูแลตั้งแต่ออกแบบเว็บ ยิงแอด ทำ SEO จนถึง AI Automation ครบในทีมเดียว</p>
+        </div>
+        <div class="footer-col"><h4>บริการ</h4><ul><li><a href="services/web-design.html">รับทำเว็บไซต์</a></li><li><a href="services.html">ยิงแอด</a></li><li><a href="services.html">SEO</a></li><li><a href="services.html">AI Automation</a></li><li><a href="services.html">Production</a></li></ul></div>
+        <div class="footer-col"><h4>บริษัท</h4><ul><li><a href="about.html">เกี่ยวกับเรา</a></li><li><a href="portfolio.html">ผลงาน</a></li><li><a href="blog.html" aria-current="page">บล็อก</a></li><li><a href="contact.html">ร่วมงานกับเรา</a></li></ul></div>
+        <div class="footer-col"><h4>ติดต่อ</h4><ul><li><a href="tel:0953857029">095-385-7029</a></li><li><a href="mailto:info@bestsolutionscorp.com">info@bestsolutionscorp.com</a></li><li><a href="https://line.me/" target="_blank" rel="noopener">LINE @bestsolutions</a></li><li><a href="https://facebook.com/" target="_blank" rel="noopener">FB @bestsolutionsagency</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Best Solutions Corp · กรุงเทพมหานคร, ประเทศไทย</span><ul class="footer-bottom-links"><li><a href="#">นโยบายความเป็นส่วนตัว</a></li><li><a href="#">ข้อตกลงการใช้งาน</a></li><li><a href="#">Sitemap</a></li></ul></div>
+    </div>
+  </footer>
+
+  <script src="scripts/motion.js" defer></script>
+</body>
+</html>

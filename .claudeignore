@@ -1,0 +1,59 @@
+# Build outputs
+node_modules/
+.pnpm-store/
+.next/
+out/
+dist/
+build/
+.turbo/
+.vercel/
+.cache/
+.parcel-cache/
+
+# Testing artifacts
+playwright-report/
+test-results/
+coverage/
+*.lcov
+.lighthouseci/
+
+# Lockfiles (rarely needed in conversation)
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Binary fonts (no code value)
+prototype/fonts/*.woff2
+prototype/fonts/*.woff
+prototype/fonts/*.ttf
+
+# Local Supabase
+supabase/.branches/
+supabase/.temp/
+
+# Editor / OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+
+# Locked moodboard reference (Direction C is locked in ADR 0005, archive only)
+prototype/_moodboard/preview.html
+prototype/_moodboard/preview.css
+prototype/_moodboard/preview-c.html
+prototype/_moodboard/preview-c.css
+prototype/_moodboard/capture-*.js
+prototype/_moodboard/screenshots/
+
+# Helper scripts already executed
+download-line-seed.js
+
+# Reference screenshots dragged in by user
+screencapture-*.png
+screencapture-*.jpg

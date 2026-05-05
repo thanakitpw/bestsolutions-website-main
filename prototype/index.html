@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Best Solutions — เอเจนซีดิจิทัลครบวงจร · กรุงเทพฯ</title>
+  <meta name="description" content="ออกแบบเว็บ ยิงแอด ทำ SEO ดูแลโซเชียล AI Automation — ครบทุกบริการในทีมเดียว ทำงานแบบ Sprint วัดผลได้จริงทุกบาท">
+
+  <link rel="preload" href="fonts/LINESeedSansTH-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="fonts/LINESeedSansTH-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="styles/tokens.css">
+  <link rel="stylesheet" href="styles/typography.css">
+  <link rel="stylesheet" href="styles/components/section.css">
+  <link rel="stylesheet" href="styles/components/button.css">
+  <link rel="stylesheet" href="styles/components/card.css">
+  <link rel="stylesheet" href="styles/components/heading-badge.css">
+  <link rel="stylesheet" href="styles/components/navbar.css">
+  <link rel="stylesheet" href="styles/components/footer.css">
+  <link rel="stylesheet" href="styles/components/motion.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--color-bg); color: var(--color-text); }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    .skip-link {
+      position: absolute;
+      top: -100px; left: 16px;
+      padding: var(--space-3) var(--space-4);
+      background: var(--color-text);
+      color: var(--color-text-on-dark);
+      border-radius: var(--r-sm);
+      z-index: 1000;
+      text-decoration: none;
+      font-weight: var(--weight-medium);
+    }
+    .skip-link:focus { top: 16px; }
+
+    /* ================= HERO ================= */
+    .hero {
+      position: relative;
+      padding-top: 140px;
+      padding-bottom: var(--space-24);
+      overflow: hidden;
+    }
+    @media (min-width: 768px) {
+      .hero { padding-top: 200px; padding-bottom: var(--space-32); }
+    }
+
+    .hero-blob {
+      position: absolute;
+      top: 8%;
+      right: -12%;
+      width: 720px;
+      height: 720px;
+      max-width: 90vw;
+      background: var(--blob-gradient);
+      filter: blur(var(--blob-blur));
+      opacity: 0.7;
+      pointer-events: none;
+      animation: blob-drift var(--t-blob) ease-in-out infinite alternate;
+      z-index: 0;
+    }
+    @keyframes blob-drift {
+      0%   { transform: translate(0, 0) scale(1); }
+      50%  { transform: translate(-40px, 30px) scale(1.06); }
+      100% { transform: translate(20px, -20px) scale(0.96); }
+    }
+
+    .hero-inner {
+      position: relative;
+      z-index: 1;
+      max-width: 1080px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero h1 {
+      max-width: 22ch;
+      margin: var(--space-6) auto var(--space-8);
+    }
+
+    .hero p.lead {
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    .hero-actions {
+      display: inline-flex;
+      flex-wrap: wrap;
+      gap: var(--space-3);
+      margin-top: var(--space-10);
+      justify-content: center;
+    }
+
+    .hero-trust {
+      display: flex;
+      flex-wrap: wrap;
+      gap: var(--space-6) var(--space-12);
+      align-items: baseline;
+      justify-content: center;
+      margin-top: var(--space-16);
+      padding-top: var(--space-8);
+      border-top: 1px solid var(--hairline);
+    }
+    .hero-trust-label {
+      font-size: var(--text-xs);
+      letter-spacing: var(--tracking-eyebrow);
+      text-transform: uppercase;
+      color: var(--color-text-subtle);
+    }
+    .hero-trust-stats {
+      display: flex;
+      gap: var(--space-10);
+      flex-wrap: wrap;
+    }
+    .hero-trust-stat .num {
+      font-family: var(--font-display);
+      font-size: var(--text-2xl);
+      font-weight: var(--weight-heavy);
+      letter-spacing: var(--tracking-tight);
+      line-height: 1;
+    }
+    .hero-trust-stat .lbl {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-top: var(--space-2);
+    }
+
+    /* Floating service pills — layered around hero */
+    .hero-pills {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      z-index: 2;
+    }
+    .hero-pill {
+      position: absolute;
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-2);
+      padding: var(--space-3) var(--space-5);
+      background: var(--color-surface);
+      border-radius: var(--r-full);
+      box-shadow: var(--shadow-pill);
+      font-size: var(--text-sm);
+      font-weight: var(--weight-bold);
+      white-space: nowrap;
+      animation: pill-float 6s ease-in-out infinite alternate;
+    }
+    .hero-pill svg {
+      width: 18px; height: 18px;
+      flex: 0 0 auto;
+    }
+    .hero-pill-1 {
+      top: 240px; left: 6%;
+      color: var(--color-orange-700);
+      transform: rotate(-6deg);
+      animation-delay: 0s;
+    }
+    .hero-pill-2 {
+      top: 200px; right: 6%;
+      color: var(--color-blue-500);
+      transform: rotate(5deg);
+      animation-delay: -2s;
+    }
+    .hero-pill-3 {
+      top: 420px; right: 10%;
+      transform: rotate(-3deg);
+      animation-delay: -4s;
+    }
+    @keyframes pill-float {
+      from { transform: translateY(0) rotate(var(--rot, 0deg)); }
+      to   { transform: translateY(-10px) rotate(var(--rot, 0deg)); }
+    }
+    @media (max-width: 1100px) {
+      .hero-pill-1 { top: 200px; left: 2%; }
+      .hero-pill-2 { top: 160px; right: 2%; }
+      .hero-pill-3 { top: 380px; right: 4%; }
+    }
+    @media (max-width: 768px) {
+      .hero-pills {
+        position: static;
+        display: flex;
+        gap: var(--space-2);
+        flex-wrap: wrap;
+        justify-content: center;
+        margin-bottom: var(--space-6);
+        z-index: auto;
+      }
+      .hero-pill {
+        position: static;
+        animation: none;
+        transform: none !important;
+      }
+      .hero-pill-3 { display: none; }
+    }
+
+    /* ============== Section helpers ============== */
+    .section-header-row {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: end;
+      gap: var(--space-8);
+      margin-bottom: var(--space-12);
+    }
+    .section-header-row .section-header {
+      margin-bottom: 0;
+      max-width: 720px;
+    }
+
+    /* Service grid — 1 / 2 / 4 */
+    .grid-services {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    @media (min-width: 640px) { .grid-services { grid-template-columns: repeat(2, 1fr); } }
+    @media (min-width: 1024px) { .grid-services { grid-template-columns: repeat(4, 1fr); } }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: var(--space-6);
+    }
+    @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+
+    /* Stats band — sits inside surface-alt rounded box */
+    .stats-band {
+      background: var(--color-surface-alt);
+      border-radius: var(--r-3xl);
+      padding: var(--space-12) var(--space-8);
+    }
+    @media (min-width: 768px) {
+      .stats-band { padding: var(--space-16) var(--space-12); }
+    }
+
+    /* ============== Testimonials ============== */
+    .testi-card {
+      background: var(--color-surface);
+      border-radius: var(--r-3xl);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-8);
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-5);
+      transition: box-shadow var(--t-base) var(--ease-out), transform var(--t-base) var(--ease-out);
+    }
+    .testi-card:hover {
+      box-shadow: var(--shadow-card-hover);
+      transform: translateY(-4px);
+    }
+    .testi-stars {
+      display: inline-flex;
+      gap: 2px;
+      color: var(--color-orange-500);
+      font-size: var(--text-base);
+    }
+    .testi-quote {
+      font-size: var(--text-lg);
+      line-height: var(--leading-normal);
+      color: var(--color-text);
+      margin: 0;
+    }
+    .testi-foot {
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+      margin-top: auto;
+      padding-top: var(--space-5);
+      border-top: 1px solid var(--hairline);
+    }
+    .testi-avatar {
+      width: 48px; height: 48px;
+      border-radius: var(--r-full);
+      flex: 0 0 auto;
+    }
+    .testi-name {
+      font-weight: var(--weight-bold);
+      line-height: 1.3;
+    }
+    .testi-role {
+      font-size: var(--text-sm);
+      color: var(--color-text-muted);
+      margin-top: 2px;
+    }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <!-- ============================================================ NAVBAR -->
+  <div class="navbar-wrap">
+    <nav class="navbar" aria-label="หลัก">
+      <a href="/" class="navbar-brand">Best Solutions</a>
+      <ul class="navbar-nav">
+        <li><a href="services.html">บริการ</a></li>
+        <li><a href="portfolio.html">ผลงาน</a></li>
+        <li><a href="blog.html">บล็อก</a></li>
+        <li><a href="about.html">เกี่ยวกับเรา</a></li>
+      </ul>
+      <a href="contact.html" class="btn btn-primary btn-sm btn-arrow navbar-cta">
+        <span class="btn-label">ปรึกษาฟรี</span>
+      </a>
+      <button class="navbar-mobile-toggle" type="button" aria-label="เปิดเมนู" aria-controls="primary-drawer" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </nav>
+  </div>
+
+  <div class="navbar-scrim" data-open="false" aria-hidden="true"></div>
+  <aside class="navbar-drawer" id="primary-drawer" data-open="false" aria-label="เมนูมือถือ">
+    <button class="navbar-drawer-close" type="button" aria-label="ปิดเมนู">×</button>
+    <ul class="navbar-drawer-nav">
+      <li><a href="services.html">บริการ</a></li>
+      <li><a href="portfolio.html">ผลงาน</a></li>
+      <li><a href="blog.html">บล็อก</a></li>
+      <li><a href="about.html">เกี่ยวกับเรา</a></li>
+      <li><a href="contact.html">ติดต่อเรา</a></li>
+    </ul>
+    <a href="contact.html" class="btn btn-primary btn-arrow navbar-drawer-cta">
+      <span class="btn-label">ปรึกษาฟรี</span>
+    </a>
+  </aside>
+
+  <main id="main">
+
+    <!-- ============================================================ HERO -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-blob" aria-hidden="true"></div>
+
+      <div class="container">
+        <div class="hero-pills" aria-hidden="true">
+          <span class="hero-pill hero-pill-1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18"/></svg>
+            เว็บไซต์
+          </span>
+          <span class="hero-pill hero-pill-2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg>
+            SEO
+          </span>
+          <span class="hero-pill hero-pill-3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5.5L20 10l-5.5 2.5L12 18l-2.5-5.5L4 10l5.5-2.5L12 2z"/></svg>
+            AI Automation
+          </span>
+        </div>
+
+        <div class="hero-inner">
+          <span class="eyebrow-pill">
+            <span class="star">✦</span>
+            <span>AI-Driven Agency · กรุงเทพฯ</span>
+          </span>
+          <h1 id="hero-title">ทำการตลาดออนไลน์ที่วัดผลได้จริง</h1>
+          <p class="lead">
+            เราดูแลตั้งแต่ออกแบบเว็บ ยิงแอด ทำ SEO ดูแลโซเชียล ไปจนถึง AI Automation —
+            ครบทุกบริการในทีมเดียวที่ทำงานแบบ Sprint วัดผลทุกบาทที่ลงทุน
+          </p>
+
+          <div class="hero-actions">
+            <a href="contact.html" class="btn btn-primary btn-lg btn-arrow">
+              <span class="btn-label">นัดคุยฟรี 30 นาที</span>
+            </a>
+            <a href="portfolio.html" class="btn btn-secondary btn-lg">
+              <span class="btn-label">ดูผลงานทั้งหมด</span>
+            </a>
+          </div>
+
+          <div class="hero-trust">
+            <div class="hero-trust-label">ตลอด 8 ปี ในวงการ</div>
+            <div class="hero-trust-stats">
+              <div class="hero-trust-stat">
+                <div class="num tabular text-orange">100+</div>
+                <div class="lbl">โปรเจคส่งมอบ</div>
+              </div>
+              <div class="hero-trust-stat">
+                <div class="num tabular">5.2×</div>
+                <div class="lbl">ROAS เฉลี่ย</div>
+              </div>
+              <div class="hero-trust-stat">
+                <div class="num tabular text-orange">90<small style="font-size:.55em;color:var(--color-text-muted);font-weight:var(--weight-regular);margin-left:4px">วัน</small></div>
+                <div class="lbl">SEO เริ่มเห็นผล</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ SERVICES -->
+    <section class="section" id="services" aria-labelledby="services-title">
+      <div class="container">
+        <div class="section-header-row">
+          <div class="section-header">
+            <span class="eyebrow-chip">● บริการของเรา</span>
+            <h2 id="services-title">ครบทุกบริการที่ธุรกิจต้องการ</h2>
+            <p class="lead">ไม่ต้องไล่หาเอเจนซีหลายเจ้า — ทีมเดียวดูแลตั้งแต่ออกแบบ ยิงแอด ไปจนถึงระบบหลังบ้าน</p>
+          </div>
+          <a href="services.html" class="btn btn-ghost btn-arrow">
+            <span class="btn-label">ดูบริการทั้งหมด</span>
+          </a>
+        </div>
+
+        <div class="grid-services">
+
+          <a href="services/web-design.html" class="card card-service">
+            <div class="card-icon is-orange" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="14" rx="2"/><path d="M3 8h18M8 12h6"/></svg>
+            </div>
+            <h3 class="card-title">รับทำเว็บไซต์</h3>
+            <p class="card-desc">เว็บโหลดเร็ว ขายของได้ ผ่าน SEO ตั้งแต่วันแรก — ไม่ใช่แค่สวย</p>
+            <span class="card-link">ดูรายละเอียด</span>
+          </a>
+
+          <a href="services.html" class="card card-service">
+            <div class="card-icon is-blue" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l18-7v16L3 13z"/><path d="M11 19c0 1.5-1 3-3 3s-3-1.5-3-3"/></svg>
+            </div>
+            <h3 class="card-title">ยิงแอด Meta &amp; Google</h3>
+            <p class="card-desc">ปรับแคมเปญรายสัปดาห์ วัดผลทุกบาท ROAS ขึ้นจริง</p>
+            <span class="card-link">เช็กแพ็กเกจ</span>
+          </a>
+
+          <a href="services.html" class="card card-service">
+            <div class="card-icon is-cream" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.5-4.5"/></svg>
+            </div>
+            <h3 class="card-title">SEO ติดอันดับ Google</h3>
+            <p class="card-desc">เนื้อหา Authority + Technical ที่ขึ้นแล้วอยู่ยาว</p>
+            <span class="card-link">วางแผน SEO</span>
+          </a>
+
+          <a href="services.html" class="card card-service">
+            <div class="card-icon is-orange" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5.5L20 10l-5.5 2.5L12 18l-2.5-5.5L4 10l5.5-2.5L12 2z"/></svg>
+            </div>
+            <h3 class="card-title">AI Automation</h3>
+            <p class="card-desc">ระบบตอบลูกค้า ปิดการขาย จัดการหลังบ้านอัตโนมัติ</p>
+            <span class="card-link">ดู Flow ตัวอย่าง</span>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ FEATURED PORTFOLIO -->
+    <section class="section section-tight" id="featured" aria-labelledby="featured-title">
+      <div class="container">
+        <div class="section-header-row">
+          <div class="section-header">
+            <span class="eyebrow-chip is-blue">● ผลงานล่าสุด</span>
+            <h2 id="featured-title">โปรเจคที่ส่งมอบล่าสุด</h2>
+            <p class="lead">ทุกโปรเจคที่นี่ได้รับความยินยอมจากลูกค้าให้แสดงต่อสาธารณะแล้ว</p>
+          </div>
+          <a href="portfolio.html" class="btn btn-ghost btn-arrow">
+            <span class="btn-label">ดูผลงานทั้งหมด</span>
+          </a>
+        </div>
+
+        <div class="grid-3">
+
+          <a href="portfolio/sample-case.html" class="card card-portfolio">
+            <div class="card-media" role="img" aria-label="หน้าเว็บใหม่ของบริษัท ก.ก่อสร้างไทย" style="background: linear-gradient(135deg, var(--color-orange-500), var(--color-peach));"></div>
+            <div class="card-body">
+              <span class="card-meta"><span>Web Design</span><span class="card-meta-dot"></span><span>2026</span></span>
+              <h3 class="card-title">บริษัท ก.ก่อสร้างไทย</h3>
+              <p class="card-desc">รื้อเว็บเก่า ทำใหม่ทั้งหมด — โหลดเร็วขึ้น 4 เท่า ลีดเข้าเพิ่ม 3.5×</p>
+            </div>
+          </a>
+
+          <a href="portfolio.html" class="card card-portfolio">
+            <div class="card-media" role="img" aria-label="หน้าร้าน e-commerce SportLab" style="background: linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700));"></div>
+            <div class="card-body">
+              <span class="card-meta"><span>E-Commerce</span><span class="card-meta-dot"></span><span>2026</span></span>
+              <h3 class="card-title">SportLab อุปกรณ์กีฬา</h3>
+              <p class="card-desc">เว็บ e-commerce พร้อมระบบสต็อก — ยอดขายขึ้น 220% ใน 6 เดือน</p>
+            </div>
+          </a>
+
+          <a href="portfolio.html" class="card card-portfolio">
+            <div class="card-media" role="img" aria-label="ภาพรีแบรนด์คาเฟ่บ้านสวน" style="background: linear-gradient(135deg, var(--color-text), var(--color-orange-700));"></div>
+            <div class="card-body">
+              <span class="card-meta"><span>Branding</span><span class="card-meta-dot"></span><span>2025</span></span>
+              <h3 class="card-title">คาเฟ่ บ้านสวน</h3>
+              <p class="card-desc">รีแบรนด์ทั้งร้าน + เว็บ + โซเชียล — ขึ้นเทรนด์ในย่านภายใน 3 เดือน</p>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ STATS BAND -->
+    <section class="section section-tight" aria-labelledby="stats-title">
+      <div class="container">
+        <div class="stats-band">
+          <div class="section-header" style="text-align: center; margin-bottom: var(--space-12);">
+            <span class="eyebrow-chip">● ตัวเลขที่เราภูมิใจ</span>
+            <h2 id="stats-title">8 ปี ของการลงมือทำจริง</h2>
+          </div>
+
+          <div class="grid-3" style="gap: var(--space-6);">
+            <div class="card card-stat">
+              <span class="card-eyebrow is-orange" aria-hidden="true">★</span>
+              <p class="card-stat-num tabular"><span class="accent">100+</span></p>
+              <p class="card-stat-label">โปรเจคที่ส่งมอบสำเร็จ</p>
+            </div>
+
+            <div class="card card-stat">
+              <span class="card-eyebrow is-blue" aria-hidden="true">◆</span>
+              <p class="card-stat-num tabular">8<span class="unit">ปี</span></p>
+              <p class="card-stat-label">ประสบการณ์ในวงการดิจิทัล</p>
+            </div>
+
+            <div class="card card-stat">
+              <span class="card-eyebrow is-orange" aria-hidden="true">↗</span>
+              <p class="card-stat-num tabular"><span class="accent">5.2×</span></p>
+              <p class="card-stat-label">ROAS เฉลี่ยของลูกค้า</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ TESTIMONIALS -->
+    <section class="section" id="testimonials" aria-labelledby="testi-title">
+      <div class="container">
+        <div class="section-header" style="margin-bottom: var(--space-12); max-width: 720px;">
+          <span class="eyebrow-chip">● เสียงจากลูกค้า</span>
+          <h2 id="testi-title">ทำไมลูกค้าถึงกลับมาใช้บริการต่อ</h2>
+        </div>
+
+        <div class="grid-3">
+
+          <article class="testi-card">
+            <span class="testi-stars" aria-label="คะแนน 5 จาก 5 ดาว">★★★★★</span>
+            <blockquote class="testi-quote">
+              "ทีมเข้าใจธุรกิจเร็วมาก คุยรอบเดียวเข้าใจว่าเราขายอะไร แอดที่ออกมาเลยตรงกลุ่ม ROAS ขึ้นจาก 1.8 เป็น 4.2 ในเดือนเดียว"
+            </blockquote>
+            <div class="testi-foot">
+              <div class="testi-avatar" aria-hidden="true" style="background: linear-gradient(135deg, var(--color-orange-300), var(--color-peach));"></div>
+              <div>
+                <div class="testi-name">คุณนภา รุ่งเรือง</div>
+                <div class="testi-role">เจ้าของร้าน · SportLab</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testi-card">
+            <span class="testi-stars" aria-label="คะแนน 5 จาก 5 ดาว">★★★★★</span>
+            <blockquote class="testi-quote">
+              "เว็บใหม่โหลดเร็วกว่าเก่ามาก ลูกค้ากดเข้ามาแล้วไม่หลุด ลีดเข้าเพิ่มขึ้น 3 เท่าตั้งแต่เปิดใช้สัปดาห์แรก"
+            </blockquote>
+            <div class="testi-foot">
+              <div class="testi-avatar" aria-hidden="true" style="background: linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500));"></div>
+              <div>
+                <div class="testi-name">คุณวิชัย ทองดี</div>
+                <div class="testi-role">กรรมการผู้จัดการ · ก.ก่อสร้างไทย</div>
+              </div>
+            </div>
+          </article>
+
+          <article class="testi-card">
+            <span class="testi-stars" aria-label="คะแนน 5 จาก 5 ดาว">★★★★★</span>
+            <blockquote class="testi-quote">
+              "ระบบ AI ตอบลูกค้าที่ทีมทำให้ ลดงานแอดมินไปวันละเกือบ 3 ชั่วโมง — ใช้เวลาที่เหลือคิดเรื่องผลิตภัณฑ์ใหม่ได้แทน"
+            </blockquote>
+            <div class="testi-foot">
+              <div class="testi-avatar" aria-hidden="true" style="background: linear-gradient(135deg, var(--color-orange-500), var(--color-orange-700));"></div>
+              <div>
+                <div class="testi-name">คุณพิมพ์ใจ เจริญสุข</div>
+                <div class="testi-role">เจ้าของร้าน · คาเฟ่ บ้านสวน</div>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ BLOG TEASER -->
+    <section class="section section-tight" id="blog" aria-labelledby="blog-title">
+      <div class="container">
+        <div class="section-header-row">
+          <div class="section-header">
+            <span class="eyebrow-chip is-blue">● บทความล่าสุด</span>
+            <h2 id="blog-title">เทคนิคและไอเดียจากทีม</h2>
+            <p class="lead">เราเขียนเฉพาะที่ลงมือทำจริง ไม่ก๊อปจาก ChatGPT</p>
+          </div>
+          <a href="blog.html" class="btn btn-ghost btn-arrow">
+            <span class="btn-label">บทความทั้งหมด</span>
+          </a>
+        </div>
+
+        <div class="grid-3">
+
+          <a href="blog/sample-post.html" class="card card-blog">
+            <div class="card-media" role="img" aria-label="ภาพประกอบบทความ AI" style="background: linear-gradient(135deg, var(--color-orange-300), var(--color-peach));"></div>
+            <div class="card-body">
+              <span class="card-category">AI</span>
+              <h3 class="card-title">5 วิธีใช้ AI ลดเวลาตอบลูกค้าใน SME ไทย</h3>
+              <p class="card-excerpt">รวม use case ที่เราใช้กับลูกค้าจริง ปรับแล้วเห็นผลใน 2 สัปดาห์</p>
+              <span class="card-meta"><span>5 พ.ค. 2026</span><span class="card-meta-dot"></span><span>ทีม Best Solutions</span></span>
+            </div>
+          </a>
+
+          <a href="blog.html" class="card card-blog">
+            <div class="card-media" role="img" aria-label="ภาพประกอบบทความยิงแอด" style="background: linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500));"></div>
+            <div class="card-body">
+              <span class="card-category is-blue">Digital Marketing</span>
+              <h3 class="card-title">ยิงแอด Meta ปี 2026 ต้องรู้อะไรบ้าง</h3>
+              <p class="card-excerpt">อัปเดตอัลกอริทึมล่าสุด พร้อมโครงสร้างแคมเปญที่ใช้ได้จริง</p>
+              <span class="card-meta"><span>3 พ.ค. 2026</span><span class="card-meta-dot"></span><span>ธนกิจ ใจทอง</span></span>
+            </div>
+          </a>
+
+          <a href="blog.html" class="card card-blog">
+            <div class="card-media" role="img" aria-label="ภาพประกอบบทความ SEO" style="background: linear-gradient(135deg, var(--color-orange-500), var(--color-orange-700));"></div>
+            <div class="card-body">
+              <span class="card-category">SEO</span>
+              <h3 class="card-title">ทำ SEO ภาษาไทยให้ติดหน้าแรกใน 90 วัน</h3>
+              <p class="card-excerpt">checklist ที่ใช้กับลูกค้าจริง 30+ เคส — เน้นโครงสร้างก่อนเขียน</p>
+              <span class="card-meta"><span>1 พ.ค. 2026</span><span class="card-meta-dot"></span><span>SEO Team</span></span>
+            </div>
+          </a>
+
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================ CTA BAND (DARK) -->
+    <div class="section section-dark-pre" aria-hidden="true"></div>
+
+    <section class="section section-dark" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="section-header section-header-center">
+          <span class="eyebrow">● เริ่มต้นวันนี้</span>
+          <h2 id="cta-title">พร้อมเริ่มต้นกับเราหรือยัง?</h2>
+          <p class="lead">นัดคุยฟรี 30 นาที — ไม่มีพิธีรีตอง ไม่ขายตรง แค่ฟังว่าธุรกิจคุณกำลังเจอโจทย์อะไร แล้วเสนอทางออกให้</p>
+        </div>
+
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; margin-top: var(--space-10);">
+          <a href="contact.html" class="btn btn-orange btn-lg btn-arrow">
+            <span class="btn-label">นัดคุยกับทีม</span>
+          </a>
+          <a href="portfolio.html" class="btn btn-on-dark btn-lg">
+            <span class="btn-label">ดูผลงานก่อน</span>
+          </a>
+        </div>
+
+        <div class="grid-3" style="margin-top: var(--space-16);">
+          <article class="card card-dark">
+            <div class="card-icon is-dark" style="background: rgba(255,255,255,0.06); color: var(--color-orange-500);" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+            </div>
+            <h3 class="card-title">นัดคุยฟรี ไม่มีค่าใช้จ่าย</h3>
+            <p class="card-desc">ฟังโจทย์ก่อนเสนอแนวทาง — ไม่กดดัน ไม่ผูกมัด</p>
+          </article>
+
+          <article class="card card-dark">
+            <div class="card-icon is-dark" style="background: rgba(255,255,255,0.06); color: var(--color-orange-500);" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+            </div>
+            <h3 class="card-title">ตอบกลับใน 1 วันทำการ</h3>
+            <p class="card-desc">เคสด่วนทักไลน์ได้ ทีมพร้อมรับ จันทร์-ศุกร์ 9:00-18:00</p>
+          </article>
+
+          <article class="card card-dark">
+            <div class="card-icon is-dark" style="background: rgba(255,255,255,0.06); color: var(--color-orange-500);" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2l2.5 5.5L20 10l-5.5 2.5L12 18l-2.5-5.5L4 10l5.5-2.5L12 2z"/></svg>
+            </div>
+            <h3 class="card-title">ทีมในไทย คุยกันรู้เรื่อง</h3>
+            <p class="card-desc">ไม่ใช่ outsource ต่างประเทศ — เข้าใจตลาดและพฤติกรรมคนไทย</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+
+  <!-- ============================================================ FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+
+        <div class="footer-col">
+          <a href="/" class="footer-brand">Best Solutions</a>
+          <p class="footer-tagline">
+            เอเจนซีดิจิทัลเต็มรูปแบบในกรุงเทพฯ — ดูแลตั้งแต่ออกแบบเว็บ ยิงแอด ทำ SEO จนถึง AI Automation ครบในทีมเดียว
+          </p>
+          <div class="footer-social" role="list">
+            <a href="https://line.me/" aria-label="LINE Official Account" role="listitem" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 4H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h2v3l4-3h8a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zM7 13H5v-3h1v2h1v1zm3 0H8.5v-3H10v3zm5-1.5L13 13h-1V10h1v1.5L14.5 10H15v3zm3.5 0H17V11h-1v-1h1v-1h1.5v3z"/></svg>
+            </a>
+            <a href="https://facebook.com/" aria-label="Facebook Page" role="listitem" target="_blank" rel="noopener">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.55 9.88v-7H8v-2.88h2.45v-2.2c0-2.42 1.44-3.76 3.65-3.76 1.06 0 2.16.18 2.16.18v2.38h-1.22c-1.2 0-1.58.75-1.58 1.51v1.81h2.69l-.43 2.88h-2.26v7A10 10 0 0 0 22 12z"/></svg>
+            </a>
+            <a href="tel:0953857029" aria-label="โทรศัพท์ 095-385-7029" role="listitem">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4>บริการ</h4>
+          <ul>
+            <li><a href="services/web-design.html">รับทำเว็บไซต์</a></li>
+            <li><a href="services.html">ยิงแอด Meta &amp; Google</a></li>
+            <li><a href="services.html">SEO</a></li>
+            <li><a href="services.html">AI Automation</a></li>
+            <li><a href="services.html">Production</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>บริษัท</h4>
+          <ul>
+            <li><a href="about.html">เกี่ยวกับเรา</a></li>
+            <li><a href="portfolio.html">ผลงาน</a></li>
+            <li><a href="blog.html">บล็อก</a></li>
+            <li><a href="contact.html">ร่วมงานกับเรา</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4>ติดต่อ</h4>
+          <ul>
+            <li><a href="tel:0953857029">095-385-7029</a></li>
+            <li><a href="mailto:info@bestsolutionscorp.com">info@bestsolutionscorp.com</a></li>
+            <li><a href="https://line.me/" target="_blank" rel="noopener">LINE @bestsolutions</a></li>
+            <li><a href="https://facebook.com/" target="_blank" rel="noopener">FB @bestsolutionsagency</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span>© 2026 Best Solutions Corp · กรุงเทพมหานคร, ประเทศไทย</span>
+        <ul class="footer-bottom-links">
+          <li><a href="#">นโยบายความเป็นส่วนตัว</a></li>
+          <li><a href="#">ข้อตกลงการใช้งาน</a></li>
+          <li><a href="#">Sitemap</a></li>
+        </ul>
+      </div>
+    </div>
+  </footer>
+
+  <script src="scripts/motion.js" defer></script>
+</body>
+</html>

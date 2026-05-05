@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>บริษัท ก.ก่อสร้างไทย · Case Study · Best Solutions</title>
+  <meta name="description" content="รื้อเว็บเก่าของบริษัท ก.ก่อสร้างไทย ทำใหม่ทั้งหมดให้โหลดเร็วขึ้น 4 เท่า ลีดเข้าเพิ่ม 3.5× ใน 6 เดือนแรก — เคสจริงจาก Best Solutions">
+
+  <link rel="preload" href="../fonts/LINESeedSansTH-ExtraBold.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="../fonts/LINESeedSansTH-Regular.woff2" as="font" type="font/woff2" crossorigin>
+
+  <link rel="stylesheet" href="../styles/tokens.css">
+  <link rel="stylesheet" href="../styles/typography.css">
+  <link rel="stylesheet" href="../styles/components/section.css">
+  <link rel="stylesheet" href="../styles/components/button.css">
+  <link rel="stylesheet" href="../styles/components/card.css">
+  <link rel="stylesheet" href="../styles/components/navbar.css">
+  <link rel="stylesheet" href="../styles/components/footer.css">
+  <link rel="stylesheet" href="../styles/components/motion.css">
+
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { background: var(--color-bg); color: var(--color-text); }
+    img, svg { display: block; max-width: 100%; }
+    a { color: inherit; }
+
+    .skip-link { position: absolute; top: -100px; left: 16px; padding: var(--space-3) var(--space-4); background: var(--color-text); color: var(--color-text-on-dark); border-radius: var(--r-sm); z-index: 1000; text-decoration: none; font-weight: var(--weight-medium); }
+    .skip-link:focus { top: 16px; }
+
+    .case-hero { position: relative; padding-top: 140px; padding-bottom: var(--space-12); }
+    @media (min-width: 768px) { .case-hero { padding-top: 200px; } }
+    .case-hero-meta { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6); }
+    .case-meta-pill { display: inline-flex; padding: 6px 14px; background: var(--color-orange-50); color: var(--color-orange-700); font-size: var(--text-sm); font-weight: var(--weight-bold); letter-spacing: 0.04em; border-radius: var(--r-full); }
+    .case-meta-pill.is-blue { background: var(--color-blue-50); color: var(--color-blue-700); }
+    .case-meta-pill.is-neutral { background: var(--color-surface); color: var(--color-text-muted); box-shadow: var(--shadow-sm); }
+    .case-hero h1 { max-width: 22ch; margin: 0 0 var(--space-6); }
+    .case-hero p.lead { max-width: 720px; margin: 0; }
+
+    .breadcrumb { display: inline-flex; align-items: center; gap: var(--space-2); font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-6); }
+    .breadcrumb a { transition: color var(--t-fast) var(--ease); }
+    .breadcrumb a:hover { color: var(--color-orange-700); }
+
+    /* Cover image */
+    .case-cover {
+      aspect-ratio: 16 / 9;
+      border-radius: var(--r-3xl);
+      background: linear-gradient(135deg, var(--color-orange-500), var(--color-peach));
+      box-shadow: var(--shadow-card);
+      margin-bottom: var(--space-12);
+    }
+
+    /* Result band */
+    .results-band { background: var(--color-surface-alt); border-radius: var(--r-3xl); padding: var(--space-12) var(--space-8); }
+    @media (min-width: 768px) { .results-band { padding: var(--space-16) var(--space-12); } }
+    .results-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-8); text-align: center; }
+    @media (min-width: 768px) { .results-grid { grid-template-columns: repeat(3, 1fr); } }
+    .result-num { font-family: var(--font-display); font-weight: var(--weight-bold); font-size: clamp(40px, 5vw, 64px); line-height: 1; letter-spacing: var(--tracking-tight); font-variant-numeric: tabular-nums; }
+    .result-num.is-orange { color: var(--color-orange-500); }
+    .result-num.is-blue { color: var(--color-blue-500); }
+    .result-label { font-size: var(--text-base); color: var(--color-text-muted); margin-top: var(--space-3); }
+
+    /* Article body */
+    .case-body { max-width: 760px; margin: 0 auto; }
+    .case-body h2 { font-size: var(--text-3xl); font-weight: var(--weight-bold); margin: var(--space-12) 0 var(--space-6); }
+    .case-body p { font-size: var(--text-lg); line-height: var(--leading-normal); color: var(--color-text); margin: 0 0 var(--space-5); }
+    .case-body ul { font-size: var(--text-base); line-height: var(--leading-normal); color: var(--color-text); margin: 0 0 var(--space-5); padding-left: var(--space-6); }
+    .case-body li { margin-bottom: var(--space-2); }
+
+    /* Gallery */
+    .gallery-grid { display: grid; grid-template-columns: 1fr; gap: var(--space-4); }
+    @media (min-width: 768px) { .gallery-grid { grid-template-columns: repeat(2, 1fr); } }
+    .gallery-img { aspect-ratio: 4 / 3; border-radius: var(--r-2xl); box-shadow: var(--shadow-sm); }
+
+    /* Tech / services chips */
+    .chip-list { display: flex; flex-wrap: wrap; gap: var(--space-2); margin: var(--space-4) 0 0; padding: 0; list-style: none; }
+    .chip-list li { display: inline-flex; padding: 8px 16px; background: var(--color-surface); border-radius: var(--r-full); font-size: var(--text-sm); color: var(--color-text); box-shadow: var(--shadow-sm); }
+
+    /* Testimonial */
+    .testi-card { background: var(--color-surface); border-radius: var(--r-3xl); box-shadow: var(--shadow-card); padding: var(--space-12); display: flex; flex-direction: column; gap: var(--space-6); max-width: 880px; margin: 0 auto; }
+    .testi-stars { color: var(--color-orange-500); font-size: var(--text-lg); }
+    .testi-quote { font-family: var(--font-display); font-weight: var(--weight-bold); font-size: var(--text-2xl); line-height: 1.4; color: var(--color-text); margin: 0; }
+    .testi-foot { display: flex; align-items: center; gap: var(--space-4); padding-top: var(--space-6); border-top: 1px solid var(--hairline); }
+    .testi-avatar { width: 56px; height: 56px; border-radius: var(--r-full); background: linear-gradient(135deg, var(--color-orange-300), var(--color-peach)); flex: 0 0 auto; }
+    .testi-name { font-weight: var(--weight-bold); font-size: var(--text-lg); }
+    .testi-role { font-size: var(--text-sm); color: var(--color-text-muted); margin-top: 2px; }
+
+    .grid-3 { display: grid; grid-template-columns: 1fr; gap: var(--space-6); }
+    @media (min-width: 768px) { .grid-3 { grid-template-columns: repeat(3, 1fr); } }
+    .section-header-center { text-align: center; max-width: 720px; margin: 0 auto var(--space-12); }
+  </style>
+</head>
+<body>
+
+  <a href="#main" class="skip-link">ข้ามไปยังเนื้อหาหลัก</a>
+
+  <div class="navbar-wrap">
+    <nav class="navbar" aria-label="หลัก">
+      <a href="../index.html" class="navbar-brand">Best Solutions</a>
+      <ul class="navbar-nav">
+        <li><a href="../services.html">บริการ</a></li>
+        <li><a href="../portfolio.html" aria-current="page">ผลงาน</a></li>
+        <li><a href="../blog.html">บล็อก</a></li>
+        <li><a href="../about.html">เกี่ยวกับเรา</a></li>
+      </ul>
+      <a href="../contact.html" class="btn btn-primary btn-sm btn-arrow navbar-cta"><span class="btn-label">ปรึกษาฟรี</span></a>
+      <button class="navbar-mobile-toggle" type="button" aria-label="เปิดเมนู" aria-controls="primary-drawer" aria-expanded="false"><span></span><span></span><span></span></button>
+    </nav>
+  </div>
+
+  <div class="navbar-scrim" data-open="false" aria-hidden="true"></div>
+  <aside class="navbar-drawer" id="primary-drawer" data-open="false" aria-label="เมนูมือถือ">
+    <button class="navbar-drawer-close" type="button" aria-label="ปิดเมนู">×</button>
+    <ul class="navbar-drawer-nav">
+      <li><a href="../services.html">บริการ</a></li>
+      <li><a href="../portfolio.html" aria-current="page">ผลงาน</a></li>
+      <li><a href="../blog.html">บล็อก</a></li>
+      <li><a href="../about.html">เกี่ยวกับเรา</a></li>
+      <li><a href="../contact.html">ติดต่อเรา</a></li>
+    </ul>
+    <a href="../contact.html" class="btn btn-primary btn-arrow navbar-drawer-cta"><span class="btn-label">ปรึกษาฟรี</span></a>
+  </aside>
+
+  <main id="main">
+
+    <!-- HERO -->
+    <section class="case-hero">
+      <div class="container">
+        <a href="../portfolio.html" class="breadcrumb">
+          <span aria-hidden="true">←</span><span>ผลงานทั้งหมด</span>
+        </a>
+        <div class="case-hero-meta">
+          <span class="case-meta-pill">Web Design</span>
+          <span class="case-meta-pill is-blue">SEO</span>
+          <span class="case-meta-pill is-neutral">2026</span>
+          <span class="case-meta-pill is-neutral">5 สัปดาห์</span>
+        </div>
+        <h1>บริษัท ก.ก่อสร้างไทย — รื้อเว็บเก่า โหลดเร็วขึ้น 4 เท่า ลีดเพิ่ม 3.5×</h1>
+        <p class="lead">เคสรีไซต์ของบริษัทรับเหมาก่อสร้างขนาดกลางในกรุงเทพฯ ที่เคยพึ่งพา Yellow Pages และ word-of-mouth — รื้อเว็บใหม่ทั้งหมดเป็น Next.js + SEO-first ผลลัพธ์เกินคาดใน 6 เดือนแรก</p>
+      </div>
+    </section>
+
+    <section class="section section-tight">
+      <div class="container">
+        <div class="case-cover" role="img" aria-label="หน้า home ใหม่ของบริษัท ก.ก่อสร้างไทย"></div>
+
+        <!-- Results band -->
+        <div class="results-band" style="margin-bottom: var(--space-16);">
+          <div class="section-header-center" style="margin-bottom: var(--space-10);">
+            <span class="eyebrow-chip">● ผลลัพธ์</span>
+            <h2 style="margin-top: var(--space-4); font-size: var(--text-3xl);">ตัวเลขจากระบบ Analytics จริง</h2>
+          </div>
+          <div class="results-grid">
+            <div>
+              <div class="result-num is-orange tabular">4×</div>
+              <div class="result-label">โหลดเร็วขึ้น (LCP 3.8s → 0.9s)</div>
+            </div>
+            <div>
+              <div class="result-num tabular">3.5×</div>
+              <div class="result-label">ลีดเข้าระบบเพิ่มขึ้น</div>
+            </div>
+            <div>
+              <div class="result-num is-blue tabular">+480%</div>
+              <div class="result-label">Organic traffic ภายใน 6 เดือน</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Body -->
+        <div class="case-body">
+          <h2>โจทย์ที่เจ้าของธุรกิจเล่าให้ฟัง</h2>
+          <p>"เว็บที่ใช้อยู่เปิดมา 6 ปีแล้ว — ทำกับเอเจนซีท้องถิ่นที่ปิดตัวไป โหลดช้า ทำใน WordPress ที่ปลั๊กอินพังบ่อย ลูกค้าบอกหาเบอร์โทรไม่เจอ ปุ่มเล็ก กดบนมือถือไม่ได้"</p>
+          <p>คุณวิชัย กรรมการผู้จัดการ มาหาเราเพราะอยากได้เว็บที่ "เร็ว สะอาด และไม่ต้องเรียกซ่อมทุกครั้ง" — เน้นที่ <strong>ลีดธุรกิจ B2B</strong> มากกว่ายอด traffic ทั่วไป</p>
+
+          <h2>วิธีที่เราเข้าใจ + วางแผน</h2>
+          <p>สัปดาห์แรกเราคุยกับทีม sales 3 คนของบริษัท ดูว่าลูกค้าที่ปิดดีลได้ส่วนใหญ่ search keyword อะไร พบว่า <strong>"รับเหมาก่อสร้าง [ย่าน]"</strong> และ <strong>"ราคารับเหมาบ้าน [จังหวัด]"</strong> เป็น keyword ที่ convert สูงสุด — แต่เว็บเก่ายังไม่ได้ optimize ตามเลย</p>
+          <ul>
+            <li>วาง sitemap ใหม่: หน้า service per ภูมิภาคที่บริษัทรับงาน</li>
+            <li>Migrate content เก่า + เขียนใหม่ให้ตรง keyword</li>
+            <li>เพิ่ม structured data (LocalBusiness, Service)</li>
+            <li>ตั้ง LINE OA + Lead form กับ Pipedrive CRM</li>
+          </ul>
+
+          <h2>เทคโนโลยีที่ใช้</h2>
+          <ul class="chip-list">
+            <li>Next.js 15</li>
+            <li>TypeScript</li>
+            <li>Tailwind CSS v4</li>
+            <li>Supabase</li>
+            <li>Vercel</li>
+            <li>GA4 + GTM</li>
+            <li>Pipedrive CRM</li>
+            <li>LINE OA API</li>
+          </ul>
+
+          <h2>ผลที่ได้ใน 6 เดือนแรก</h2>
+          <p>หลัง launch สิ้นเดือนพฤศจิกายน 2025 ทีมเราตั้ง weekly report ให้ลูกค้าผ่าน Looker Studio — ติดตาม Core Web Vitals + Organic traffic + Lead count รายสัปดาห์</p>
+          <p>ภายใน 90 วันแรก keyword หลัก 3 ตัวขึ้นหน้าแรก Google ทั้งหมด ภายใน 180 วัน organic traffic ขึ้นจาก ~800/เดือน เป็น 4,600/เดือน Lead ผ่านฟอร์มเฉลี่ย 24/เดือน (เดิม 6-7/เดือน)</p>
+        </div>
+
+        <!-- Gallery -->
+        <div style="margin-top: var(--space-16);">
+          <h2 style="text-align: center; font-size: var(--text-3xl); font-weight: var(--weight-bold); margin: 0 0 var(--space-8);">หน้าเว็บที่ส่งมอบ</h2>
+          <div class="gallery-grid">
+            <div class="gallery-img" role="img" aria-label="หน้า services" style="background: linear-gradient(135deg, var(--color-orange-300), var(--color-peach));"></div>
+            <div class="gallery-img" role="img" aria-label="หน้า portfolio" style="background: linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500));"></div>
+            <div class="gallery-img" role="img" aria-label="หน้า contact" style="background: linear-gradient(135deg, var(--color-text), var(--color-orange-700));"></div>
+            <div class="gallery-img" role="img" aria-label="หน้า blog" style="background: linear-gradient(135deg, var(--color-orange-500), var(--color-orange-700));"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIAL -->
+    <section class="section section-tight">
+      <div class="container">
+        <article class="testi-card">
+          <span class="testi-stars" aria-label="คะแนน 5 จาก 5 ดาว">★★★★★</span>
+          <blockquote class="testi-quote">"เว็บใหม่โหลดเร็วกว่าเก่ามาก ลูกค้าที่กดเข้ามาแล้วไม่หลุด ลีดเข้าเพิ่มขึ้น 3 เท่าตั้งแต่เปิดใช้สัปดาห์แรก ทีมงาน Best Solutions ให้คำปรึกษาตรงไปตรงมา ไม่ขายของเกินจริง"</blockquote>
+          <div class="testi-foot">
+            <div class="testi-avatar" aria-hidden="true" style="background: linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500));"></div>
+            <div>
+              <div class="testi-name">คุณวิชัย ทองดี</div>
+              <div class="testi-role">กรรมการผู้จัดการ · บริษัท ก.ก่อสร้างไทย</div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- RELATED -->
+    <section class="section section-tight">
+      <div class="container">
+        <div class="section-header-center">
+          <span class="eyebrow-chip is-blue">● เคสที่คล้ายกัน</span>
+          <h2 style="margin-top: var(--space-4);">ผลงานอื่นที่อาจสนใจ</h2>
+        </div>
+        <div class="grid-3">
+          <a href="sample-case.html" class="card card-portfolio">
+            <div class="card-media" role="img" aria-label="หน้าร้าน e-commerce SportLab" style="background: linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700));"></div>
+            <div class="card-body"><span class="card-meta"><span>E-Commerce</span><span class="card-meta-dot"></span><span>2026</span></span><h3 class="card-title">SportLab อุปกรณ์กีฬา</h3><p class="card-desc">เว็บ + ระบบสต็อก ยอดขายขึ้น 220%</p></div>
+          </a>
+          <a href="sample-case.html" class="card card-portfolio">
+            <div class="card-media" role="img" aria-label="โรงแรม Ocean Bay" style="background: linear-gradient(135deg, var(--color-blue-700), var(--color-text));"></div>
+            <div class="card-body"><span class="card-meta"><span>Web Design</span><span class="card-meta-dot"></span><span>2025</span></span><h3 class="card-title">โรงแรม Ocean Bay</h3><p class="card-desc">เว็บจองห้องพัก การจอง +180%</p></div>
+          </a>
+          <a href="sample-case.html" class="card card-portfolio">
+            <div class="card-media" role="img" aria-label="สำนักบัญชี ทรัพย์สิน" style="background: linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500));"></div>
+            <div class="card-body"><span class="card-meta"><span>SEO</span><span class="card-meta-dot"></span><span>2025</span></span><h3 class="card-title">สำนักบัญชี ทรัพย์สิน</h3><p class="card-desc">SEO ภาษาไทย ทราฟฟิก +480%</p></div>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- DARK CTA -->
+    <div class="section section-dark-pre" aria-hidden="true"></div>
+    <section class="section section-dark" aria-labelledby="cta-title">
+      <div class="container">
+        <div class="section-header section-header-center">
+          <span class="eyebrow">● พร้อมเริ่ม</span>
+          <h2 id="cta-title">อยากให้เคสของคุณ เป็นเคสต่อไปที่เราภูมิใจ</h2>
+          <p class="lead">นัดคุยฟรี 30 นาที — เล่าโจทย์ให้ฟัง เราจะเสนอแนวทางที่ปรับใช้กับธุรกิจคุณได้</p>
+        </div>
+        <div style="display: flex; flex-wrap: wrap; gap: var(--space-4); justify-content: center; margin-top: var(--space-10);">
+          <a href="../contact.html" class="btn btn-orange btn-lg btn-arrow"><span class="btn-label">นัดคุยกับทีม</span></a>
+          <a href="../portfolio.html" class="btn btn-on-dark btn-lg"><span class="btn-label">ผลงานทั้งหมด</span></a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <a href="../index.html" class="footer-brand">Best Solutions</a>
+          <p class="footer-tagline">เอเจนซีดิจิทัลเต็มรูปแบบในกรุงเทพฯ — ดูแลตั้งแต่ออกแบบเว็บ ยิงแอด ทำ SEO จนถึง AI Automation ครบในทีมเดียว</p>
+        </div>
+        <div class="footer-col"><h4>บริการ</h4><ul><li><a href="../services/web-design.html">รับทำเว็บไซต์</a></li><li><a href="../services.html">ยิงแอด</a></li><li><a href="../services.html">SEO</a></li><li><a href="../services.html">AI Automation</a></li><li><a href="../services.html">Production</a></li></ul></div>
+        <div class="footer-col"><h4>บริษัท</h4><ul><li><a href="../about.html">เกี่ยวกับเรา</a></li><li><a href="../portfolio.html" aria-current="page">ผลงาน</a></li><li><a href="../blog.html">บล็อก</a></li><li><a href="../contact.html">ร่วมงานกับเรา</a></li></ul></div>
+        <div class="footer-col"><h4>ติดต่อ</h4><ul><li><a href="tel:0953857029">095-385-7029</a></li><li><a href="mailto:info@bestsolutionscorp.com">info@bestsolutionscorp.com</a></li><li><a href="https://line.me/" target="_blank" rel="noopener">LINE @bestsolutions</a></li><li><a href="https://facebook.com/" target="_blank" rel="noopener">FB @bestsolutionsagency</a></li></ul></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 Best Solutions Corp · กรุงเทพมหานคร, ประเทศไทย</span><ul class="footer-bottom-links"><li><a href="#">นโยบายความเป็นส่วนตัว</a></li><li><a href="#">ข้อตกลงการใช้งาน</a></li><li><a href="#">Sitemap</a></li></ul></div>
+    </div>
+  </footer>
+
+  <script src="../scripts/motion.js" defer></script>
+</body>
+</html>
