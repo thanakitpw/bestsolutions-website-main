@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getServiceBySlug, getPortfolioItems } from "@/utils/supabase/queries";
+import { ServiceJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
 import { pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/web-design.css";
@@ -44,6 +45,20 @@ export default async function WebDesignPage({
 
   return (
     <main id="main">
+      {service ? <ServiceJsonLd service={service} locale={locale} /> : null}
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Services" : "บริการ", path: "/services" },
+          {
+            name: service
+              ? pickLocale(locale, service.name_th, service.name_en ?? service.name_th)
+              : "Web Design",
+            path: "/services/web-design",
+          },
+        ]}
+      />
 
       {/* ============================================================ HERO */}
       <section className="page-hero" aria-labelledby="hero-title">

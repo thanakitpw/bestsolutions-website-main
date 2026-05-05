@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import { getArticleBySlug, getArticles, getArticleSlugs } from "@/utils/supabase/queries";
 import { buildAlternates, buildOg } from "@/utils/metadata";
+import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import "@/styles/pages/sample-post.css";
 
@@ -65,6 +66,15 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main id="main">
+      <ArticleJsonLd article={article} locale={locale} />
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Blog" : "บทความ", path: "/blog" },
+          { name: title, path: `/blog/${slug}` },
+        ]}
+      />
 
       {/* ============================================================ HEADER */}
       <header className="post-header">

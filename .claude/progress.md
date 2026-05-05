@@ -1,7 +1,7 @@
 # Progress — Best Solutions Website Redesign
 
-**Last updated:** 2026-05-05 17:30 GMT+7
-**Current branch:** `main` (clean — eb94343 pushed)
+**Last updated:** 2026-05-05 17:25 GMT+7
+**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes`
 **Live Supabase project:** `dhftyjnzqkyocfhtmjet` (bestsolutions-website, ap-northeast-2)
 
 ---
@@ -33,6 +33,33 @@
 - ✅ **Portfolio index** — 9-card grid + stats band ← `getPortfolioItems()` + stats setting
 - ✅ **Portfolio `[slug]`** — dynamic route replacing `sample-case/`, results band, `body_md`, tech_stack
 - ✅ **Services/web-design** — hero name/summary + related portfolio ← `getServiceBySlug()`
+
+### Task C — SEO Phase 5 (in progress)
+
+#### T5.2 — JSON-LD structured data ✅ DONE
+- ✅ `web/components/json-ld.tsx` — `JsonLd` base + 7 schema components
+  - `OrganizationJsonLd` (with `sameAs` Facebook/LINE, `contactPoint` w/ E.164 phone)
+  - `LocalBusinessJsonLd` (`ProfessionalService` + address Bangkok TH + opening hours)
+  - `ServiceJsonLd` (single Service ref'd to Org `@id`)
+  - `ServiceListJsonLd` (ItemList of all services)
+  - `ArticleJsonLd` (headline, image, datePublished, author Person, mainEntityOfPage)
+  - `PortfolioJsonLd` (CreativeWork + sourceOrganization client + dateCreated)
+  - `BreadcrumbJsonLd` (helper accepts items + locale)
+- ✅ Wired on home (Org + LocalBusiness)
+- ✅ Wired on services index (ServiceList + Breadcrumb), web-design detail (Service + Breadcrumb)
+- ✅ Wired on blog/[slug] (Article + Breadcrumb), blog index (Breadcrumb)
+- ✅ Wired on portfolio/[slug] (CreativeWork + Breadcrumb), portfolio index (Breadcrumb)
+- ✅ Wired on about + contact (Breadcrumb)
+- ✅ Build clean, dev curl-verified all 9 routes emit valid `application/ld+json`
+
+#### T5.1 — generateMetadata per route ✅ DONE (commit 5d3fbc2)
+- ✅ `web/utils/metadata.ts` — utility ใหม่: `buildPageMetadata`, `buildAlternates`, `buildOg`
+- ✅ 6 static pages — แทน `export const metadata` เก่าด้วย async `generateMetadata` (locale-aware ผ่าน next-intl)
+  - about, services, services/web-design, blog, portfolio, contact
+- ✅ 2 dynamic routes — เพิ่ม canonical, hreflang th/en, OG image (ใช้ `cover_image` จาก DB)
+  - blog/[slug], portfolio/[slug]
+- ✅ th.json + en.json — เพิ่ม meta keys: About, Services, WebDesign, Blog, Portfolio, Contact namespaces
+- ✅ Build clean (11 files, 233 insertions)
 
 ### Task B — Contact form server action ✅ DONE (commit eb94343)
 - ✅ `actions.ts` — Zod v4 validate → honeypot check → IP-hash rate limit (3/hr) → admin client insert
@@ -66,6 +93,21 @@
 | `web/components/contact-form.tsx` | NEW — client component (RHF + zodResolver + success state) |
 | `web/app/[locale]/contact/page.tsx` | แทน `<form>` hardcoded ด้วย `<ContactForm>` |
 
+### Task C.1 commits (T5.1)
+| File | การเปลี่ยนแปลง |
+|---|---|
+| `web/utils/metadata.ts` | NEW — `buildPageMetadata`, `buildAlternates`, `buildOg` helpers |
+| `web/messages/th.json` | เพิ่ม About/Services/WebDesign/Blog/Portfolio/Contact meta namespaces |
+| `web/messages/en.json` | เพิ่ม About/Services/WebDesign/Blog/Portfolio/Contact meta namespaces |
+| `web/app/[locale]/about/page.tsx` | ลบ static metadata → async `generateMetadata` |
+| `web/app/[locale]/services/page.tsx` | ลบ static metadata → async `generateMetadata` |
+| `web/app/[locale]/services/web-design/page.tsx` | ลบ static metadata → async `generateMetadata` |
+| `web/app/[locale]/contact/page.tsx` | ลบ static metadata → async `generateMetadata` |
+| `web/app/[locale]/blog/page.tsx` | ลบ static metadata → async `generateMetadata` |
+| `web/app/[locale]/portfolio/page.tsx` | ลบ static metadata → async `generateMetadata` |
+| `web/app/[locale]/blog/[slug]/page.tsx` | เพิ่ม canonical, hreflang, OG (type=article, cover_image) |
+| `web/app/[locale]/portfolio/[slug]/page.tsx` | เพิ่ม canonical, hreflang, OG (cover_image) |
+
 ### Packages เพิ่ม
 - `react-markdown` + `rehype-sanitize` — render `body_md_th` ใน blog/portfolio detail
 - `react-hook-form` + `@hookform/resolvers` — contact form validation
@@ -89,15 +131,18 @@
 - **Zod → DB coercion:** `undefined` → `null` explicit ก่อน insert เพราะ `exactOptionalPropertyTypes: true`
 - **Service detail routes:** only `web-design` static page; อื่น ๆ ยัง link ไป `/services` index (deferred)
 - **Admin:** Supabase Studio ก่อน launch; lead inbox (`/admin/leads`) เป็น v1 เดียว
+- **Metadata architecture:** layout sets `metadataBase` + `title.template` ("%s · Best Solutions") + home defaults; static pages use `getTranslations` → `buildPageMetadata`; dynamic routes use `{ absolute: fullTitle }` เพื่อป้องกัน template ซ้ำซ้อน
+- **exactOptionalPropertyTypes:** optional spread ผ่าน `...(val !== undefined ? { key: val } : {})` — ห้ามส่ง `undefined` ตรงๆ
+- **i18n meta copy:** meta titles/descriptions อยู่ใน `messages/[locale].json` แยก namespace ต่อหน้า ไม่ hardcode ใน component
 
 ---
 
 ## 🚧 TODO ที่ยังเหลือ
 
-### C — SEO Phase 5 ← **NEXT**
-- T5.1 `generateMetadata` per route (title ≤60, desc ≤160, canonical, OG, hreflang th/en)
-- T5.2 JSON-LD components (Organization, LocalBusiness, Service, Article, BreadcrumbList)
-- T5.3 `web/app/sitemap.ts` (pulls article + portfolio slugs from Supabase)
+### C — SEO Phase 5 ← **IN PROGRESS**
+- ✅ T5.1 `generateMetadata` per route (title ≤60, desc ≤160, canonical, OG, hreflang th/en)
+- ✅ T5.2 JSON-LD components (Organization, LocalBusiness, Service, Article, CreativeWork, Breadcrumb)
+- **← NEXT** T5.3 `web/app/sitemap.ts` (pulls article + portfolio slugs from Supabase)
 - T5.4 `web/app/robots.ts`
 - T5.5 OG image generation (`opengraph-image.tsx` with LINE Seed font)
 - T5.6 Image audit — `next/image`, alt text ภาษาไทย, `priority` on above-fold
@@ -139,8 +184,11 @@
 
 ## ➡️ Next steps (recommend)
 
-1. **Task C — SEO** (เริ่มที่ T5.1 `generateMetadata` ก่อน — ทุก route ต้องมี title/desc/OG ก่อน deploy)
-   - Priority: home → services → contact → blog post → portfolio case
+1. **Task C — SEO (ต่อ)** ✅ T5.1 done — ทำต่อที่:
+   - **T5.2** JSON-LD: `OrganizationJsonLd` + `LocalBusinessJsonLd` บน home, `ServiceJsonLd` บน service pages, `ArticleJsonLd` บน blog/[slug], `BreadcrumbJsonLd` ทุกหน้า
+   - T5.3 sitemap.ts (Supabase slugs)
+   - T5.4 robots.ts
+   - T5.5 OG image generation
    - JSON-LD: Organization + LocalBusiness บน home, Service บน service pages, Article บน blog
 2. **Task D — ISR** เพิ่ม `revalidate` ใน page route config หลัง SEO เสร็จ
 3. **Task F — Playwright** setup + critical path e2e ก่อน staging deploy

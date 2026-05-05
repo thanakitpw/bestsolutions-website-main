@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getSiteSetting } from "@/utils/supabase/queries";
 import { ContactForm } from "@/components/contact-form";
+import { BreadcrumbJsonLd } from "@/components/json-ld";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/contact.css";
 
@@ -48,6 +49,13 @@ export default async function ContactPage({
 
   return (
     <main id="main">
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Contact" : "ติดต่อเรา", path: "/contact" },
+        ]}
+      />
 
       {/* ============================================================ HERO */}
       <section className="page-hero" aria-labelledby="hero-title">

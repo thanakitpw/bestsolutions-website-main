@@ -6,6 +6,7 @@ import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import { getPortfolioItemBySlug, getPortfolioItems, getPortfolioSlugs } from "@/utils/supabase/queries";
 import { buildAlternates, buildOg } from "@/utils/metadata";
+import { PortfolioJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
 import { pickLocale } from "@/utils/format";
 import type { PortfolioResult } from "@/utils/supabase/types";
 import "@/styles/pages/sample-case.css";
@@ -64,6 +65,15 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
   return (
     <main id="main">
+      <PortfolioJsonLd item={item} locale={locale} />
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Portfolio" : "ผลงาน", path: "/portfolio" },
+          { name: item.title, path: `/portfolio/${slug}` },
+        ]}
+      />
 
       {/* ============================================================ HERO */}
       <section className="case-hero">

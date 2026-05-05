@@ -3,6 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getServices } from "@/utils/supabase/queries";
 import { ServiceIcon } from "@/components/service-icon";
+import { ServiceListJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
 import { pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/services.css";
@@ -35,6 +36,14 @@ export default async function ServicesPage({
 
   return (
     <main id="main">
+      <ServiceListJsonLd services={services} locale={locale} />
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Services" : "บริการ", path: "/services" },
+        ]}
+      />
 
       {/* ============================================================ HERO */}
       <section className="page-hero" aria-labelledby="hero-title">

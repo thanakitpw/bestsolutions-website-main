@@ -8,6 +8,11 @@ import {
   getSiteSetting,
 } from "@/utils/supabase/queries";
 import { ServiceIcon } from "@/components/service-icon";
+import {
+  OrganizationJsonLd,
+  LocalBusinessJsonLd,
+  type ContactInfo,
+} from "@/components/json-ld";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import "@/styles/pages/home.css";
 
@@ -63,7 +68,7 @@ export default async function HomePage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [services, featuredPortfolio, testimonials, articles, hero, stats] =
+  const [services, featuredPortfolio, testimonials, articles, hero, stats, contact] =
     await Promise.all([
       getServices(),
       getPortfolioItems({ featured: true, limit: 3 }),
@@ -71,6 +76,7 @@ export default async function HomePage({
       getArticles({ limit: 3 }),
       getSiteSetting<HeroSetting>("hero"),
       getSiteSetting<StatsSetting>("stats"),
+      getSiteSetting<ContactInfo>("contact"),
     ]);
 
   const homeServices = services.slice(0, 4);
@@ -87,8 +93,13 @@ export default async function HomePage({
   const heroSeoDays = stats?.seo_days ?? "90";
   const heroYears = stats?.years ?? "8";
 
+  const contactInfo: ContactInfo = contact ?? {};
+
   return (
     <main id="main">
+      <OrganizationJsonLd contact={contactInfo} locale={locale} />
+      <LocalBusinessJsonLd contact={contactInfo} locale={locale} />
+
       {/* ============================================================ HERO */}
       <section className="hero" aria-labelledby="hero-title">
         <div className="hero-blob" aria-hidden="true"></div>

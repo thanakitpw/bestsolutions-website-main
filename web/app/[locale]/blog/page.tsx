@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getArticles } from "@/utils/supabase/queries";
+import { BreadcrumbJsonLd } from "@/components/json-ld";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/blog.css";
@@ -46,6 +47,13 @@ export default async function BlogPage({
 
   return (
     <main id="main">
+      <BreadcrumbJsonLd
+        locale={locale}
+        items={[
+          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
+          { name: locale === "en" ? "Blog" : "บทความ", path: "/blog" },
+        ]}
+      />
 
       {/* ============================================================ HERO */}
       <section className="page-hero" aria-labelledby="hero-title">
