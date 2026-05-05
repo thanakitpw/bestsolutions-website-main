@@ -1,7 +1,7 @@
 # Progress — Best Solutions Website Redesign
 
-**Last updated:** 2026-05-05 20:51 GMT+7
-**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes` (commit `e235dc0`)
+**Last updated:** 2026-05-05 22:30 GMT+7
+**Current branch:** `thanakitpw/feat/seo-generate-metadata-all-routes` (commit `6b17ac9`)
 **Live Supabase project:** `dhftyjnzqkyocfhtmjet` (bestsolutions-website, ap-northeast-2)
 **Recent commits this session:** 6a67e44 → 6bab4d8 → cc47527 → 5e80ed4 → e235dc0
 
@@ -286,16 +286,16 @@
 - ✅ T5.7 Heading hierarchy audit (commit 6bab4d8) — fixed blog/[slug] h4→h2 (TOC), contact h4→h3 (เวลาทำการ/ที่ตั้ง); all 9 routes 1×H1, correct H2→H3
 - ✅ T5.8 Internal linking pass (commit cc47527) — about+CTA→/services, services→/blog, portfolio/[slug]→/services; triangle service↔portfolio↔blog ครบ
 
-### D — Performance Phase 6 ← **IN PROGRESS** (4/5 done)
+### D — Performance Phase 6 ✅ COMPLETE (4/5 done — T6.1 deferred to staging)
 - T6.1 LCP audit home + services + blog (throttled 4G) — defer to staging (T9.2)
 - ✅ T6.2 ISR strategy (commit 5e80ed4) — indices revalidate=60, details=300, static=3600; ครบ 9 routes
 - ✅ T6.3 Bundle analyzer (commit e235dc0) — `@next/bundle-analyzer` wired (ANALYZE=true); home 207KB gz; revised target ~200KB (120KB unrealistic for App Router+next-intl+motion)
 - ✅ T6.4 Framer Motion scope check — motion ใช้เฉพาะ `reveal.tsx` (`"use client"`); ไม่มี server bundle leak
 - ✅ T6.5 Caching headers (commit e235dc0) — `vercel.json` → /fonts/* + /_next/static/* immutable 1 year
 
-### E — Phase 7 (admin minimum)
-- T7.2 Supabase Auth magic-link (founder allowlist)
-- T7.6 Lead inbox `/admin/leads` (mark read, CSV export, optional Resend notification)
+### E — Phase 7 (admin minimum) ✅ COMPLETE (commit 7212dcf)
+- ✅ T7.2 Supabase Auth magic-link — /admin/login, /api/auth/callback, /api/auth/signout, proxy.ts guard + allowlist (agency.bestsolutions@gmail.com)
+- ✅ T7.6 Lead inbox `/admin/leads` — table UI, mark-contacted action, BOM CSV export
 - ❌ T7.3–T7.5 (article/portfolio/service editors) — deferred post-launch
 
 ### F — Phase 8 testing
@@ -308,8 +308,12 @@
 - T8.7 Redirect verification (`redirect-map.csv` → 301)
 
 ### G — Phase 9 launch
-- T9.1 Vercel project setup
-- T9.2 Staging deploy
+- T9.1 Vercel project setup ← **IN PROGRESS**
+  - Vercel MCP connected (claude mcp add --transport http vercel https://mcp.vercel.com)
+  - env vars set บน project `bestsolutions-website`: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY, SUPABASE_SERVICE_ROLE_KEY, IP_HASH_SALT, NEXT_PUBLIC_SITE_URL (production+preview+development)
+  - ⚠️ ยังไม่ได้ vercel link project ใหม่แยกจากเว็บเก่า — ต้อง run `vercel link` จาก `web/` เลือก N (ไม่ link อันเดิม) ชื่อ `bestsolutions-website-redesign`
+  - vercel.json: เพิ่ม buildCommand/outputDirectory/installCommand (commit 6b17ac9)
+- T9.2 Staging deploy — ยังไม่ได้ทำ
 - T9.3 G3 founder review on staging
 - T9.4 DNS plan ADR
 - T9.5 Production env vars
