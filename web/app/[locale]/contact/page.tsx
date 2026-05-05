@@ -135,12 +135,12 @@ export default async function ContactPage({
               </div>
 
               <div className="info-card">
-                <h4>เวลาทำการ</h4>
+                <h3>เวลาทำการ</h3>
                 <p>{contact.hours}<br />เสาร์-อาทิตย์: ทักไลน์ทิ้งไว้ได้ ตอบเช้าวันจันทร์</p>
               </div>
 
               <div className="info-card">
-                <h4>ที่ตั้ง</h4>
+                <h3>ที่ตั้ง</h3>
                 <p>กรุงเทพมหานคร, ประเทศไทย<br />(นัดคุยทาง Google Meet เป็นหลัก — ออฟฟิศนัดล่วงหน้า)</p>
               </div>
 

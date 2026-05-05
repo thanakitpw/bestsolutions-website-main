@@ -112,7 +112,7 @@ export default async function BlogPostPage({ params }: Props) {
 
             {/* TOC placeholder — populated by client-side JS in future */}
             <nav className="post-toc" aria-label="สารบัญบทความ">
-              <h4>สารบัญ</h4>
+              <h2>สารบัญ</h2>
             </nav>
 
             {/* BODY */}
