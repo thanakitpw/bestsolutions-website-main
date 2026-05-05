@@ -1,6 +1,8 @@
 import { cookies } from "next/headers";
 import { createClient } from "./server";
+import { createBrowserClient } from "@supabase/ssr";
 import type { Article, PortfolioItem, Service, Testimonial, SiteSetting } from "./types";
+import type { Database } from "./types";
 
 /**
  * Read helpers for RSC pages. RLS guarantees only published rows are returned to anon.
@@ -10,6 +12,14 @@ import type { Article, PortfolioItem, Service, Testimonial, SiteSetting } from "
 async function db() {
   const cookieStore = await cookies();
   return createClient(cookieStore);
+}
+
+/** Cookie-free anon client for use in generateStaticParams (build-time, no HTTP request). */
+function staticDb() {
+  return createBrowserClient<Database>(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
+  );
 }
 
 export async function getServices(): Promise<Service[]> {
@@ -110,4 +120,22 @@ export async function getSiteSetting<T = unknown>(key: string): Promise<T | null
   if (error) throw error;
   if (!data) return null;
   return (data as SiteSetting).value as T;
+}
+
+/** For generateStaticParams — cookie-free, build-time safe. */
+export async function getArticleSlugs(): Promise<string[]> {
+  const { data } = await staticDb()
+    .from("articles")
+    .select("slug")
+    .eq("status", "published");
+  return (data ?? []).map((r) => r.slug);
+}
+
+/** For generateStaticParams — cookie-free, build-time safe. */
+export async function getPortfolioSlugs(): Promise<string[]> {
+  const { data } = await staticDb()
+    .from("portfolio_items")
+    .select("slug")
+    .eq("status", "published");
+  return (data ?? []).map((r) => r.slug);
 }

@@ -1,12 +1,29 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getSiteSetting } from "@/utils/supabase/queries";
 import "@/styles/pages/contact.css";
+
+type ContactSetting = {
+  phone: string;
+  email: string;
+  line: string;
+  facebook: string;
+  hours: string;
+};
 
 export const metadata: Metadata = {
   title: "ติดต่อเรา · Best Solutions — นัดคุยฟรี 30 นาที ทักไลน์ได้ทันที",
   description:
     "ติดต่อ Best Solutions Corp กรุงเทพฯ — ฟอร์มขอใบเสนอราคา / โทร 095-385-7029 / LINE @bestsolutions / อีเมล info@bestsolutionscorp.com — ตอบกลับใน 1 วันทำการ",
+};
+
+const DEFAULT_CONTACT: ContactSetting = {
+  phone: "095-385-7029",
+  email: "info@bestsolutionscorp.com",
+  line: "@bestsolutions",
+  facebook: "@bestsolutionsagency",
+  hours: "จันทร์-ศุกร์ 9:00-18:00",
 };
 
 export default async function ContactPage({
@@ -16,6 +33,9 @@ export default async function ContactPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const contactData = await getSiteSetting<ContactSetting>("contact");
+  const contact = contactData ?? DEFAULT_CONTACT;
 
   return (
     <main id="main">
@@ -108,7 +128,7 @@ export default async function ContactPage({
 
               <div className="form-actions">
                 <button className="btn btn-primary btn-arrow" type="submit"><span className="btn-label">ส่งข้อมูล</span></button>
-                <span className="form-help" style={{ marginTop: 0 }}>หรือทักไลน์ <strong>@bestsolutions</strong> ก็ได้</span>
+                <span className="form-help" style={{ marginTop: 0 }}>หรือทักไลน์ <strong>{contact.line}</strong> ก็ได้</span>
               </div>
             </form>
 
@@ -123,43 +143,43 @@ export default async function ContactPage({
 
               <div className="contact-channels">
 
-                <a href="https://line.me/" target="_blank" rel="noopener" className="contact-channel">
+                <a href={`https://line.me/R/ti/p/${contact.line}`} target="_blank" rel="noopener" className="contact-channel">
                   <div className="contact-channel-icon is-line" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h2v3l4-3h8a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zM7 13H5v-3h1v2h1v1zm3 0H8.5v-3H10v3zm5-1.5L13 13h-1V10h1v1.5L14.5 10H15v3zm3.5 0H17V11h-1v-1h1v-1h1.5v3z" /></svg>
                   </div>
                   <div>
                     <div className="contact-channel-label">LINE Official</div>
-                    <div className="contact-channel-value">@bestsolutions</div>
+                    <div className="contact-channel-value">{contact.line}</div>
                   </div>
                 </a>
 
-                <a href="tel:0953857029" className="contact-channel">
+                <a href={`tel:${contact.phone.replace(/-/g, "")}`} className="contact-channel">
                   <div className="contact-channel-icon" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" /></svg>
                   </div>
                   <div>
                     <div className="contact-channel-label">โทรศัพท์</div>
-                    <div className="contact-channel-value">095-385-7029</div>
+                    <div className="contact-channel-value">{contact.phone}</div>
                   </div>
                 </a>
 
-                <a href="mailto:info@bestsolutionscorp.com" className="contact-channel">
+                <a href={`mailto:${contact.email}`} className="contact-channel">
                   <div className="contact-channel-icon is-blue" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
                   </div>
                   <div>
                     <div className="contact-channel-label">อีเมล</div>
-                    <div className="contact-channel-value">info@bestsolutionscorp.com</div>
+                    <div className="contact-channel-value">{contact.email}</div>
                   </div>
                 </a>
 
-                <a href="https://facebook.com/" target="_blank" rel="noopener" className="contact-channel">
+                <a href={`https://facebook.com/${contact.facebook.replace("@", "")}`} target="_blank" rel="noopener" className="contact-channel">
                   <div className="contact-channel-icon is-blue" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.55 9.88v-7H8v-2.88h2.45v-2.2c0-2.42 1.44-3.76 3.65-3.76 1.06 0 2.16.18 2.16.18v2.38h-1.22c-1.2 0-1.58.75-1.58 1.51v1.81h2.69l-.43 2.88h-2.26v7A10 10 0 0 0 22 12z" /></svg>
                   </div>
                   <div>
                     <div className="contact-channel-label">Facebook Page</div>
-                    <div className="contact-channel-value">@bestsolutionsagency</div>
+                    <div className="contact-channel-value">{contact.facebook}</div>
                   </div>
                 </a>
 
@@ -167,7 +187,7 @@ export default async function ContactPage({
 
               <div className="info-card">
                 <h4>เวลาทำการ</h4>
-                <p>จันทร์-ศุกร์ 9:00 - 18:00<br />เสาร์-อาทิตย์: ทักไลน์ทิ้งไว้ได้ ตอบเช้าวันจันทร์</p>
+                <p>{contact.hours}<br />เสาร์-อาทิตย์: ทักไลน์ทิ้งไว้ได้ ตอบเช้าวันจันทร์</p>
               </div>
 
               <div className="info-card">

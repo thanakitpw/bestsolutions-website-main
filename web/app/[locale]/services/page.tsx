@@ -1,7 +1,13 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getServices } from "@/utils/supabase/queries";
+import { ServiceIcon } from "@/components/service-icon";
+import { pickLocale } from "@/utils/format";
 import "@/styles/pages/services.css";
+
+const SERVICE_TONES = ["is-orange", "is-blue", "is-cream", "is-orange", "is-blue", "is-cream", "is-orange"] as const;
+const SERVICES_WITH_DETAIL = new Set(["web-design"]);
 
 export const metadata: Metadata = {
   title: "บริการของเรา · Best Solutions — รับทำเว็บ ยิงแอด SEO AI Automation",
@@ -16,6 +22,8 @@ export default async function ServicesPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const services = await getServices();
 
   return (
     <main id="main">
@@ -45,105 +53,26 @@ export default async function ServicesPage({
           <h2 id="services-title" className="visually-hidden">บริการทั้งหมดของเรา</h2>
 
           <div className="grid-services-7">
-
-            <Link href="/services/web-design" className="card card-service">
-              <div className="card-icon is-orange" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="14" rx="2" /><path d="M3 8h18M8 12h6" /></svg>
-              </div>
-              <h3 className="card-title">รับทำเว็บไซต์</h3>
-              <p className="card-desc">เว็บโหลดเร็ว ขายของได้ ผ่าน SEO ตั้งแต่วันแรก ไม่ใช่แค่สวย</p>
-              <ul className="service-features">
-                <li className="service-feature">ออกแบบ UX/UI ตามแบรนด์</li>
-                <li className="service-feature">SEO-ready โครงสร้างถูกต้อง</li>
-                <li className="service-feature">เปิดแอดมินแก้ content เองได้</li>
-              </ul>
-              <span className="card-link">ดูรายละเอียด</span>
-            </Link>
-
-            <Link href="/services" className="card card-service">
-              <div className="card-icon is-blue" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M3 11l18-7v16L3 13z" /><path d="M11 19c0 1.5-1 3-3 3s-3-1.5-3-3" /></svg>
-              </div>
-              <h3 className="card-title">ยิงแอด Meta &amp; Google</h3>
-              <p className="card-desc">ปรับแคมเปญรายสัปดาห์ วัดผลทุกบาท ROAS ขึ้นจริง</p>
-              <ul className="service-features">
-                <li className="service-feature">วาง funnel + audience</li>
-                <li className="service-feature">A/B test ครีเอทีฟ</li>
-                <li className="service-feature">รายงานรายสัปดาห์</li>
-              </ul>
-              <span className="card-link">เช็กแพ็กเกจ</span>
-            </Link>
-
-            <Link href="/services" className="card card-service">
-              <div className="card-icon is-cream" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="7" /><path d="M21 21l-4.5-4.5" /></svg>
-              </div>
-              <h3 className="card-title">SEO ติดอันดับ Google</h3>
-              <p className="card-desc">เนื้อหา Authority + Technical ที่ขึ้นแล้วอยู่ยาว</p>
-              <ul className="service-features">
-                <li className="service-feature">Keyword research ภาษาไทย</li>
-                <li className="service-feature">Technical audit + fix</li>
-                <li className="service-feature">Content writer ทีมไทย</li>
-              </ul>
-              <span className="card-link">วางแผน SEO</span>
-            </Link>
-
-            <Link href="/services" className="card card-service">
-              <div className="card-icon is-orange" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" /></svg>
-              </div>
-              <h3 className="card-title">ดูแลเพจโซเชียล</h3>
-              <p className="card-desc">คอนเทนต์ + ตอบแอดมิน + รายงานรายเดือน ครบจบในที่เดียว</p>
-              <ul className="service-features">
-                <li className="service-feature">Content plan รายเดือน</li>
-                <li className="service-feature">Admin ตอบ inbox</li>
-                <li className="service-feature">Monthly performance report</li>
-              </ul>
-              <span className="card-link">ดูแพ็กเกจ</span>
-            </Link>
-
-            <Link href="/services" className="card card-service">
-              <div className="card-icon is-blue" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M12 2l2.5 5.5L20 10l-5.5 2.5L12 18l-2.5-5.5L4 10l5.5-2.5L12 2z" /></svg>
-              </div>
-              <h3 className="card-title">AI Automation</h3>
-              <p className="card-desc">ระบบตอบลูกค้า ปิดการขาย จัดการหลังบ้านอัตโนมัติ</p>
-              <ul className="service-features">
-                <li className="service-feature">Chat bot ตอบลูกค้า 24/7</li>
-                <li className="service-feature">เชื่อม CRM อัตโนมัติ</li>
-                <li className="service-feature">Workflow n8n / Zapier</li>
-              </ul>
-              <span className="card-link">ดู Flow ตัวอย่าง</span>
-            </Link>
-
-            <Link href="/services" className="card card-service">
-              <div className="card-icon is-cream" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" /><polyline points="22,6 12,13 2,6" /></svg>
-              </div>
-              <h3 className="card-title">AI ตอบอีเมล</h3>
-              <p className="card-desc">ระบบจัด priority + ร่างคำตอบให้พร้อมส่ง ลดงานวันละ 2 ชั่วโมง</p>
-              <ul className="service-features">
-                <li className="service-feature">จัดหมวดอีเมลอัตโนมัติ</li>
-                <li className="service-feature">ร่างคำตอบ AI</li>
-                <li className="service-feature">ปลอดภัย ไม่ส่งข้อมูลเข้า public LLM</li>
-              </ul>
-              <span className="card-link">ลองดูตัวอย่าง</span>
-            </Link>
-
-            <Link href="/services" className="card card-service">
-              <div className="card-icon is-orange" aria-hidden="true">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round"><polygon points="23 7 16 12 23 17 23 7" /><rect x="1" y="5" width="15" height="14" rx="2" ry="2" /></svg>
-              </div>
-              <h3 className="card-title">Production · Video</h3>
-              <p className="card-desc">ถ่าย ตัด ลง — โฆษณา / รีวิวสินค้า / คอนเทนต์โซเชียล</p>
-              <ul className="service-features">
-                <li className="service-feature">วาง concept + scripting</li>
-                <li className="service-feature">ทีมถ่ายในกรุงเทพฯ</li>
-                <li className="service-feature">ตัด + ลง พร้อม caption</li>
-              </ul>
-              <span className="card-link">ดูตัวอย่างงาน</span>
-            </Link>
-
+            {services.map((s, i) => {
+              const href = SERVICES_WITH_DETAIL.has(s.slug) ? `/services/${s.slug}` : "/services";
+              const tone = SERVICE_TONES[i % SERVICE_TONES.length];
+              const features = locale === "en" && s.features_en?.length ? s.features_en : s.features_th;
+              return (
+                <Link key={s.slug} href={href} className="card card-service">
+                  <div className={`card-icon ${tone}`} aria-hidden="true">
+                    <ServiceIcon name={s.icon} />
+                  </div>
+                  <h3 className="card-title">{pickLocale(locale, s.name_th, s.name_en ?? s.name_th)}</h3>
+                  <p className="card-desc">{pickLocale(locale, s.summary_th, s.summary_en ?? s.summary_th)}</p>
+                  <ul className="service-features">
+                    {features?.map((f) => (
+                      <li key={f} className="service-feature">{f}</li>
+                    ))}
+                  </ul>
+                  <span className="card-link">ดูรายละเอียด</span>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

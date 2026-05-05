@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getServiceBySlug, getPortfolioItems } from "@/utils/supabase/queries";
+import { pickLocale } from "@/utils/format";
 import "@/styles/pages/web-design.css";
+
+const RELATED_GRADIENTS = [
+  "linear-gradient(135deg, var(--color-orange-500), var(--color-peach))",
+  "linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700))",
+  "linear-gradient(135deg, var(--color-text), var(--color-orange-700))",
+];
 
 export const metadata: Metadata = {
   title: "รับทำเว็บไซต์ · Best Solutions — เว็บที่ขายของได้จริง พร้อม SEO",
@@ -16,6 +24,15 @@ export default async function WebDesignPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const [service, allPortfolio] = await Promise.all([
+    getServiceBySlug("web-design"),
+    getPortfolioItems(),
+  ]);
+
+  const relatedPortfolio = allPortfolio
+    .filter((p) => p.services?.includes("web-design"))
+    .slice(0, 3);
 
   return (
     <main id="main">
@@ -33,10 +50,11 @@ export default async function WebDesignPage({
               <span className="star">✦</span>
               <span>Web Design · Service</span>
             </span>
-            <h1 id="hero-title">ออกแบบเว็บไซต์ที่ขายของได้จริง — ไม่ใช่แค่สวย</h1>
+            <h1 id="hero-title">
+              {service ? pickLocale(locale, service.name_th, service.name_en ?? service.name_th) : "ออกแบบเว็บไซต์ที่ขายของได้จริง — ไม่ใช่แค่สวย"}
+            </h1>
             <p className="lead">
-              เว็บที่โหลดเร็ว SEO-ready ออกแบบจากแบรนด์คุณ พร้อม Lighthouse score ≥ 95 ทุกเว็บที่ส่งมอบ
-              แก้ content เองได้ผ่าน Supabase Studio ไม่ต้องโทรหาเราทุกครั้ง
+              {service ? pickLocale(locale, service.summary_th, service.summary_en ?? service.summary_th) : "เว็บที่โหลดเร็ว SEO-ready ออกแบบจากแบรนด์คุณ พร้อม Lighthouse score ≥ 95 ทุกเว็บที่ส่งมอบ"}
             </p>
             <div className="hero-ctas">
               <Link href="/contact" className="btn btn-primary btn-lg btn-arrow">
@@ -216,30 +234,24 @@ export default async function WebDesignPage({
           </div>
 
           <div className="grid-3">
-            <Link href="/portfolio" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="หน้าเว็บใหม่ของบริษัท ก.ก่อสร้างไทย" style={{ background: "linear-gradient(135deg, var(--color-orange-500), var(--color-peach))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>Web Design</span><span className="card-meta-dot"></span><span>2026</span></span>
-                <h3 className="card-title">บริษัท ก.ก่อสร้างไทย</h3>
-                <p className="card-desc">รื้อเว็บเก่า โหลดเร็วขึ้น 4 เท่า ลีดเข้าเพิ่ม 3.5×</p>
-              </div>
-            </Link>
-            <Link href="/portfolio" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="หน้าร้าน e-commerce SportLab" style={{ background: "linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>E-Commerce</span><span className="card-meta-dot"></span><span>2026</span></span>
-                <h3 className="card-title">SportLab อุปกรณ์กีฬา</h3>
-                <p className="card-desc">ระบบสต็อก + checkout — ยอดขายขึ้น 220% ใน 6 เดือน</p>
-              </div>
-            </Link>
-            <Link href="/portfolio" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="ภาพรีแบรนด์คาเฟ่บ้านสวน" style={{ background: "linear-gradient(135deg, var(--color-text), var(--color-orange-700))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>Branding</span><span className="card-meta-dot"></span><span>2025</span></span>
-                <h3 className="card-title">คาเฟ่ บ้านสวน</h3>
-                <p className="card-desc">รีแบรนด์ + เว็บ + โซเชียล ขึ้นเทรนด์ในย่าน 3 เดือน</p>
-              </div>
-            </Link>
+            {(relatedPortfolio.length > 0 ? relatedPortfolio : allPortfolio.slice(0, 3)).map((p, i) => (
+              <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
+                <div
+                  className="card-media"
+                  role="img"
+                  aria-label={`ภาพผลงาน${p.title}`}
+                  style={p.cover_image ? { backgroundImage: `url(${p.cover_image})`, backgroundSize: "cover" } : { background: RELATED_GRADIENTS[i % RELATED_GRADIENTS.length] }}
+                ></div>
+                <div className="card-body">
+                  <span className="card-meta">
+                    <span>{p.category}</span>
+                    {p.year && <><span className="card-meta-dot"></span><span>{p.year}</span></>}
+                  </span>
+                  <h3 className="card-title">{p.title}</h3>
+                  <p className="card-desc">{pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th)}</p>
+                </div>
+              </Link>
+            ))}
           </div>
         </div>
       </section>

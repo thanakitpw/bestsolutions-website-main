@@ -1,7 +1,23 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getArticles } from "@/utils/supabase/queries";
+import { formatThaiDate, pickLocale } from "@/utils/format";
 import "@/styles/pages/blog.css";
+
+const CATEGORY_TONE: Record<string, string> = {
+  "Digital Marketing": "is-blue",
+  "SEO": "is-blue",
+};
+
+const CARD_GRADIENTS = [
+  "linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500))",
+  "linear-gradient(135deg, var(--color-orange-500), var(--color-orange-700))",
+  "linear-gradient(135deg, var(--color-text), var(--color-orange-700))",
+  "linear-gradient(135deg, var(--color-orange-300), var(--color-peach))",
+  "linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700))",
+  "linear-gradient(135deg, var(--color-peach), var(--color-orange-500))",
+];
 
 export const metadata: Metadata = {
   title: "บล็อก · Best Solutions — บทความ AI, Digital Marketing, SEO ภาษาไทย",
@@ -16,6 +32,9 @@ export default async function BlogPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const articles = await getArticles();
+  const [featured, ...rest] = articles;
 
   return (
     <main id="main">
@@ -48,85 +67,61 @@ export default async function BlogPage({
           </div>
 
           {/* Featured */}
-          <Link href="/blog/sample-post" className="featured-card" aria-labelledby="featured-title">
-            <div className="featured-media" role="img" aria-label="ภาพประกอบบทความ AI ตอบลูกค้า"></div>
-            <div className="featured-body">
-              <span className="featured-cat">Featured · AI</span>
-              <h3 className="featured-title" id="featured-title">5 วิธีใช้ AI ลดเวลาตอบลูกค้าใน SME ไทย — ทำได้จริงใน 2 สัปดาห์</h3>
-              <p className="featured-excerpt">รวม use case ที่เราใช้กับลูกค้าจริง ทั้ง chatbot Facebook + LINE OA + อีเมล ปรับแล้วเห็นผลตั้งแต่สัปดาห์แรก พร้อมตัวอย่างต้นทุนที่ใช้จริง</p>
-              <div className="featured-meta">
-                <span><strong>ทีม Best Solutions</strong></span>
-                <span>·</span>
-                <span>5 พ.ค. 2026</span>
-                <span>·</span>
-                <span>อ่าน 8 นาที</span>
+          {featured && (
+            <Link href={`/blog/${featured.slug}`} className="featured-card" aria-labelledby="featured-title">
+              <div
+                className="featured-media"
+                role="img"
+                aria-label={`ภาพประกอบบทความ${pickLocale(locale, featured.title_th, featured.title_en ?? featured.title_th)}`}
+                style={featured.cover_image ? { backgroundImage: `url(${featured.cover_image})`, backgroundSize: "cover" } : undefined}
+              ></div>
+              <div className="featured-body">
+                <span className="featured-cat">Featured · {featured.category}</span>
+                <h3 className="featured-title" id="featured-title">
+                  {pickLocale(locale, featured.title_th, featured.title_en ?? featured.title_th)}
+                </h3>
+                <p className="featured-excerpt">
+                  {pickLocale(locale, featured.excerpt_th, featured.excerpt_en ?? featured.excerpt_th ?? "")}
+                </p>
+                <div className="featured-meta">
+                  <span><strong>{featured.author_name}</strong></span>
+                  <span>·</span>
+                  <span>{formatThaiDate(featured.published_at)}</span>
+                  <span>·</span>
+                  <span>อ่าน {featured.reading_time} นาที</span>
+                </div>
               </div>
-            </div>
-          </Link>
+            </Link>
+          )}
 
           {/* Grid */}
           <div className="grid-blog">
-
-            <Link href="/blog/sample-post" className="card card-blog">
-              <div className="card-media" role="img" aria-label="ภาพประกอบบทความยิงแอด" style={{ background: "linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500))" }}></div>
-              <div className="card-body">
-                <span className="card-category is-blue">Digital Marketing</span>
-                <h3 className="card-title">ยิงแอด Meta ปี 2026 ต้องรู้อะไรบ้าง</h3>
-                <p className="card-excerpt">อัปเดตอัลกอริทึมล่าสุด พร้อมโครงสร้างแคมเปญที่ใช้ได้จริง</p>
-                <span className="card-meta"><span>3 พ.ค. 2026</span><span className="card-meta-dot"></span><span>ธนกิจ ใจทอง</span></span>
-              </div>
-            </Link>
-
-            <Link href="/blog/sample-post" className="card card-blog">
-              <div className="card-media" role="img" aria-label="ภาพประกอบบทความ SEO" style={{ background: "linear-gradient(135deg, var(--color-orange-500), var(--color-orange-700))" }}></div>
-              <div className="card-body">
-                <span className="card-category">SEO</span>
-                <h3 className="card-title">ทำ SEO ภาษาไทยให้ติดหน้าแรกใน 90 วัน</h3>
-                <p className="card-excerpt">checklist ที่ใช้กับลูกค้าจริง 30+ เคส — เน้นโครงสร้างก่อนเขียน</p>
-                <span className="card-meta"><span>1 พ.ค. 2026</span><span className="card-meta-dot"></span><span>SEO Team</span></span>
-              </div>
-            </Link>
-
-            <Link href="/blog/sample-post" className="card card-blog">
-              <div className="card-media" role="img" aria-label="ภาพประกอบบทความ Web Design" style={{ background: "linear-gradient(135deg, var(--color-text), var(--color-orange-700))" }}></div>
-              <div className="card-body">
-                <span className="card-category">Web Design</span>
-                <h3 className="card-title">7 ข้อผิดพลาดที่เจอบ่อยในเว็บ SME ไทย</h3>
-                <p className="card-excerpt">ปัญหาที่ทำให้ลูกค้าหลุด และวิธีแก้ที่ใช้เวลาไม่ถึงสัปดาห์</p>
-                <span className="card-meta"><span>28 เม.ย. 2026</span><span className="card-meta-dot"></span><span>ทีม Design</span></span>
-              </div>
-            </Link>
-
-            <Link href="/blog/sample-post" className="card card-blog">
-              <div className="card-media" role="img" aria-label="ภาพประกอบบทความ AI" style={{ background: "linear-gradient(135deg, var(--color-orange-300), var(--color-peach))" }}></div>
-              <div className="card-body">
-                <span className="card-category">AI</span>
-                <h3 className="card-title">n8n vs Zapier vs Make — เลือกตัวไหนสำหรับ SME ไทย</h3>
-                <p className="card-excerpt">เปรียบเทียบ 3 เครื่องมือ automation ที่ใช้กันบ่อย พร้อมราคาจริง</p>
-                <span className="card-meta"><span>22 เม.ย. 2026</span><span className="card-meta-dot"></span><span>ทีม AI</span></span>
-              </div>
-            </Link>
-
-            <Link href="/blog/sample-post" className="card card-blog">
-              <div className="card-media" role="img" aria-label="ภาพประกอบบทความ SEO" style={{ background: "linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700))" }}></div>
-              <div className="card-body">
-                <span className="card-category is-blue">SEO</span>
-                <h3 className="card-title">สลัก URL ภาษาไทย ทำได้ไหม + กระทบ SEO หรือเปล่า</h3>
-                <p className="card-excerpt">คำถามยอดฮิตของลูกค้า — มีคำตอบจาก case จริง 12 เคส</p>
-                <span className="card-meta"><span>18 เม.ย. 2026</span><span className="card-meta-dot"></span><span>SEO Team</span></span>
-              </div>
-            </Link>
-
-            <Link href="/blog/sample-post" className="card card-blog">
-              <div className="card-media" role="img" aria-label="ภาพประกอบบทความเคสลูกค้า" style={{ background: "linear-gradient(135deg, var(--color-peach), var(--color-orange-500))" }}></div>
-              <div className="card-body">
-                <span className="card-category">Case Studies</span>
-                <h3 className="card-title">วิเคราะห์เคส SportLab — ทำไมยอดขายขึ้น 220%</h3>
-                <p className="card-excerpt">เจาะรายละเอียด funnel + page speed + retention ที่ทำให้เปลี่ยนตัวเลข</p>
-                <span className="card-meta"><span>15 เม.ย. 2026</span><span className="card-meta-dot"></span><span>ธนกิจ ใจทอง</span></span>
-              </div>
-            </Link>
-
+            {rest.map((a, i) => {
+              const title = pickLocale(locale, a.title_th, a.title_en ?? a.title_th);
+              const excerpt = pickLocale(locale, a.excerpt_th, a.excerpt_en ?? a.excerpt_th ?? "");
+              const tone = CATEGORY_TONE[a.category] ?? "";
+              const bg = CARD_GRADIENTS[i % CARD_GRADIENTS.length];
+              return (
+                <Link key={a.slug} href={`/blog/${a.slug}`} className="card card-blog">
+                  <div
+                    className="card-media"
+                    role="img"
+                    aria-label={`ภาพประกอบบทความ${title}`}
+                    style={a.cover_image ? { backgroundImage: `url(${a.cover_image})`, backgroundSize: "cover" } : { background: bg }}
+                  ></div>
+                  <div className="card-body">
+                    <span className={`card-category ${tone}`}>{a.category}</span>
+                    <h3 className="card-title">{title}</h3>
+                    <p className="card-excerpt">{excerpt}</p>
+                    <span className="card-meta">
+                      <span>{formatThaiDate(a.published_at)}</span>
+                      <span className="card-meta-dot"></span>
+                      <span>{a.author_name}</span>
+                    </span>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>

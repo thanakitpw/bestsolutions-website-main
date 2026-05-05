@@ -1,7 +1,21 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getSiteSetting } from "@/utils/supabase/queries";
 import "@/styles/pages/about.css";
+
+type StatsSetting = {
+  projects: string;
+  years: string;
+  roas: string;
+  seo_days: string;
+};
+
+type FounderSetting = {
+  name: string;
+  role: string;
+  bio_th?: string;
+};
 
 export const metadata: Metadata = {
   title: "เกี่ยวกับเรา · Best Solutions — เอเจนซีดิจิทัลกรุงเทพฯ",
@@ -16,6 +30,11 @@ export default async function AboutPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const [stats, founder] = await Promise.all([
+    getSiteSetting<StatsSetting>("stats"),
+    getSiteSetting<FounderSetting>("founder"),
+  ]);
 
   return (
     <main id="main">
@@ -75,8 +94,8 @@ export default async function AboutPage({
               </p>
 
               <div className="founder-sig">
-                <div className="founder-sig-name">ธนกิจ ใจทอง (Thanakit Chaithong)</div>
-                <div className="founder-sig-role">Founder &amp; Lead Strategist</div>
+                <div className="founder-sig-name">{founder?.name ?? "ธนกิจ ใจทอง"} (Thanakit Chaithong)</div>
+                <div className="founder-sig-role">{founder?.role ?? "Founder & Lead Strategist"}</div>
               </div>
             </div>
 
@@ -185,19 +204,19 @@ export default async function AboutPage({
             <div className="grid-3" style={{ gap: "var(--space-6)" }}>
               <div className="card card-stat">
                 <span className="card-eyebrow is-orange" aria-hidden="true">★</span>
-                <p className="card-stat-num tabular"><span className="accent">100+</span></p>
+                <p className="card-stat-num tabular"><span className="accent">{stats?.projects ?? "100+"}</span></p>
                 <p className="card-stat-label">โปรเจคที่ส่งมอบสำเร็จ</p>
               </div>
 
               <div className="card card-stat">
                 <span className="card-eyebrow is-blue" aria-hidden="true">◆</span>
-                <p className="card-stat-num tabular">8<span className="unit">ปี</span></p>
+                <p className="card-stat-num tabular">{stats?.years ?? "8"}<span className="unit">ปี</span></p>
                 <p className="card-stat-label">ประสบการณ์ในวงการดิจิทัล</p>
               </div>
 
               <div className="card card-stat">
                 <span className="card-eyebrow is-orange" aria-hidden="true">↗</span>
-                <p className="card-stat-num tabular"><span className="accent">5.2×</span></p>
+                <p className="card-stat-num tabular"><span className="accent">{stats?.roas ?? "5.2×"}</span></p>
                 <p className="card-stat-label">ROAS เฉลี่ยของลูกค้า</p>
               </div>
             </div>

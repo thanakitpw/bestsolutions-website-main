@@ -1,7 +1,23 @@
 import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { getPortfolioItems, getSiteSetting } from "@/utils/supabase/queries";
+import { pickLocale } from "@/utils/format";
 import "@/styles/pages/portfolio.css";
+
+type StatsSetting = { projects: string; years: string; roas: string; seo_days: string };
+
+const CARD_GRADIENTS = [
+  "linear-gradient(135deg, var(--color-orange-500), var(--color-peach))",
+  "linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700))",
+  "linear-gradient(135deg, var(--color-text), var(--color-orange-700))",
+  "linear-gradient(135deg, var(--color-orange-300), var(--color-orange-500))",
+  "linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500))",
+  "linear-gradient(135deg, #5C1A02, var(--color-orange-700))",
+  "linear-gradient(135deg, var(--color-blue-700), var(--color-text))",
+  "linear-gradient(135deg, var(--color-peach), var(--color-orange-300))",
+  "linear-gradient(135deg, var(--color-orange-500), var(--color-blue-500))",
+];
 
 export const metadata: Metadata = {
   title: "ผลงานของเรา · Best Solutions — Web Design, E-Commerce, SEO, Branding",
@@ -16,6 +32,11 @@ export default async function PortfolioPage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+
+  const [items, stats] = await Promise.all([
+    getPortfolioItems(),
+    getSiteSetting<StatsSetting>("stats"),
+  ]);
 
   return (
     <main id="main">
@@ -49,88 +70,28 @@ export default async function PortfolioPage({
           </div>
 
           <div className="grid-portfolio">
-
-            <Link href="/portfolio/sample-case" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="หน้าเว็บใหม่ของบริษัท ก.ก่อสร้างไทย" style={{ background: "linear-gradient(135deg, var(--color-orange-500), var(--color-peach))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>Web Design</span><span className="card-meta-dot"></span><span>2026</span></span>
-                <h3 className="card-title">บริษัท ก.ก่อสร้างไทย</h3>
-                <p className="card-desc">รื้อเว็บเก่า โหลดเร็วขึ้น 4 เท่า ลีดเข้าเพิ่ม 3.5×</p>
-              </div>
-            </Link>
-
-            <Link href="/portfolio/sample-case" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="หน้าร้าน e-commerce SportLab" style={{ background: "linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>E-Commerce</span><span className="card-meta-dot"></span><span>2026</span></span>
-                <h3 className="card-title">SportLab อุปกรณ์กีฬา</h3>
-                <p className="card-desc">เว็บ + ระบบสต็อก ยอดขายขึ้น 220% ใน 6 เดือน</p>
-              </div>
-            </Link>
-
-            <Link href="/portfolio/sample-case" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="ภาพรีแบรนด์คาเฟ่บ้านสวน" style={{ background: "linear-gradient(135deg, var(--color-text), var(--color-orange-700))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>Branding</span><span className="card-meta-dot"></span><span>2025</span></span>
-                <h3 className="card-title">คาเฟ่ บ้านสวน</h3>
-                <p className="card-desc">รีแบรนด์ทั้งร้าน + เว็บ + โซเชียล ขึ้นเทรนด์ 3 เดือน</p>
-              </div>
-            </Link>
-
-            <Link href="/portfolio/sample-case" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="แคมเปญ ads คลินิกความงาม" style={{ background: "linear-gradient(135deg, var(--color-orange-300), var(--color-orange-500))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>Online Marketing</span><span className="card-meta-dot"></span><span>2025</span></span>
-                <h3 className="card-title">คลินิกความงาม Aura</h3>
-                <p className="card-desc">ยิงแอด Meta + Google ROAS เฉลี่ย 6.8× ใน 4 เดือน</p>
-              </div>
-            </Link>
-
-            <Link href="/portfolio/sample-case" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="แคมเปญ SEO บริษัทบัญชี" style={{ background: "linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>SEO</span><span className="card-meta-dot"></span><span>2025</span></span>
-                <h3 className="card-title">สำนักบัญชี ทรัพย์สิน</h3>
-                <p className="card-desc">SEO ภาษาไทย ติดหน้าแรกใน 90 วัน ทราฟฟิก +480%</p>
-              </div>
-            </Link>
-
-            <Link href="/portfolio/sample-case" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="วิดีโอแคมเปญร้านอาหาร" style={{ background: "linear-gradient(135deg, #5C1A02, var(--color-orange-700))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>Video &amp; Content</span><span className="card-meta-dot"></span><span>2025</span></span>
-                <h3 className="card-title">ร้านอาหาร The Lobby</h3>
-                <p className="card-desc">ผลิตวิดีโอ 12 ชิ้น สำหรับ TikTok + IG Reels ยอด view 2.3M</p>
-              </div>
-            </Link>
-
-            <Link href="/portfolio/sample-case" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="เว็บนอนโรงแรมทะเล" style={{ background: "linear-gradient(135deg, var(--color-blue-700), var(--color-text))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>Web Design</span><span className="card-meta-dot"></span><span>2025</span></span>
-                <h3 className="card-title">โรงแรม Ocean Bay</h3>
-                <p className="card-desc">เว็บจองห้องพัก พร้อมระบบ payment การจองเพิ่ม 180%</p>
-              </div>
-            </Link>
-
-            <Link href="/portfolio/sample-case" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="แคมเปญ branding ร้านขนม" style={{ background: "linear-gradient(135deg, var(--color-peach), var(--color-orange-300))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>Branding</span><span className="card-meta-dot"></span><span>2024</span></span>
-                <h3 className="card-title">ร้านขนม PomPom</h3>
-                <p className="card-desc">รีแบรนด์ + แพ็คเกจจิ้ง ยอดขาย IG ขึ้น 4 เท่า</p>
-              </div>
-            </Link>
-
-            <Link href="/portfolio/sample-case" className="card card-portfolio">
-              <div className="card-media" role="img" aria-label="ระบบ AI Automation บริษัทประกัน" style={{ background: "linear-gradient(135deg, var(--color-orange-500), var(--color-blue-500))" }}></div>
-              <div className="card-body">
-                <span className="card-meta"><span>Online Marketing</span><span className="card-meta-dot"></span><span>2024</span></span>
-                <h3 className="card-title">บริษัทประกัน LifeShield</h3>
-                <p className="card-desc">AI ตอบลูกค้า + funnel — ปิดดีล 3.2× เร็วขึ้น</p>
-              </div>
-            </Link>
-
+            {items.map((p, i) => {
+              const summary = pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th);
+              const bg = CARD_GRADIENTS[i % CARD_GRADIENTS.length];
+              return (
+                <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
+                  <div
+                    className="card-media"
+                    role="img"
+                    aria-label={`ภาพผลงาน${p.title}`}
+                    style={p.cover_image ? { backgroundImage: `url(${p.cover_image})`, backgroundSize: "cover" } : { background: bg }}
+                  ></div>
+                  <div className="card-body">
+                    <span className="card-meta">
+                      <span>{p.category}</span>
+                      {p.year && <><span className="card-meta-dot"></span><span>{p.year}</span></>}
+                    </span>
+                    <h3 className="card-title">{p.title}</h3>
+                    <p className="card-desc">{summary}</p>
+                  </div>
+                </Link>
+              );
+            })}
           </div>
         </div>
       </section>
@@ -145,9 +106,9 @@ export default async function PortfolioPage({
               <h2 id="stats-title" style={{ marginTop: "var(--space-4)" }}>8 ปี ของการลงมือทำจริง</h2>
             </div>
             <div className="grid-3" style={{ gap: "var(--space-6)" }}>
-              <div className="card card-stat"><span className="card-eyebrow is-orange" aria-hidden="true">★</span><p className="card-stat-num tabular"><span className="accent">100+</span></p><p className="card-stat-label">โปรเจคที่ส่งมอบสำเร็จ</p></div>
-              <div className="card card-stat"><span className="card-eyebrow is-blue" aria-hidden="true">◆</span><p className="card-stat-num tabular">8<span className="unit">ปี</span></p><p className="card-stat-label">ประสบการณ์ในวงการดิจิทัล</p></div>
-              <div className="card card-stat"><span className="card-eyebrow is-orange" aria-hidden="true">↗</span><p className="card-stat-num tabular"><span className="accent">5.2×</span></p><p className="card-stat-label">ROAS เฉลี่ยของลูกค้า</p></div>
+              <div className="card card-stat"><span className="card-eyebrow is-orange" aria-hidden="true">★</span><p className="card-stat-num tabular"><span className="accent">{stats?.projects ?? "100+"}</span></p><p className="card-stat-label">โปรเจคที่ส่งมอบสำเร็จ</p></div>
+              <div className="card card-stat"><span className="card-eyebrow is-blue" aria-hidden="true">◆</span><p className="card-stat-num tabular">{stats?.years ?? "8"}<span className="unit">ปี</span></p><p className="card-stat-label">ประสบการณ์ในวงการดิจิทัล</p></div>
+              <div className="card card-stat"><span className="card-eyebrow is-orange" aria-hidden="true">↗</span><p className="card-stat-num tabular"><span className="accent">{stats?.roas ?? "5.2×"}</span></p><p className="card-stat-label">ROAS เฉลี่ยของลูกค้า</p></div>
             </div>
           </div>
         </div>
