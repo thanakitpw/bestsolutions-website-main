@@ -1,0 +1,197 @@
+/* =============================================================================
+   Footer
+   Direction C — Aigocy-true. Cream bg, hairline divider, generous padding.
+   ============================================================================= */
+
+.footer {
+  background: var(--color-bg);
+  color: var(--color-text);
+  padding-block: 56px;
+  border-top: 1px solid var(--hairline);
+}
+
+@media (min-width: 768px) {
+  .footer {
+    padding-block: 80px;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Top grid — 1 col mobile, 4 col desktop
+   ------------------------------------------------------------------------- */
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-8);
+}
+
+@media (min-width: 768px) {
+  .footer-grid {
+    grid-template-columns: 1.4fr repeat(3, 1fr);
+    gap: var(--space-12);
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Column
+   ------------------------------------------------------------------------- */
+.footer-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.footer-col h4 {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  margin: 0 0 var(--space-4);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+}
+
+.footer-col ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.footer-col a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: var(--text-base);
+  transition: color var(--t-base) var(--ease);
+}
+
+.footer-col a:hover {
+  color: var(--color-text);
+}
+
+.footer-col a:focus-visible {
+  outline: none;
+  color: var(--color-text);
+  box-shadow: var(--shadow-glow-orange);
+  border-radius: var(--r-xs);
+}
+
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-display);
+  font-weight: var(--weight-heavy);
+  font-size: var(--text-xl);
+  letter-spacing: var(--tracking-tight);
+  color: var(--color-text);
+  text-decoration: none;
+  margin-bottom: var(--space-4);
+}
+
+.footer-brand::before {
+  content: "";
+  display: inline-block;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%,
+    var(--color-orange-500) 0%,
+    var(--color-orange-700) 65%,
+    var(--color-orange-900) 100%);
+  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.18);
+  flex-shrink: 0;
+}
+
+.footer-tagline {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: var(--leading-normal);
+  max-width: 38ch;
+  margin: 0 0 var(--space-6);
+}
+
+/* -------------------------------------------------------------------------
+   Social pills — circular icon buttons
+   ------------------------------------------------------------------------- */
+.footer-social {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-3);
+  flex-wrap: wrap;
+}
+
+.footer-social a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: transparent;
+  border: 1px solid var(--hairline-strong);
+  color: var(--color-text);
+  text-decoration: none;
+  transition: background var(--t-base) var(--ease),
+              transform var(--t-base) var(--ease),
+              border-color var(--t-base) var(--ease);
+}
+
+.footer-social a:hover {
+  background: var(--color-surface);
+  border-color: var(--color-text);
+  transform: translateY(-2px);
+}
+
+.footer-social a:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-glow-orange);
+}
+
+.footer-social svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* -------------------------------------------------------------------------
+   Bottom row
+   ------------------------------------------------------------------------- */
+.footer-bottom {
+  border-top: 1px solid var(--hairline);
+  margin-top: var(--space-12);
+  padding-top: var(--space-6);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: var(--space-3);
+  font-size: var(--text-sm);
+  color: var(--color-text-subtle);
+}
+
+.footer-bottom-links {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.footer-bottom-links a {
+  color: var(--color-text-subtle);
+  text-decoration: none;
+  transition: color var(--t-base) var(--ease);
+}
+
+.footer-bottom-links a:hover {
+  color: var(--color-text);
+}
+
+@media (min-width: 768px) {
+  .footer-bottom {
+    flex-direction: row;
+    align-items: center;
+  }
+}

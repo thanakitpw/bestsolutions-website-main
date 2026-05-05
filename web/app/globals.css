@@ -1,44 +1,22 @@
 @import "tailwindcss";
 
 /* =============================================================================
-   Self-hosted LINE Seed Sans Thai (SIL OFL 1.1)
-   Source: https://github.com/line/seed
-   Phase 2 TODO: migrate to next/font/local for build-time optimization (T2.5)
+   Component CSS — ported 1:1 from prototype/styles/components/*
+   For pixel-perfect parity with the static prototype (T1.x).
    ============================================================================= */
-
-@font-face {
-  font-family: "LINE Seed Sans Thai";
-  font-weight: 400;
-  font-style: normal;
-  font-display: swap;
-  src: url("/fonts/LINESeedSansTH-Regular.woff2") format("woff2");
-}
-@font-face {
-  font-family: "LINE Seed Sans Thai";
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
-  src: url("/fonts/LINESeedSansTH-Bold.woff2") format("woff2");
-}
-@font-face {
-  font-family: "LINE Seed Sans Thai";
-  font-weight: 800;
-  font-style: normal;
-  font-display: swap;
-  src: url("/fonts/LINESeedSansTH-ExtraBold.woff2") format("woff2");
-}
-@font-face {
-  font-family: "LINE Seed Sans Thai";
-  font-weight: 900;
-  font-style: normal;
-  font-display: swap;
-  src: url("/fonts/LINESeedSansTH-Black.woff2") format("woff2");
-}
+@import "../styles/components/section.css";
+@import "../styles/components/button.css";
+@import "../styles/components/card.css";
+@import "../styles/components/heading-badge.css";
+@import "../styles/components/navbar.css";
+@import "../styles/components/form.css";
+@import "../styles/components/footer.css";
+@import "../styles/components/motion.css";
 
 /* =============================================================================
    Design tokens — Tailwind v4 @theme
    Bridged from prototype/styles/tokens.css (Direction C "Aigocy-true", ADR 0005)
-   Light theme only.
+   Light theme only. --font-line-seed comes from next/font/local (web/lib/fonts.ts).
    ============================================================================= */
 
 @theme {
@@ -89,8 +67,8 @@
   --color-warning:    #B45309;
 
   /* === Fonts === */
-  --font-display: "LINE Seed Sans Thai", "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
-  --font-body:    "LINE Seed Sans Thai", "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-display: var(--font-line-seed), "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
+  --font-body:    var(--font-line-seed), "IBM Plex Sans Thai", "IBM Plex Sans", system-ui, -apple-system, "Helvetica Neue", sans-serif;
   --font-mono:    "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* === Type scale (fluid) === */
@@ -141,39 +119,72 @@
 }
 
 /* =============================================================================
-   Custom properties — not mapped to Tailwind utility classes
-   Use via var(--foo) in styled components or arbitrary values.
+   Aliases for prototype CSS compatibility (--r-*, --space-*) +
+   custom properties not mapped to Tailwind utility.
    ============================================================================= */
 
 :root {
-  --section-y: 120px;
+  /* Radius aliases used by prototype components */
+  --r-xs:   var(--radius-xs);
+  --r-sm:   var(--radius-sm);
+  --r-md:   var(--radius-md);
+  --r-lg:   var(--radius-lg);
+  --r-xl:   var(--radius-xl);
+  --r-2xl:  var(--radius-2xl);
+  --r-3xl:  var(--radius-3xl);
+  --r-full: var(--radius-full);
+
+  /* Explicit spacing values — used by prototype components */
+  --space-0:  0;
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  20px;
+  --space-6:  24px;
+  --space-8:  32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* Section padding rhythm */
+  --section-y:        120px;
   --section-y-mobile: 72px;
 
+  /* Hairlines — never solid black */
   --hairline:         rgb(0 0 0 / 0.06);
   --hairline-strong:  rgb(0 0 0 / 0.10);
   --hairline-on-dark: rgb(255 255 255 / 0.10);
 
+  /* Motion timing */
   --t-fast: 180ms;
   --t-base: 220ms;
   --t-slow: 320ms;
   --t-blob: 15s;
 
+  /* Tracking */
   --tracking-tight:   -0.02em;
   --tracking-normal:  0;
   --tracking-wide:    0.04em;
   --tracking-eyebrow: 0.12em;
 
+  /* Line heights */
   --leading-tight:  1.04;
   --leading-snug:   1.2;
   --leading-normal: 1.5;
   --leading-body:   1.7;
 
+  /* Weights — LINE Seed available 400/700/800/900 */
   --weight-regular:  400;
   --weight-medium:   500;
   --weight-semibold: 600;
   --weight-bold:     700;
   --weight-heavy:    800;
 
+  /* Hero gradient blob */
   --blob-gradient: radial-gradient(
     closest-side at 60% 50%,
     var(--color-orange-500) 0%,
@@ -181,6 +192,14 @@
     transparent 70%
   );
   --blob-blur: 70px;
+
+  /* Z-index ladder */
+  --z-base:    0;
+  --z-raised:  10;
+  --z-sticky:  50;
+  --z-overlay: 100;
+  --z-modal:   200;
+  --z-toast:   300;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -193,8 +212,13 @@
 }
 
 /* =============================================================================
-   Base styles
+   Base reset + body
    ============================================================================= */
+
+*, *::before, *::after { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
 
 body {
   background: var(--color-bg);
@@ -208,6 +232,10 @@ body {
   text-rendering: optimizeLegibility;
   font-feature-settings: "kern" 1, "liga" 1;
 }
+
+/* =============================================================================
+   Headings
+   ============================================================================= */
 
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-display);
@@ -251,3 +279,91 @@ h6 {
 
 p { margin: 0 0 1em; }
 small { font-size: var(--text-sm); }
+
+/* =============================================================================
+   Utility classes — eyebrows, leads, text colors, tabular nums
+   (Mirrors prototype/styles/typography.css)
+   ============================================================================= */
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  letter-spacing: var(--tracking-eyebrow);
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.eyebrow-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 8px 16px;
+  background: var(--color-surface);
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.02em;
+  border-radius: var(--r-full);
+  box-shadow: var(--shadow-pill);
+}
+.eyebrow-pill .star { color: var(--color-orange-500); }
+
+.eyebrow-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  padding: 6px 14px;
+  background: var(--color-orange-50);
+  color: var(--color-orange-700);
+  font-size: 13px;
+  font-weight: var(--weight-bold);
+  letter-spacing: 0.04em;
+  border-radius: var(--r-full);
+}
+.eyebrow-chip.is-blue { background: var(--color-blue-50); color: var(--color-blue-700); }
+
+.lead {
+  font-size: var(--text-xl);
+  line-height: var(--leading-normal);
+  color: var(--color-text-muted);
+  font-weight: var(--weight-regular);
+}
+
+.display-hero {
+  font-family: var(--font-display);
+  font-weight: var(--weight-bold);
+  font-size: var(--text-display);
+  line-height: 1.04;
+  letter-spacing: -0.022em;
+}
+
+.tabular {
+  font-variant-numeric: tabular-nums;
+  font-feature-settings: "tnum" 1;
+}
+
+.text-muted   { color: var(--color-text-muted); }
+.text-subtle  { color: var(--color-text-subtle); }
+.text-orange  { color: var(--color-orange-500); }
+.text-blue    { color: var(--color-blue-500); }
+
+/* =============================================================================
+   Skip link (a11y) — visually hidden until focused
+   ============================================================================= */
+
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-text);
+  color: var(--color-text-on-dark);
+  border-radius: var(--r-sm);
+  z-index: var(--z-toast);
+  text-decoration: none;
+  font-weight: var(--weight-medium);
+}
+.skip-link:focus { top: 16px; }

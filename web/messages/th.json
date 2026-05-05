@@ -1,0 +1,34 @@
+{
+  "Common": {
+    "brand": "Best Solutions",
+    "consultFree": "ปรึกษาฟรี",
+    "skipToMain": "ข้ามไปยังเนื้อหาหลัก",
+    "openMenu": "เปิดเมนู",
+    "closeMenu": "ปิดเมนู"
+  },
+  "Nav": {
+    "services": "บริการ",
+    "portfolio": "ผลงาน",
+    "blog": "บล็อก",
+    "about": "เกี่ยวกับเรา",
+    "contact": "ติดต่อเรา"
+  },
+  "Footer": {
+    "tagline": "เอเจนซีดิจิทัลเต็มรูปแบบในกรุงเทพฯ — ดูแลตั้งแต่ออกแบบเว็บ ยิงแอด ทำ SEO จนถึง AI Automation ครบในทีมเดียว",
+    "servicesHeading": "บริการ",
+    "companyHeading": "บริษัท",
+    "contactHeading": "ติดต่อ",
+    "phone": "095-385-7029",
+    "email": "info@bestsolutionscorp.com",
+    "lineLabel": "LINE @bestsolutions",
+    "fbLabel": "FB @bestsolutionsagency",
+    "copyright": "© 2026 Best Solutions Corp · กรุงเทพมหานคร, ประเทศไทย",
+    "privacy": "นโยบายความเป็นส่วนตัว",
+    "terms": "ข้อตกลงการใช้งาน",
+    "sitemap": "Sitemap"
+  },
+  "Home": {
+    "metaTitle": "Best Solutions — เอเจนซีดิจิทัลครบวงจร · กรุงเทพฯ",
+    "metaDescription": "ออกแบบเว็บ ยิงแอด ทำ SEO ดูแลโซเชียล AI Automation — ครบทุกบริการในทีมเดียว ทำงานแบบ Sprint วัดผลได้จริงทุกบาท"
+  }
+}

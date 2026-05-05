@@ -1,0 +1,54 @@
+/* =============================================================================
+   Best Solutions — Motion (scroll-reveal + drawer transitions)
+   Companion to prototype/scripts/motion.js
+   ============================================================================= */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+/* Stagger children of grids slightly for nicer cascade */
+.grid-services > .reveal,
+.grid-services-7 > .reveal,
+.grid-portfolio > .reveal,
+.grid-blog > .reveal,
+.grid-3 > .reveal,
+.grid-values > .reveal,
+.features-grid > .reveal {
+  transition-delay: calc(var(--reveal-delay, 0ms));
+}
+
+/* Drawer transitions (state-driven via data-open) */
+.navbar-drawer {
+  transition: transform var(--t-base) var(--ease-out), opacity var(--t-base) var(--ease-out);
+}
+.navbar-scrim {
+  transition: opacity var(--t-base) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal,
+  .reveal.is-visible,
+  .navbar-drawer,
+  .navbar-scrim {
+    transition: none !important;
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
+
+.reduce-motion .reveal {
+  opacity: 1 !important;
+  transform: none !important;
+  transition: none !important;
+}

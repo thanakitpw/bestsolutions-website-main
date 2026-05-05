@@ -1,0 +1,34 @@
+{
+  "Common": {
+    "brand": "Best Solutions",
+    "consultFree": "Free consultation",
+    "skipToMain": "Skip to main content",
+    "openMenu": "Open menu",
+    "closeMenu": "Close menu"
+  },
+  "Nav": {
+    "services": "Services",
+    "portfolio": "Portfolio",
+    "blog": "Blog",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "Footer": {
+    "tagline": "Full-stack digital agency in Bangkok — web design, paid ads, SEO, and AI automation, all in one team",
+    "servicesHeading": "Services",
+    "companyHeading": "Company",
+    "contactHeading": "Contact",
+    "phone": "+66 95-385-7029",
+    "email": "info@bestsolutionscorp.com",
+    "lineLabel": "LINE @bestsolutions",
+    "fbLabel": "FB @bestsolutionsagency",
+    "copyright": "© 2026 Best Solutions Corp · Bangkok, Thailand",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "sitemap": "Sitemap"
+  },
+  "Home": {
+    "metaTitle": "Best Solutions — Full-Service Digital Agency · Bangkok",
+    "metaDescription": "Web design, paid ads, SEO, social, and AI automation — all in one team that works in Sprints with measurable results"
+  }
+}
