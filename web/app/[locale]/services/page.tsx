@@ -55,7 +55,7 @@ export default async function ServicesPage({
           <div className="page-hero-inner">
             <span className="eyebrow-pill">
               <span className="star">✦</span>
-              <span>บริการครบวงจร · 7 services</span>
+              <span>บริการครบวงจร · 6 services</span>
             </span>
             <h1 id="hero-title">ทุกอย่างที่ธุรกิจคุณต้องการ ในทีมเดียว</h1>
             <p className="lead">
@@ -70,7 +70,15 @@ export default async function ServicesPage({
       {/* ============================================================ SERVICES GRID */}
       <section className="section section-tight" id="services" aria-labelledby="services-title">
         <div className="container">
-          <h2 id="services-title" className="visually-hidden">บริการทั้งหมดของเรา</h2>
+          <h2
+            id="services-title"
+            style={{
+              fontSize: "var(--text-3xl)",
+              margin: "0 0 var(--space-10)",
+            }}
+          >
+            บริการของเรา
+          </h2>
 
           <Reveal className="grid-services-7">
             {services.map((s, i) => {

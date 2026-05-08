@@ -43,13 +43,6 @@ insert into services (slug, name_th, name_en, summary_th, summary_en, icon, feat
    'sparkle', array['Chat bot ตอบลูกค้า 24/7','เชื่อม CRM อัตโนมัติ','Workflow n8n / Zapier'],
    array['24/7 chatbot','Auto CRM sync','n8n / Zapier workflows'], 5, 'published'),
 
-  ('ai-email',
-   'AI ตอบอีเมล', 'AI Email Assistant',
-   'ระบบจัด priority + ร่างคำตอบให้พร้อมส่ง ลดงานวันละ 2 ชั่วโมง',
-   'Priority inbox + AI drafts ready to send, save 2 hours/day',
-   'mail', array['จัดหมวดอีเมลอัตโนมัติ','ร่างคำตอบ AI','ปลอดภัย ไม่ส่งข้อมูลเข้า public LLM'],
-   array['Auto inbox triage','AI draft replies','Secure (no public LLM)'], 6, 'published'),
-
   ('production',
    'Production · Video', 'Video Production',
    'ถ่าย ตัด ลง — โฆษณา / รีวิวสินค้า / คอนเทนต์โซเชียล',
