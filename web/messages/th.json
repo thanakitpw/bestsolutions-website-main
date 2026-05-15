@@ -7,14 +7,21 @@
     "closeMenu": "ปิดเมนู"
   },
   "Nav": {
+    "home": "หน้าแรก",
     "services": "บริการ",
     "portfolio": "ผลงาน",
-    "blog": "บล็อก",
+    "blog": "บทความ",
     "about": "เกี่ยวกับเรา",
-    "contact": "ติดต่อเรา"
+    "contact": "ติดต่อเรา",
+    "webDesign": "รับทำเว็บไซต์",
+    "seo": "SEO ติดอันดับ Google",
+    "paidAds": "ทำโฆษณา Meta & Google",
+    "socialMedia": "ดูแลโซเชียลมีเดีย",
+    "automation": "ระบบ Automation & AI",
+    "production": "Production · Video"
   },
   "Footer": {
-    "tagline": "เอเจนซีดิจิทัลเต็มรูปแบบในกรุงเทพฯ — ดูแลตั้งแต่ออกแบบเว็บ ยิงแอด ทำ SEO จนถึง AI Automation ครบในทีมเดียว",
+    "tagline": "Digital Agency ครบวงจร — ดูแลตั้งแต่ออกแบบเว็บ ทำโฆษณา ทำ SEO จนถึง AI Automation ครบในทีมเดียว",
     "servicesHeading": "บริการ",
     "companyHeading": "บริษัท",
     "contactHeading": "ติดต่อ",
@@ -28,31 +35,31 @@
     "sitemap": "Sitemap"
   },
   "Home": {
-    "metaTitle": "Best Solutions — เอเจนซีดิจิทัลครบวงจร · กรุงเทพฯ",
-    "metaDescription": "ออกแบบเว็บ ยิงแอด ทำ SEO ดูแลโซเชียล AI Automation — ครบทุกบริการในทีมเดียว ทำงานแบบ Sprint วัดผลได้จริงทุกบาท"
+    "metaTitle": "Best Solutions — Digital Marketing Agency สำหรับธุรกิจไทย",
+    "metaDescription": "วางระบบดิจิทัลให้ธุรกิจเติบโตอย่างมั่นคง ทั้งเว็บไซต์ SEO แคมเปญโฆษณา โซเชียล และ Automation โดยทีมที่เข้าใจธุรกิจไทย"
   },
   "About": {
-    "metaTitle": "เกี่ยวกับเรา — เอเจนซีดิจิทัล กรุงเทพฯ",
-    "metaDescription": "รู้จักทีม Best Solutions เอเจนซีดิจิทัลครบวงจรกรุงเทพฯ บริการออกแบบเว็บ ยิงแอด SEO และ AI Automation โดยผู้เชี่ยวชาญจริง"
+    "metaTitle": "เกี่ยวกับ Best Solutions — ทีมดิจิทัลเอเจนซีสำหรับธุรกิจไทย",
+    "metaDescription": "รู้จัก Best Solutions ทีมดิจิทัลเอเจนซีในกรุงเทพฯ ที่ช่วยธุรกิจไทยวางระบบเว็บไซต์ SEO โฆษณา และ Automation อย่างเป็นขั้นตอน"
   },
   "Services": {
-    "metaTitle": "บริการดิจิทัลครบวงจร — เว็บ แอด SEO AI กรุงเทพฯ",
-    "metaDescription": "7 บริการดิจิทัลจาก Best Solutions: รับทำเว็บ ยิงแอด ดูแลเพจ SEO AI Automation AI อีเมล และ Production ราคาโปร่งใส วัดผลได้"
+    "metaTitle": "บริการดิจิทัลมาร์เก็ตติ้ง — เว็บไซต์ SEO โฆษณา และ Automation",
+    "metaDescription": "บริการดิจิทัลจาก Best Solutions สำหรับธุรกิจไทย ทั้งเว็บไซต์ SEO โฆษณา โซเชียล Automation และ Production วางแผนเป็นระบบและติดตามผลได้"
   },
   "WebDesign": {
-    "metaTitle": "รับทำเว็บไซต์ กรุงเทพฯ — UX/UI สวยงาม SEO Ready",
-    "metaDescription": "รับออกแบบเว็บไซต์มืออาชีพกรุงเทพฯ UX/UI สวยงาม โหลดเร็ว รองรับมือถือ SEO Ready พร้อม Conversion Rate สูง ปรึกษาฟรีวันนี้"
+    "metaTitle": "รับทำเว็บไซต์ กรุงเทพฯ — ออกแบบเว็บธุรกิจ SEO-ready",
+    "metaDescription": "ออกแบบเว็บไซต์สำหรับธุรกิจไทย ให้ดูน่าเชื่อถือ โหลดเร็ว ใช้งานง่าย รองรับมือถือ และวางโครงสร้าง SEO พร้อมต่อยอดการตลาดออนไลน์"
   },
   "Blog": {
-    "metaTitle": "บล็อกดิจิทัล — เคล็ดลับ SEO ยิงแอด การตลาด",
-    "metaDescription": "บทความดิจิทัลมาร์เก็ตติ้งจาก Best Solutions: SEO ยิงแอด Facebook/Google ออกแบบเว็บ และ AI อัปเดตทุกสัปดาห์"
+    "metaTitle": "บทความดิจิทัลมาร์เก็ตติ้ง — SEO โฆษณา เว็บไซต์ และ Automation",
+    "metaDescription": "รวมบทความจากทีม Best Solutions เรื่อง SEO โฆษณา เว็บไซต์ คอนเทนต์ และ Automation สำหรับเจ้าของธุรกิจที่อยากวางระบบดิจิทัลให้ชัดขึ้น"
   },
   "Portfolio": {
-    "metaTitle": "ผลงาน — เว็บ SEO โฆษณา Branding กรุงเทพฯ",
-    "metaDescription": "ผลงาน 9+ โปรเจกต์จาก Best Solutions: เว็บไซต์ E-Commerce SEO Online Marketing Branding และ Video Content สำหรับธุรกิจไทย"
+    "metaTitle": "ผลงาน Best Solutions — เว็บไซต์ SEO โฆษณา และระบบดิจิทัล",
+    "metaDescription": "ตัวอย่างผลงานจาก Best Solutions ทั้งเว็บไซต์ SEO โฆษณา Branding และระบบดิจิทัลที่ออกแบบให้เหมาะกับเป้าหมายของธุรกิจไทย"
   },
   "Contact": {
-    "metaTitle": "ติดต่อ Best Solutions — ปรึกษาฟรี กรุงเทพฯ",
-    "metaDescription": "ติดต่อ Best Solutions ผ่าน LINE @bestsolutions โทร 095-385-7029 หรือกรอกฟอร์มออนไลน์ ปรึกษาฟรี ตอบภายใน 24 ชั่วโมง"
+    "metaTitle": "ติดต่อ Best Solutions — นัดปรึกษาดิจิทัลมาร์เก็ตติ้งฟรี",
+    "metaDescription": "ติดต่อ Best Solutions เพื่อปรึกษาเรื่องเว็บไซต์ SEO โฆษณา โซเชียล และ Automation ผ่าน LINE โทรศัพท์ หรือฟอร์มออนไลน์ ทีมตอบกลับภายใน 1 วันทำการ"
   }
 }

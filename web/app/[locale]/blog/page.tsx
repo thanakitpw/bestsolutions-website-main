@@ -65,8 +65,8 @@ export default async function BlogPage({
         <div className="container">
           <div className="page-hero-inner">
             <span className="eyebrow-pill"><span className="star">✦</span><span>Blog · Insights from the team</span></span>
-            <h1 id="hero-title">บทความและไอเดียจากทีม</h1>
-            <p className="lead">เราเขียนเฉพาะที่ลงมือทำจริง — ไม่ก๊อปจาก ChatGPT ทุกบทความผ่านการ verify โดยทีมที่ดูแลเคสในระบบจริง</p>
+            <h1 id="hero-title">มุมมองและเทคนิคจากงานที่เราลงมือทำ</h1>
+            <p className="lead">รวมบทความเรื่องเว็บไซต์ SEO โฆษณา คอนเทนต์ และ Automation จากประสบการณ์ทำงานจริง เพื่อให้เจ้าของธุรกิจนำไปปรับใช้ได้ง่ายขึ้น</p>
           </div>
         </div>
       </section>
@@ -98,7 +98,7 @@ export default async function BlogPage({
                 priority
               />
               <div className="featured-body">
-                <span className="featured-cat">Featured · {featured.category}</span>
+                <span className="featured-cat">แนะนำ · {featured.category}</span>
                 <h3 className="featured-title" id="featured-title">
                   {pickLocale(locale, featured.title_th, featured.title_en ?? featured.title_th)}
                 </h3>
@@ -157,8 +157,8 @@ export default async function BlogPage({
         <div className="container">
           <Reveal className="section-header section-header-center">
             <span className="eyebrow">● พร้อมเริ่ม</span>
-            <h2 id="cta-title">อยากให้เราช่วยปรับใช้กับธุรกิจคุณ?</h2>
-            <p className="lead">เนื้อหาในบล็อกเป็นแค่ส่วนหนึ่งของสิ่งที่เราทำให้ลูกค้า — ทักมาเล่าโจทย์ดู เราจะช่วยปรับให้เหมาะกับเคสคุณ</p>
+            <h2 id="cta-title">อยากเอาแนวทางเหล่านี้ไปใช้กับธุรกิจของคุณให้ชัดขึ้นไหม?</h2>
+            <p className="lead">เล่าโจทย์ของธุรกิจให้เราฟังได้ เราจะช่วยดูว่าควรเริ่มจากเว็บไซต์ SEO โฆษณา หรือ Automation เพื่อให้เหมาะกับสถานการณ์จริงของคุณ</p>
           </Reveal>
           <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>

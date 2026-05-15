@@ -51,10 +51,10 @@ export function ContactForm({ lineHandle }: Props) {
     return (
       <div className="form card" style={{ padding: "var(--space-10)", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", gap: "var(--space-6)", textAlign: "center", minHeight: 400 }}>
         <div style={{ fontSize: "3rem" }} aria-hidden="true">✅</div>
-        <h2 style={{ fontSize: "var(--text-2xl)", margin: 0 }}>ได้รับข้อมูลแล้ว!</h2>
+        <h2 style={{ fontSize: "var(--text-2xl)", margin: 0 }}>ได้รับข้อมูลแล้ว</h2>
         <p style={{ color: "var(--color-text-muted)", margin: 0 }}>
-          ทีมเราจะติดต่อกลับภายใน 1 วันทำการ<br />
-          หรือทักไลน์ <strong>{lineHandle}</strong> เพื่อคุยได้เลย
+          ทีมจะติดต่อกลับภายใน 1 วันทำการ<br />
+          หรือทัก LINE <strong>{lineHandle}</strong> เพื่อคุยต่อได้เลย
         </p>
       </div>
     );
@@ -63,9 +63,9 @@ export function ContactForm({ lineHandle }: Props) {
   return (
     <form className="form card" style={{ padding: "var(--space-10)" }} onSubmit={handleSubmit(onSubmit)} noValidate>
       <div style={{ marginBottom: "var(--space-6)" }}>
-        <span className="eyebrow-chip">● ฟอร์มขอใบเสนอ</span>
-        <h2 style={{ margin: "var(--space-3) 0 var(--space-2)", fontSize: "var(--text-2xl)" }}>เล่าให้ฟังก่อนได้</h2>
-        <p style={{ margin: 0, fontSize: "var(--text-sm)", color: "var(--color-text-muted)" }}>เราจะติดต่อกลับภายใน 1 วันทำการ</p>
+        <span className="eyebrow-chip">● ฟอร์มติดต่อ</span>
+        <h2 style={{ margin: "var(--space-3) 0 var(--space-2)", fontSize: "var(--text-2xl)" }}>เล่าโจทย์ให้เราฟังก่อนได้</h2>
+        <p style={{ margin: 0, fontSize: "var(--text-sm)", color: "var(--color-text-muted)" }}>ทีมจะติดต่อกลับภายใน 1 วันทำการ</p>
       </div>
 
       <div className="form-row">
@@ -111,11 +111,11 @@ export function ContactForm({ lineHandle }: Props) {
         <label className="form-label" htmlFor="lead-service">บริการที่สนใจ</label>
         <select className="form-select" id="lead-service" {...register("service")}>
           <option value="">ยังไม่แน่ใจ — ขอคำปรึกษา</option>
-          <option value="web-design">รับทำเว็บไซต์</option>
-          <option value="ads">ยิงแอด Meta &amp; Google</option>
+          <option value="web-design">ออกแบบเว็บไซต์</option>
+          <option value="ads">ดูแลแคมเปญโฆษณา Meta &amp; Google</option>
           <option value="seo">SEO</option>
-          <option value="social-media">ดูแลเพจโซเชียล</option>
-          <option value="ai-automation">AI Automation</option>
+          <option value="social-media">ดูแลโซเชียลมีเดีย</option>
+          <option value="ai-automation">Automation &amp; AI</option>
           <option value="production">Production (Video &amp; Content)</option>
         </select>
       </div>
@@ -136,10 +136,10 @@ export function ContactForm({ lineHandle }: Props) {
         <textarea
           className="form-textarea"
           id="lead-message"
-          placeholder="เล่าให้ฟังว่าธุรกิจคุณกำลังเจอโจทย์อะไร — ยิ่งละเอียดเรายิ่งช่วยได้ตรงจุด"
+          placeholder="เล่าให้ฟังว่าธุรกิจของคุณกำลังเจอโจทย์อะไร อยากเริ่มจากตรงไหน หรือมีเป้าหมายแบบใด"
           {...register("message")}
         ></textarea>
-        <span className="form-help">ไม่จำเป็นต้องครบ — เริ่มเล่าเท่าที่นึกออก เราถามต่อในการคุยได้</span>
+        <span className="form-help">ไม่จำเป็นต้องกรอกให้ครบทุกอย่าง เริ่มจากข้อมูลที่มี แล้วเราจะช่วยถามต่อในการคุย</span>
       </div>
 
       <div className="form-field">
@@ -149,7 +149,7 @@ export function ContactForm({ lineHandle }: Props) {
             type="checkbox"
             {...register("consent")}
           />
-          <span>ยินยอมให้ Best Solutions เก็บข้อมูลตามนโยบายความเป็นส่วนตัว เพื่อใช้ติดต่อกลับเรื่องโปรเจคเท่านั้น</span>
+          <span>ยินยอมให้ Best Solutions เก็บข้อมูลตามนโยบายความเป็นส่วนตัว เพื่อใช้ติดต่อกลับเรื่องโปรเจกต์เท่านั้น</span>
         </label>
         {errors.consent && <span className="form-error" role="alert">{errors.consent.message}</span>}
       </div>
@@ -170,10 +170,10 @@ export function ContactForm({ lineHandle }: Props) {
 
       <div className="form-actions">
         <button className="btn btn-primary btn-arrow" type="submit" disabled={isSubmitting}>
-          <span className="btn-label">{isSubmitting ? "กำลังส่ง…" : "ส่งข้อมูล"}</span>
+          <span className="btn-label">{isSubmitting ? "กำลังส่ง..." : "ส่งข้อมูล"}</span>
         </button>
         <span className="form-help" style={{ marginTop: 0 }}>
-          หรือทักไลน์ <strong>{lineHandle}</strong> ก็ได้
+          หรือทัก LINE <strong>{lineHandle}</strong> ได้เช่นกัน
         </span>
       </div>
     </form>

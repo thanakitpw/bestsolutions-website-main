@@ -66,8 +66,8 @@ export default async function ContactPage({
         <div className="container">
           <div className="page-hero-inner">
             <span className="eyebrow-pill"><span className="star">✦</span><span>Contact · ตอบใน 1 วันทำการ</span></span>
-            <h1 id="hero-title">นัดคุยฟรี 30 นาที — ไม่กดดัน ไม่ผูกมัด</h1>
-            <p className="lead">เล่าโจทย์ให้ฟัง เราจะแนะนำแนวทางที่เคยใช้ได้ผลกับธุรกิจคล้าย ๆ คุณ — ถ้าไม่ตรงโจทย์เรา เราจะแนะนำเอเจนซีอื่นที่เหมาะให้</p>
+            <h1 id="hero-title">เล่าโจทย์ให้เราฟังก่อน แล้วค่อยดูว่าควรเริ่มจากตรงไหน</h1>
+            <p className="lead">นัดคุยฟรีเพื่อให้เราช่วยดูภาพรวมของธุรกิจ แนะนำทิศทางที่เหมาะสม และตอบคำถามก่อนตัดสินใจเริ่มงาน</p>
           </div>
         </div>
       </section>
@@ -88,8 +88,8 @@ export default async function ContactPage({
             <aside className="contact-info">
               <div>
                 <span className="eyebrow-chip is-blue">● ช่องทางติดต่อ</span>
-                <h2 style={{ margin: "var(--space-3) 0 var(--space-2)", fontSize: "var(--text-2xl)" }}>หรือทักช่องทางอื่นได้</h2>
-                <p style={{ margin: 0, fontSize: "var(--text-sm)", color: "var(--color-text-muted)" }}>เลือกที่สะดวกสุด — ทุกช่องเข้าทีมเดียวกัน</p>
+                <h2 style={{ margin: "var(--space-3) 0 var(--space-2)", fontSize: "var(--text-2xl)" }}>ติดต่อผ่านช่องทางที่สะดวกได้เลย</h2>
+                <p style={{ margin: 0, fontSize: "var(--text-sm)", color: "var(--color-text-muted)" }}>ทุกช่องทางเข้าทีมเดียวกัน เลือกช่องทางที่สะดวกที่สุดได้เลย</p>
               </div>
 
               <div className="contact-channels">
@@ -138,12 +138,12 @@ export default async function ContactPage({
 
               <div className="info-card">
                 <h3>เวลาทำการ</h3>
-                <p>{contact.hours}<br />เสาร์-อาทิตย์: ทักไลน์ทิ้งไว้ได้ ตอบเช้าวันจันทร์</p>
+                <p>{contact.hours}<br />เสาร์-อาทิตย์สามารถทัก LINE ทิ้งไว้ได้ ทีมจะตอบกลับในวันทำการถัดไป</p>
               </div>
 
               <div className="info-card">
                 <h3>ที่ตั้ง</h3>
-                <p>กรุงเทพมหานคร, ประเทศไทย<br />(นัดคุยทาง Google Meet เป็นหลัก — ออฟฟิศนัดล่วงหน้า)</p>
+                <p>กรุงเทพมหานคร, ประเทศไทย<br />นัดคุยผ่าน Google Meet เป็นหลัก หากต้องการเข้าพบสามารถนัดล่วงหน้าได้</p>
               </div>
 
               <div className="map-placeholder" role="img" aria-label="แผนที่ที่ตั้ง — แสดงเมื่อมีพิกัดจริง">
@@ -162,29 +162,29 @@ export default async function ContactPage({
         <div className="container">
           <Reveal className="section-header-center">
             <span className="eyebrow-chip">● คำถามที่พบบ่อย</span>
-            <h2 id="faq-title" style={{ marginTop: "var(--space-4)" }}>เรื่องที่ลูกค้าถามก่อนตัดสินใจ</h2>
+            <h2 id="faq-title" style={{ marginTop: "var(--space-4)" }}>เรื่องที่ลูกค้ามักถามก่อนเริ่มคุย</h2>
           </Reveal>
 
           <Reveal className="faq-list" delay={0.1}>
             <details className="faq-item">
-              <summary>นัดคุยฟรี 30 นาที จริง ๆ ฟรีไหม? มีเงื่อนไขอะไรไหม?</summary>
-              <p>ฟรีจริง ไม่มีเงื่อนไข — เราใช้ 30 นาทีนี้ทำความรู้จักธุรกิจคุณ ฟังโจทย์ และเสนอแนวทาง ไม่ต้องเซ็นอะไร ไม่ต้องจองเวลาขั้นต่ำ ไม่ขายตรงระหว่างคุย ถ้าโจทย์ของคุณเราดูแล้วไม่ตรงกับสิ่งที่เราเก่ง เราแนะนำเอเจนซีอื่นให้</p>
+              <summary>นัดคุยฟรีจริงไหม มีเงื่อนไขอะไรหรือเปล่า?</summary>
+              <p>ฟรีจริง ไม่มีเงื่อนไข เราใช้เวลานี้เพื่อทำความเข้าใจธุรกิจ ฟังโจทย์ และแนะนำแนวทางเบื้องต้น คุณไม่ต้องเซ็นสัญญาหรือผูกมัดใด ๆ หลังคุย</p>
             </details>
             <details className="faq-item">
-              <summary>ตอบกลับเร็วแค่ไหน?</summary>
-              <p>ทุกฟอร์ม + ไลน์ที่ส่งเข้ามาในเวลาทำการ (จันทร์-ศุกร์ 9:00-18:00) เราตอบกลับภายใน 1 ชั่วโมง สำหรับวันหยุด/นอกเวลา ตอบกลับเช้าวันถัดไป (สูงสุด 1 วันทำการ)</p>
+              <summary>ทีมตอบกลับเร็วแค่ไหน?</summary>
+              <p>ฟอร์มหรือ LINE ที่ส่งเข้ามาในเวลาทำการ ทีมจะพยายามตอบกลับโดยเร็ว และไม่เกิน 1 วันทำการ</p>
             </details>
             <details className="faq-item">
               <summary>ราคาประมาณเท่าไหร่?</summary>
-              <p>ขึ้นกับขนาดและฟีเจอร์ — เว็บ landing เริ่มที่หลักหมื่นปลาย ๆ เว็บบริษัท 5-8 หน้าหลักแสน e-commerce / web app หลักแสนปลาย ๆ ขึ้นไป ส่วนแอด/SEO มีแพ็กเกจรายเดือน เริ่ม 15,000 บาท หรือทักมาเล่าโจทย์ เราจะให้ตัวเลขเฉพาะเคสคุณ</p>
+              <p>ราคาขึ้นกับขอบเขตงาน ขนาดเว็บไซต์ งบโฆษณา และเป้าหมายของธุรกิจ เล่าโจทย์คร่าว ๆ มาก่อนได้ แล้วเราจะประเมินช่วงงบประมาณให้เหมาะกับเคสของคุณ</p>
             </details>
             <details className="faq-item">
               <summary>ทำงานกับลูกค้าต่างจังหวัดได้ไหม?</summary>
-              <p>ได้ — ลูกค้าเราอยู่ครบทุกภาค ทำงานกับทีมผ่าน Google Meet + Slack + Notion เห็นความคืบหน้าได้ทุกวัน ไม่ต้องเดินทางมากรุงเทพฯ</p>
+              <p>ได้ เราทำงานผ่าน Google Meet, LINE และเอกสารออนไลน์เป็นหลัก ลูกค้าไม่จำเป็นต้องเดินทางเข้ากรุงเทพฯ</p>
             </details>
             <details className="faq-item">
-              <summary>มีตัวอย่างสัญญาให้ดูก่อนได้ไหม?</summary>
-              <p>ได้ครับ ขอตัวอย่าง MSA + SOW ผ่านอีเมลก่อนตัดสินใจได้เลย — สัญญาเรียบง่าย ไม่ผูกขาดยาว ไม่มีค่าปรับซ่อน ทุกข้อชัดเจน</p>
+              <summary>มีตัวอย่างสัญญาหรือขอบเขตงานให้ดูก่อนไหม?</summary>
+              <p>ได้ เราสามารถส่งตัวอย่างเอกสาร ขอบเขตงาน และเงื่อนไขหลักให้พิจารณาก่อนตัดสินใจ เพื่อให้ทุกอย่างชัดเจนตั้งแต่ต้น</p>
             </details>
           </Reveal>
         </div>
