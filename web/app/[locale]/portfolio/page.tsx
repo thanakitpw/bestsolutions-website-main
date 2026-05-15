@@ -4,8 +4,7 @@ import { Link } from "@/i18n/navigation";
 import { getPortfolioItems, getSiteSetting } from "@/utils/supabase/queries";
 import { BreadcrumbJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
-import { MediaImage } from "@/components/media-image";
-import { pickLocale } from "@/utils/format";
+import { PortfolioFilter } from "@/components/portfolio-filter";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/portfolio.css";
 
@@ -26,17 +25,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 type StatsSetting = { projects: string; years: string; roas: string; seo_days: string };
 
-const CARD_GRADIENTS = [
-  "linear-gradient(135deg, var(--color-orange-500), var(--color-peach))",
-  "linear-gradient(135deg, var(--color-blue-500), var(--color-blue-700))",
-  "linear-gradient(135deg, var(--color-text), var(--color-orange-700))",
-  "linear-gradient(135deg, var(--color-orange-300), var(--color-orange-500))",
-  "linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500))",
-  "linear-gradient(135deg, #5C1A02, var(--color-orange-700))",
-  "linear-gradient(135deg, var(--color-blue-700), var(--color-text))",
-  "linear-gradient(135deg, var(--color-peach), var(--color-orange-300))",
-  "linear-gradient(135deg, var(--color-orange-500), var(--color-blue-500))",
-];
+const CATEGORIES = ["เว็บไซต์องค์กร / บริษัท", "เว็บไซต์ร้านค้าออนไลน์"];
 
 export default async function PortfolioPage({
   params,
@@ -66,9 +55,9 @@ export default async function PortfolioPage({
         <div className="page-hero-blob" aria-hidden="true"></div>
         <div className="container">
           <div className="page-hero-inner">
-            <span className="eyebrow-pill"><span className="star">✦</span><span>Portfolio · 100+ projects</span></span>
-            <h1 id="hero-title">ผลงานที่เราภูมิใจ ส่งมอบจริง วัดผลได้จริง</h1>
-            <p className="lead">โปรเจคทุกอันที่นี่ได้รับความยินยอมจากลูกค้าให้แสดงต่อสาธารณะ — ตัวเลขผลลัพธ์มาจากข้อมูลจริงในระบบ Analytics</p>
+            <span className="eyebrow-pill"><span className="star">✦</span><span>ผลงาน</span></span>
+            <h1 id="hero-title">ตัวอย่างงานที่ออกแบบจากโจทย์จริงของลูกค้า</h1>
+            <p className="lead">ดูแนวทางการทำงานผ่านโปรเจกต์จริง ทั้งเว็บไซต์ แคมเปญ คอนเทนต์ และระบบดิจิทัลที่ออกแบบให้เข้ากับเป้าหมายของแต่ละธุรกิจ</p>
           </div>
         </div>
       </section>
@@ -79,42 +68,7 @@ export default async function PortfolioPage({
         <div className="container">
           <h2 id="works-title" style={{ position: "absolute", clip: "rect(0 0 0 0)", width: "1px", height: "1px", overflow: "hidden" }}>ผลงานทั้งหมด</h2>
 
-          <div className="filter-bar" role="tablist" aria-label="กรองตามหมวดหมู่">
-            <button className="filter-chip is-active" type="button" role="tab" aria-selected={true}>ทั้งหมด</button>
-            <button className="filter-chip" type="button" role="tab" aria-selected={false}>Web Design</button>
-            <button className="filter-chip" type="button" role="tab" aria-selected={false}>E-Commerce</button>
-            <button className="filter-chip" type="button" role="tab" aria-selected={false}>Online Marketing</button>
-            <button className="filter-chip" type="button" role="tab" aria-selected={false}>SEO</button>
-            <button className="filter-chip" type="button" role="tab" aria-selected={false}>Branding</button>
-            <button className="filter-chip" type="button" role="tab" aria-selected={false}>Video &amp; Content</button>
-          </div>
-
-          <Reveal className="grid-portfolio">
-            {items.map((p, i) => {
-              const summary = pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th);
-              const bg = CARD_GRADIENTS[i % CARD_GRADIENTS.length];
-              return (
-                <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
-                  <MediaImage
-                    className="card-media"
-                    src={p.cover_image}
-                    alt={`ภาพผลงาน ${p.title}`}
-                    gradient={bg}
-                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
-                    priority={i < 3}
-                  />
-                  <div className="card-body">
-                    <span className="card-meta">
-                      <span>{p.category}</span>
-                      {p.year && <><span className="card-meta-dot"></span><span>{p.year}</span></>}
-                    </span>
-                    <h3 className="card-title">{p.title}</h3>
-                    <p className="card-desc">{summary}</p>
-                  </div>
-                </Link>
-              );
-            })}
-          </Reveal>
+          <PortfolioFilter items={items} locale={locale} categories={CATEGORIES} />
         </div>
       </section>
 
@@ -125,12 +79,12 @@ export default async function PortfolioPage({
           <Reveal className="stats-band">
             <div className="section-header-center" style={{ marginBottom: "var(--space-12)" }}>
               <span className="eyebrow-chip">● ภาพรวม</span>
-              <h2 id="stats-title" style={{ marginTop: "var(--space-4)" }}>8 ปี ของการลงมือทำจริง</h2>
+              <h2 id="stats-title" style={{ marginTop: "var(--space-4)" }}>ประสบการณ์ที่ต่อยอดเป็นระบบให้ลูกค้า</h2>
             </div>
             <div className="grid-3" style={{ gap: "var(--space-6)" }}>
-              <div className="card card-stat"><span className="card-eyebrow is-orange" aria-hidden="true">★</span><p className="card-stat-num tabular"><span className="accent">{stats?.projects ?? "100+"}</span></p><p className="card-stat-label">โปรเจคที่ส่งมอบสำเร็จ</p></div>
-              <div className="card card-stat"><span className="card-eyebrow is-blue" aria-hidden="true">◆</span><p className="card-stat-num tabular">{stats?.years ?? "8"}<span className="unit">ปี</span></p><p className="card-stat-label">ประสบการณ์ในวงการดิจิทัล</p></div>
-              <div className="card card-stat"><span className="card-eyebrow is-orange" aria-hidden="true">↗</span><p className="card-stat-num tabular"><span className="accent">{stats?.roas ?? "5.2×"}</span></p><p className="card-stat-label">ROAS เฉลี่ยของลูกค้า</p></div>
+              <div className="card card-stat"><span className="card-eyebrow is-orange" aria-hidden="true">★</span><p className="card-stat-num tabular"><span className="accent">{stats?.projects ?? "100+"}</span></p><p className="card-stat-label">โปรเจกต์ที่ส่งมอบให้ลูกค้า</p></div>
+              <div className="card card-stat"><span className="card-eyebrow is-blue" aria-hidden="true">◆</span><p className="card-stat-num tabular">{stats?.years ?? "8"}<span className="unit">ปี</span></p><p className="card-stat-label">ประสบการณ์ด้านดิจิทัล</p></div>
+              <div className="card card-stat"><span className="card-eyebrow is-orange" aria-hidden="true">↗</span><p className="card-stat-num tabular"><span className="accent">{stats?.roas ?? "5.2×"}</span></p><p className="card-stat-label">ROAS เฉลี่ยจากแคมเปญลูกค้า</p></div>
             </div>
           </Reveal>
         </div>
@@ -143,8 +97,8 @@ export default async function PortfolioPage({
         <div className="container">
           <Reveal className="section-header section-header-center">
             <span className="eyebrow">● พร้อมเริ่ม</span>
-            <h2 id="cta-title">อยากให้ธุรกิจคุณเป็นเคสต่อไป?</h2>
-            <p className="lead">นัดคุยฟรี 30 นาที — เล่าโจทย์ให้ฟัง เราจะแนะนำแนวทางที่เคยใช้ได้ผลกับธุรกิจคล้าย ๆ คุณ</p>
+            <h2 id="cta-title">อยากให้โปรเจกต์ต่อไปของคุณเดินเป็นระบบกว่านี้ไหม?</h2>
+            <p className="lead">เล่าโจทย์ของธุรกิจให้เราฟังได้ เราจะช่วยดูว่าควรเริ่มจากเว็บไซต์ SEO โฆษณา หรือ Automation เพื่อให้เหมาะกับเป้าหมายของคุณ</p>
           </Reveal>
           <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
             <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>
