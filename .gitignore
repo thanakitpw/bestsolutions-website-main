@@ -62,3 +62,5 @@ docs/extracted-patterns/
 *service-account*.json
 bestsolutions-seo-*.json
 gsc-sa.json
+*psi-key*
+client_secret*

@@ -14,6 +14,20 @@
 
 นัยยะ: เว็บเก่า organic presence ต่ำมาก/แทบไม่มี → **upside สูง, แทบไม่มี downside risk**. ใช้ "0" เป็น baseline จริงได้.
 
+## CWV / Lighthouse baseline (PSI, live, 2026-05-16)
+Script: `node scripts/psi.mjs <url>` (key `~/.config/bsc/psi-key.txt`, gitignored)
+
+| Page | Strategy | Perf | SEO | A11y | BP | LCP | CLS | TBT |
+|---|---|---|---|---|---|---|---|---|
+| /th | desktop | 98 | 100 | 96 | 100 | 0.6s | 0 | 60ms |
+| /th | mobile | — | — | — | — | — | — | — (PSI transient, re-run ที่ QA) |
+| /th/services/seo | desktop | 100 | 100 | 95 | 100 | 0.6s | 0 | 60ms |
+| /th/services/seo | mobile | ~* | 100 | 95 | 100 | * | 0 | * (partial) |
+| /th/blog | desktop | 98 | 100 | 95 | 100 | 0.6s | 0 | 0ms |
+| /th/blog | mobile | 95 | 100 | 95 | 100 | 2.7s | 0.029 | 20ms |
+
+สรุป: desktop เยี่ยม (Perf 98–100, SEO 100). mobile blog Perf 95 / LCP 2.7s (ใกล้ขอบ 2.5s — เฝ้าดู). mobile บางหน้า PSI error ชั่วคราว → **re-run ครบที่ QA gate** ก่อน ship (DoD ≥95). ผ่าน threshold §8 (LCP<2.5 ยกเว้น blog mobile 2.7 ต้องจับตา, CLS<0.1 ✅).
+
 ## Baseline number (ใช้เทียบ KPI §8)
 
 | Metric | Baseline (2026-05-16) | Source |
@@ -25,8 +39,14 @@
 | Lighthouse/CWV | TBD — รันหลัง deploy (qa-tester, PSI) | PSI |
 | GA4 organic sessions | TBD — รอ GA4 setup + tag | GA4 |
 
+## Deploy verified (2026-05-16)
+- เว็บ redesign + S1 ขึ้น production `https://www.bestsolutionscorp.com` ✅
+- NEXT_PUBLIC_SITE_URL แก้เป็นโดเมนจริงแล้ว → canonical/sitemap/og/robots ถูกต้อง
+- sitemap 16 URLs (6 service slug ครบ), non-www→www 307 (ควรเปลี่ยนเป็น 308 ถาวร)
+
 ## ต้องทำต่อ
-- [ ] หลัง deploy เว็บใหม่ (โดเมนจริง) → submit `sitemap.xml` ใน GSC, เริ่มสะสม data
+- [ ] submit `sitemap.xml` ใน GSC UI (โดเมนตรงแล้ว — ทำได้)
+- [ ] non-www redirect: 307 → ตั้งเป็น permanent (308/301) ใน Vercel Domains
 - [ ] ตั้ง pull รายเดือน → `docs/seo/07-kpi-monthly/YYYY-MM.md` (script พร้อมแล้ว)
 - [ ] GA4 + PSI key (ดู `00-strategy.md` §10) — ยังไม่ตั้ง
 - [ ] 🔴 `NEXT_PUBLIC_SITE_URL` ต้องเป็นโดเมนจริงตอน deploy (ดู `03-technical-audit.md`)
