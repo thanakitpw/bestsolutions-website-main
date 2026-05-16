@@ -32,6 +32,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!item) return {};
   const description = item.seo_description ?? pickLocale(locale, item.summary_th, item.summary_en ?? item.summary_th);
   const fullTitle = item.seo_title ?? `${item.title} · Case Study · Best Solutions`;
+  const ogImage = item.og_image ?? item.cover_image;
   return {
     title: { absolute: fullTitle },
     description,
@@ -41,9 +42,14 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       title: fullTitle,
       description,
       path: `/portfolio/${slug}`,
-      ...(item.cover_image ? { image: item.cover_image } : {}),
+      ...(ogImage ? { image: ogImage } : {}),
     }),
-    twitter: { card: "summary_large_image", title: fullTitle, description },
+    twitter: {
+      card: "summary_large_image",
+      title: fullTitle,
+      description,
+      ...(ogImage ? { images: [ogImage] } : {}),
+    },
   };
 }
 
