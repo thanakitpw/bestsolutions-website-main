@@ -57,11 +57,11 @@ export function OrganizationJsonLd({ contact, locale }: { contact?: ContactInfo;
     name: "Best Solutions",
     alternateName: "Best Solutions Corp",
     url: `${SITE_URL}/${locale}`,
-    logo: `${SITE_URL}/images/logo.png`,
+    logo: `${SITE_URL}/logo.webp`,
     description:
       locale === "en"
         ? "Bangkok-based digital marketing agency. Web design, ads, SEO, social, AI automation."
-        : "เอเจนซีดิจิทัลมาร์เก็ตติ้งกรุงเทพฯ — ออกแบบเว็บ ยิงแอด SEO ดูแลโซเชียล AI Automation",
+        : "เอเจนซีดิจิทัลมาร์เก็ตติ้งกรุงเทพฯ — ออกแบบเว็บ ทำโฆษณา SEO ดูแลโซเชียล AI Automation",
     sameAs: sameAs(contact),
   };
   const tel = telephoneE164(contact?.phone);

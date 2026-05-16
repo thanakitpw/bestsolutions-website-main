@@ -82,7 +82,7 @@ export default async function LocaleLayout({
   const t = await getTranslations({ locale, namespace: "Common" });
 
   return (
-    <html lang={locale} className={lineSeedSansThai.variable}>
+    <html lang={locale} className={lineSeedSansThai.variable} suppressHydrationWarning>
       <body>
         <a href="#main" className="skip-link">{t("skipToMain")}</a>
 

@@ -53,3 +53,6 @@ supabase/.temp/
 # Local-only reference assets (large screenshots dragged in by user)
 screencapture-*.png
 screencapture-*.jpg
+
+# WIP — pattern extraction for future template/skills (not project work)
+docs/extracted-patterns/

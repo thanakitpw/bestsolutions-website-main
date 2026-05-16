@@ -53,17 +53,9 @@
   text-decoration: none;
 }
 
-.navbar-brand::before {
-  content: "";
-  display: inline-block;
-  width: 24px;
-  height: 24px;
-  border-radius: 50%;
-  background: radial-gradient(circle at 35% 35%,
-    var(--color-orange-500) 0%,
-    var(--color-orange-700) 65%,
-    var(--color-orange-900) 100%);
-  box-shadow: inset 0 -3px 6px rgba(0, 0, 0, 0.18);
+.navbar-brand-mark {
+  width: auto;
+  height: 28px;
   flex-shrink: 0;
 }
 
@@ -79,23 +71,46 @@
   padding: 0;
 }
 
-.navbar-nav a {
-  font-size: var(--text-sm);
+.navbar-nav > li > a {
+  position: relative;
+  font-size: var(--text-base);
   font-weight: var(--weight-medium);
   color: var(--color-text-muted);
   text-decoration: none;
+  padding: 6px 2px;
   transition: color var(--t-base) var(--ease);
 }
 
-.navbar-nav a:hover {
-  color: var(--color-text);
+.navbar-nav > li > a::after {
+  content: "";
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  bottom: 0;
+  height: 2px;
+  background: var(--color-orange-500);
+  border-radius: var(--r-full);
+  transform-origin: left;
+  transform: scaleX(0);
+  transition: transform var(--t-base) var(--ease-out);
 }
 
-.navbar-nav a:focus-visible {
+.navbar-nav > li > a:hover {
+  color: var(--color-orange-500);
+}
+
+.navbar-nav > li > a:hover::after {
+  transform: scaleX(1);
+}
+
+.navbar-nav > li > a:focus-visible {
   outline: none;
-  color: var(--color-text);
+  color: var(--color-orange-500);
   box-shadow: var(--shadow-glow-orange);
-  border-radius: var(--r-full);
+  border-radius: var(--r-sm);
+}
+.navbar-nav > li > a:focus-visible::after {
+  transform: scaleX(1);
 }
 
 @media (min-width: 900px) {
@@ -115,6 +130,20 @@
   .navbar-cta {
     display: inline-flex;
   }
+}
+
+.navbar-cta.btn-primary {
+  background: var(--color-orange-500);
+  color: var(--color-text-on-dark);
+  box-shadow: 0 8px 20px -8px rgba(255, 90, 31, 0.45);
+}
+.navbar-cta.btn-primary:hover {
+  background: var(--color-orange-700);
+  box-shadow: 0 14px 28px -10px rgba(217, 65, 14, 0.55);
+}
+.navbar-cta.btn-primary:focus-visible {
+  background: var(--color-orange-700);
+  box-shadow: 0 8px 20px -8px rgba(255, 90, 31, 0.45), var(--shadow-glow-orange);
 }
 
 /* -------------------------------------------------------------------------
@@ -265,4 +294,154 @@
   .navbar-scrim {
     display: none;
   }
+}
+
+/* -------------------------------------------------------------------------
+   Desktop services dropdown
+   ------------------------------------------------------------------------- */
+.navbar-nav-dropdown {
+  position: relative;
+}
+
+.navbar-nav-services-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.navbar-nav-chevron {
+  flex-shrink: 0;
+  transition: transform var(--t-base) var(--ease);
+}
+
+.navbar-nav-dropdown:hover .navbar-nav-chevron,
+.navbar-nav-dropdown:focus-within .navbar-nav-chevron {
+  transform: rotate(180deg);
+}
+
+.navbar-dropdown {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translateX(-50%) translateY(-6px);
+  list-style: none;
+  margin: 0;
+  padding: 6px;
+  min-width: 220px;
+  background: var(--color-surface);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+  backdrop-filter: saturate(160%) blur(16px);
+  border: 1px solid var(--hairline);
+  border-radius: var(--r-2xl);
+  box-shadow: 0 8px 32px -8px rgba(0, 0, 0, 0.14), 0 2px 8px -2px rgba(0, 0, 0, 0.08);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity var(--t-base) var(--ease), transform var(--t-base) var(--ease);
+  z-index: 10;
+}
+
+/* bridge gap between link and dropdown so mouse doesn't lose hover */
+.navbar-dropdown::before {
+  content: "";
+  position: absolute;
+  top: -14px;
+  left: 0;
+  right: 0;
+  height: 14px;
+}
+
+.navbar-nav-dropdown:hover .navbar-dropdown,
+.navbar-nav-dropdown:focus-within .navbar-dropdown {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateX(-50%) translateY(0);
+}
+
+.navbar-dropdown li a {
+  display: block;
+  padding: 9px 14px;
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  border-radius: var(--r-xl);
+  transition: background var(--t-base) var(--ease), color var(--t-base) var(--ease);
+  white-space: nowrap;
+}
+
+.navbar-dropdown li a:hover {
+  background: var(--color-surface-alt);
+  color: var(--color-orange-500);
+}
+
+.navbar-dropdown li a:focus-visible {
+  outline: none;
+  background: var(--color-surface-alt);
+  color: var(--color-orange-500);
+  box-shadow: var(--shadow-glow-orange);
+}
+
+/* -------------------------------------------------------------------------
+   Mobile drawer — services accordion
+   ------------------------------------------------------------------------- */
+.navbar-drawer-services-item {
+  list-style: none;
+}
+
+.navbar-drawer-details {
+  width: 100%;
+}
+
+.navbar-drawer-details[open] .navbar-drawer-chevron {
+  transform: rotate(180deg);
+}
+
+.navbar-drawer-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  list-style: none;
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  letter-spacing: var(--tracking-tight);
+  transition: color var(--t-base) var(--ease);
+  user-select: none;
+}
+
+.navbar-drawer-summary::-webkit-details-marker {
+  display: none;
+}
+
+.navbar-drawer-summary:hover {
+  color: var(--color-orange-700);
+}
+
+.navbar-drawer-chevron {
+  flex-shrink: 0;
+  transition: transform var(--t-base) var(--ease);
+}
+
+.navbar-drawer-subnav {
+  list-style: none;
+  margin: var(--space-3) 0 0;
+  padding: 0 0 0 var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  border-left: 2px solid var(--hairline-strong);
+}
+
+.navbar-drawer-subnav a {
+  font-size: var(--text-lg);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  text-decoration: none;
+  transition: color var(--t-base) var(--ease);
+}
+
+.navbar-drawer-subnav a:hover {
+  color: var(--color-orange-700);
 }

@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 
@@ -10,7 +11,16 @@ export async function Footer() {
         <div className="footer-grid">
 
           <div className="footer-col">
-            <Link href="/" className="footer-brand">{t("Common.brand")}</Link>
+            <Link href="/" className="footer-brand">
+              <Image
+                src="/logo.webp"
+                alt=""
+                width={32}
+                height={42}
+                className="footer-brand-mark"
+              />
+              <span>{t("Common.brand")}</span>
+            </Link>
             <p className="footer-tagline">{t("Footer.tagline")}</p>
 
             <div className="footer-social" role="list">
@@ -36,7 +46,7 @@ export async function Footer() {
             <h4>{t("Footer.servicesHeading")}</h4>
             <ul>
               <li><Link href="/services/web-design">รับทำเว็บไซต์</Link></li>
-              <li><Link href="/services">ยิงแอด Meta &amp; Google</Link></li>
+              <li><Link href="/services">ทำโฆษณา Meta &amp; Google</Link></li>
               <li><Link href="/services">SEO</Link></li>
               <li><Link href="/services">AI Automation</Link></li>
               <li><Link href="/services">Production</Link></li>

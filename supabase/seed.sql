@@ -4,7 +4,7 @@
 -- =============================================================================
 
 -- =============================================================================
--- services (7 entries)
+-- services (6 entries)
 -- =============================================================================
 
 insert into services (slug, name_th, name_en, summary_th, summary_en, icon, features_th, features_en, sort_order, status) values
@@ -15,31 +15,31 @@ insert into services (slug, name_th, name_en, summary_th, summary_en, icon, feat
    'web', array['ออกแบบ UX/UI ตามแบรนด์','SEO-ready โครงสร้างถูกต้อง','เปิดแอดมินแก้ content เองได้'],
    array['UX/UI designed from brand','SEO-ready structure','Edit content via admin'], 1, 'published'),
 
-  ('ads',
-   'ยิงแอด Meta & Google', 'Paid Ads (Meta & Google)',
-   'ปรับแคมเปญรายสัปดาห์ วัดผลทุกบาท ROAS ขึ้นจริง',
-   'Weekly campaign tuning, every baht measured, ROAS that climbs',
-   'megaphone', array['วาง funnel + audience','A/B test ครีเอทีฟ','รายงานรายสัปดาห์'],
-   array['Funnel + audience setup','Creative A/B testing','Weekly reports'], 2, 'published'),
-
   ('seo',
    'SEO ติดอันดับ Google', 'SEO',
    'เนื้อหา Authority + Technical ที่ขึ้นแล้วอยู่ยาว',
    'Authority content + technical SEO that ranks and stays',
    'search', array['Keyword research ภาษาไทย','Technical audit + fix','Content writer ทีมไทย'],
-   array['Thai keyword research','Technical audit + fix','Thai content writers'], 3, 'published'),
+   array['Thai keyword research','Technical audit + fix','Thai content writers'], 2, 'published'),
+
+  ('paid-ads',
+   'ทำโฆษณา Meta & Google', 'Paid Ads (Meta & Google)',
+   'ปรับแคมเปญรายสัปดาห์ วัดผลทุกบาท ROAS ขึ้นจริง',
+   'Weekly campaign tuning, every baht measured, ROAS that climbs',
+   'megaphone', array['วาง funnel + audience','A/B test ครีเอทีฟ','รายงานรายสัปดาห์'],
+   array['Funnel + audience setup','Creative A/B testing','Weekly reports'], 3, 'published'),
 
   ('social-media',
-   'ดูแลเพจโซเชียล', 'Social Media Management',
+   'ดูแลโซเชียลมีเดีย', 'Social Media Management',
    'คอนเทนต์ + ตอบแอดมิน + รายงานรายเดือน ครบจบในที่เดียว',
    'Content + admin replies + monthly reports, all in one team',
    'chat', array['Content plan รายเดือน','Admin ตอบ inbox','Monthly performance report'],
    array['Monthly content plan','Inbox admin','Monthly performance report'], 4, 'published'),
 
-  ('ai-automation',
-   'AI Automation', 'AI Automation',
-   'ระบบตอบลูกค้า ปิดการขาย จัดการหลังบ้านอัตโนมัติ',
-   'AI chatbots, auto sales follow-up, back-office automation',
+  ('automation',
+   'ระบบ Automation & AI', 'Automation & AI',
+   'Workflow + Chatbot + ระบบหลังบ้านอัตโนมัติ ลดงานซ้ำซาก',
+   'Workflows, chatbots, back-office automation — kill repetitive work',
    'sparkle', array['Chat bot ตอบลูกค้า 24/7','เชื่อม CRM อัตโนมัติ','Workflow n8n / Zapier'],
    array['24/7 chatbot','Auto CRM sync','n8n / Zapier workflows'], 5, 'published'),
 
@@ -48,77 +48,12 @@ insert into services (slug, name_th, name_en, summary_th, summary_en, icon, feat
    'ถ่าย ตัด ลง — โฆษณา / รีวิวสินค้า / คอนเทนต์โซเชียล',
    'Shoot, cut, post — ads, product reviews, social content',
    'video', array['วาง concept + scripting','ทีมถ่ายในกรุงเทพฯ','ตัด + ลง พร้อม caption'],
-   array['Concept + scripting','Bangkok-based shoot crew','Edit + post with captions'], 7, 'published')
+   array['Concept + scripting','Bangkok-based shoot crew','Edit + post with captions'], 6, 'published')
 on conflict (slug) do nothing;
 
 -- =============================================================================
--- portfolio_items (9 sample entries)
+-- portfolio_items — managed in Supabase Studio (twodesk-studio is the only live entry)
 -- =============================================================================
-
-insert into portfolio_items (slug, title, client, category, summary_th, summary_en, services, year, featured, sort_order, status, results) values
-  ('sample-case',
-   'บริษัท ก.ก่อสร้างไทย', 'ก.ก่อสร้างไทย', 'Web Design',
-   'รื้อเว็บเก่า ทำใหม่ทั้งหมด — โหลดเร็วขึ้น 4 เท่า ลีดเข้าเพิ่ม 3.5×',
-   'Full rebuild — 4× faster load, 3.5× more leads',
-   array['web-design','seo'], 2026, true, 1, 'published',
-   '[{"metric":"Load speed","value":"4×","label":"เร็วขึ้น (LCP 3.8s → 0.9s)"},{"metric":"Leads","value":"3.5×","label":"ลีดเข้าระบบเพิ่มขึ้น"},{"metric":"Organic traffic","value":"+480%","label":"ภายใน 6 เดือน"}]'::jsonb),
-
-  ('sportlab',
-   'SportLab อุปกรณ์กีฬา', 'SportLab', 'E-Commerce',
-   'เว็บ e-commerce พร้อมระบบสต็อก — ยอดขายขึ้น 220% ใน 6 เดือน',
-   'E-commerce + inventory — 220% sales lift in 6 months',
-   array['web-design','ads'], 2026, true, 2, 'published',
-   '[{"metric":"Sales","value":"+220%","label":"ยอดขาย 6 เดือนแรก"}]'::jsonb),
-
-  ('cafe-baan-suan',
-   'คาเฟ่ บ้านสวน', 'บ้านสวน Cafe', 'Branding',
-   'รีแบรนด์ทั้งร้าน + เว็บ + โซเชียล — ขึ้นเทรนด์ในย่านภายใน 3 เดือน',
-   'Full rebrand + web + social — trending locally in 3 months',
-   array['branding','social-media'], 2025, true, 3, 'published',
-   '[]'::jsonb),
-
-  ('aura-clinic',
-   'คลินิกความงาม Aura', 'Aura Clinic', 'Online Marketing',
-   'ยิงแอด Meta + Google ROAS เฉลี่ย 6.8× ใน 4 เดือน',
-   'Meta + Google ads averaging 6.8× ROAS over 4 months',
-   array['ads'], 2025, false, 4, 'published',
-   '[{"metric":"ROAS","value":"6.8×","label":"เฉลี่ย 4 เดือน"}]'::jsonb),
-
-  ('subsin-accounting',
-   'สำนักบัญชี ทรัพย์สิน', 'Subsin & Co', 'SEO',
-   'SEO ภาษาไทย ติดหน้าแรกใน 90 วัน ทราฟฟิก +480%',
-   'Thai SEO — front-page in 90 days, +480% traffic',
-   array['seo'], 2025, false, 5, 'published',
-   '[{"metric":"Traffic","value":"+480%","label":"organic ใน 6 เดือน"}]'::jsonb),
-
-  ('the-lobby',
-   'ร้านอาหาร The Lobby', 'The Lobby', 'Video & Content',
-   'ผลิตวิดีโอ 12 ชิ้น สำหรับ TikTok + IG Reels ยอด view 2.3M',
-   '12 videos for TikTok + IG Reels — 2.3M views',
-   array['production'], 2025, false, 6, 'published',
-   '[{"metric":"Views","value":"2.3M","label":"TikTok + IG Reels"}]'::jsonb),
-
-  ('ocean-bay',
-   'โรงแรม Ocean Bay', 'Ocean Bay Hotel', 'Web Design',
-   'เว็บจองห้องพัก พร้อมระบบ payment การจองเพิ่ม 180%',
-   'Booking site + payment — bookings +180%',
-   array['web-design'], 2025, false, 7, 'published',
-   '[{"metric":"Bookings","value":"+180%","label":"YoY"}]'::jsonb),
-
-  ('pompom',
-   'ร้านขนม PomPom', 'PomPom Snacks', 'Branding',
-   'รีแบรนด์ + แพ็คเกจจิ้ง ยอดขาย IG ขึ้น 4 เท่า',
-   'Rebrand + packaging — 4× IG sales',
-   array['branding'], 2024, false, 8, 'published',
-   '[{"metric":"IG sales","value":"4×","label":"3 เดือนแรก"}]'::jsonb),
-
-  ('lifeshield',
-   'บริษัทประกัน LifeShield', 'LifeShield Insurance', 'Online Marketing',
-   'AI ตอบลูกค้า + funnel — ปิดดีล 3.2× เร็วขึ้น',
-   'AI chatbot + funnel — 3.2× faster deal close',
-   array['ai-automation','ads'], 2024, false, 9, 'published',
-   '[{"metric":"Deal close time","value":"3.2×","label":"เร็วขึ้น"}]'::jsonb)
-on conflict (slug) do nothing;
 
 -- =============================================================================
 -- testimonials (3 featured)
@@ -176,7 +111,7 @@ on conflict (slug) do nothing;
 
 insert into site_settings (key, value, description) values
   ('contact', '{"phone":"095-385-7029","email":"info@bestsolutionscorp.com","line":"@bestsolutions","facebook":"@bestsolutionsagency","hours":"จันทร์-ศุกร์ 9:00-18:00"}'::jsonb, 'Contact channels shown in nav, footer, contact page'),
-  ('hero',   '{"eyebrow_th":"AI-Driven Agency · กรุงเทพฯ","eyebrow_en":"AI-Driven Agency · Bangkok","title_th":"ทำการตลาดออนไลน์ที่วัดผลได้จริง","title_en":"Digital marketing with measurable results"}'::jsonb, 'Home hero copy'),
+  ('hero',   '{"eyebrow_th":"Digital Marketing Agency","eyebrow_en":"Digital Marketing Agency","title_th":"วางระบบดิจิทัล ให้ธุรกิจเติบโตอย่างมั่นคง","title_en":"Build a digital system for steady business growth"}'::jsonb, 'Home hero copy'),
   ('stats',  '{"projects":"100+","years":"8","roas":"5.2×","seo_days":"90"}'::jsonb, 'Trust strip + stats band numbers'),
   ('founder','{"name":"ธนกิจ ใจทอง","role":"Founder & Lead Strategist","bio_th":"10 ปีในวงการ Digital Marketing"}'::jsonb, 'Founder bio for About page')
 on conflict (key) do nothing;
