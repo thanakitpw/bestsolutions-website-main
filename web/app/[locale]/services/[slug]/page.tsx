@@ -21,7 +21,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;
   const service = await getServiceBySlug(slug);
   if (!service) return {};
-  const title = service.seo_title ?? `${pickLocale(locale, service.name_th, service.name_en ?? service.name_th)} — Best Solutions`;
+  // Title goes through the root layout template ("%s · Best Solutions"),
+  // so the brand must NOT be repeated here.
+  const title = service.seo_title ?? pickLocale(locale, service.name_th, service.name_en ?? service.name_th);
   const description = service.seo_description ?? pickLocale(locale, service.summary_th, service.summary_en ?? service.summary_th);
   return buildPageMetadata({
     locale,
