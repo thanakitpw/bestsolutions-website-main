@@ -30,4 +30,4 @@ Services จริงใน DB = **6** (ไม่มี ai-email ตามที
 | `automation` | ระบบ automation ธุรกิจ | วางระบบ Automation & AI ให้ธุรกิจ | วางระบบ Automation และ AI ลดงานซ้ำให้ธุรกิจไทย เชื่อม CRM/LINE/Email ตอบลูกค้าอัตโนมัติ ออกแบบ workflow ตามงานจริง |
 | `production` | รับถ่ายวิดีโอ | รับถ่ายวิดีโอ & ผลิตคอนเทนต์ธุรกิจ | รับถ่ายวิดีโอและผลิตคอนเทนต์สำหรับธุรกิจไทย วาง concept ถ่ายทำ ตัดต่อ ส่งมอบไฟล์พร้อมลงทุกแพลตฟอร์ม |
 
-สถานะ: ยัง **ไม่ใส่ DB** (seo_title/seo_description = NULL ทุก row) → รอผู้ใช้อนุมัติ apply ผ่าน Supabase. ปัจจุบัน fallback = `name_th` (ไม่ซ้ำแบรนด์แล้ว แต่ยังไม่ KW-front).
+สถานะ: ✅ **ใส่ DB แล้ว** (2026-05-16, Supabase MCP UPDATE 6 rows). seo_title 33–40 ตัว, seo_description 99–125. service-detail title = KW-front อัตโนมัติผ่าน ISR.
