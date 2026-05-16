@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getServiceBySlug } from "@/utils/supabase/queries";
-import { ServiceJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
+import { ServiceJsonLd, BreadcrumbJsonLd, FaqJsonLd } from "@/components/json-ld";
 import { ServiceIcon } from "@/components/service-icon";
 import { Reveal } from "@/components/reveal";
 import { ProcessCarousel, type ProcessStep } from "@/components/process-carousel";
@@ -123,6 +123,7 @@ export default async function ServiceDetailPage({ params }: Props) {
   return (
     <main id="main" className="service-single">
       <ServiceJsonLd service={service} locale={locale} />
+      {faqs && <FaqJsonLd items={faqs} />}
       <BreadcrumbJsonLd
         locale={locale}
         items={[

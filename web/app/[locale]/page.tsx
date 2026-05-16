@@ -11,6 +11,7 @@ import { ServicesAccordion } from "@/components/services-accordion";
 import {
   OrganizationJsonLd,
   LocalBusinessJsonLd,
+  WebSiteJsonLd,
   type ContactInfo,
 } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
@@ -122,6 +123,7 @@ export default async function HomePage({
     <main id="main">
       <OrganizationJsonLd contact={contactInfo} locale={locale} />
       <LocalBusinessJsonLd contact={contactInfo} locale={locale} />
+      <WebSiteJsonLd locale={locale} />
 
       {/* ============================================================ HERO */}
       <section className="hero" aria-labelledby="hero-title">
@@ -194,7 +196,7 @@ export default async function HomePage({
         <div className="container">
           <Reveal className="section-header section-header-center">
             <span className="eyebrow-chip">● ปัญหาที่เจอบ่อย</span>
-            <h2 id="problem-title">ถ้าระบบดิจิทัลยังทำงานแยกกัน<br/>ธุรกิจก็โตได้ช้ากว่าที่ควร</h2>
+            <h2 id="problem-title" style={{textWrap: "balance"}}>ถ้าระบบดิจิทัลยังทำงานแยกกัน ธุรกิจก็โตได้ช้ากว่าที่ควร</h2>
             <p className="lead">หลายธุรกิจมีเว็บไซต์ โฆษณา SEO และเครื่องมือครบแล้ว แต่แต่ละส่วนยังไม่เชื่อมกัน ทำให้ทีมทำงานซ้ำ เสียโอกาส และมองภาพผลลัพธ์ได้ไม่ชัด</p>
           </Reveal>
 
@@ -239,10 +241,9 @@ export default async function HomePage({
           <div className="services-split">
             <Reveal className="services-split-left">
               <span className="eyebrow-chip">● บริการของเรา</span>
-              <h2 id="services-title">วางระบบการตลาดดิจิทัล<br/>ให้ทำงานต่อเนื่อง</h2>
-              <p className="lead">
-                ตั้งแต่เว็บไซต์ SEO แคมเปญโฆษณา โซเชียล ไปจนถึง Automation เราช่วยจัดแต่ละส่วนให้เชื่อมกันเป็นระบบเดียว
-                เพื่อให้ทีมของคุณทำงานง่ายขึ้นและเห็นผลได้ชัดเจนขึ้น
+              <h2 id="services-title" style={{textWrap: "balance"}}>วางระบบการตลาดดิจิทัล ให้ทำงานต่อเนื่อง</h2>
+              <p className="lead" style={{textWrap: "pretty"}}>
+                ตั้งแต่เว็บไซต์ SEO แคมเปญโฆษณา โซเชียล ไปจนถึง Automation เราช่วยจัดแต่ละส่วนให้เชื่อมกันเป็นระบบเดียว เพื่อให้ทีมของคุณทำงานง่ายขึ้นและเห็นผลได้ชัดเจนขึ้น
               </p>
               <Link href="/services" className="btn btn-primary btn-arrow services-split-cta">
                 <span className="btn-label">ดูบริการทั้งหมด</span>
@@ -317,8 +318,8 @@ export default async function HomePage({
         <div className="container">
           <Reveal className="section-header section-header-center">
             <span className="eyebrow-chip is-blue">● วิธีการทำงาน</span>
-            <h2 id="process-title">เริ่มจากเข้าใจโจทย์<br/>แล้วค่อยวางระบบให้เหมาะกับธุรกิจ</h2>
-            <p className="lead">ทุกโปรเจกต์เริ่มจากการทำความเข้าใจธุรกิจ ก่อนแปลงเป็นแผนงานที่ชัดเจน เพื่อให้รู้ตั้งแต่ต้นว่าต้องเตรียมอะไร จะได้อะไร และควรวัดผลอย่างไร</p>
+            <h2 id="process-title" style={{textWrap: "balance"}}>เริ่มจากเข้าใจโจทย์ แล้วค่อยวางระบบให้เหมาะกับธุรกิจ</h2>
+            <p className="lead" style={{textWrap: "pretty"}}>ทุกโปรเจกต์เริ่มจากการทำความเข้าใจธุรกิจ ก่อนแปลงเป็นแผนงานที่ชัดเจน เพื่อให้รู้ตั้งแต่ต้นว่าต้องเตรียมอะไร จะได้อะไร และควรวัดผลอย่างไร</p>
           </Reveal>
 
           <Reveal className="process-flow" delay={0.1}>

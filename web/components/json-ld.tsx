@@ -49,6 +49,43 @@ function telephoneE164(raw: string | undefined): string | undefined {
   return raw;
 }
 
+export function WebSiteJsonLd({ locale }: { locale: string }) {
+  const data: Json = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": `${SITE_URL}/#website`,
+    url: `${SITE_URL}/${locale}`,
+    name: "Best Solutions",
+    inLanguage: locale === "en" ? "en" : "th",
+    publisher: { "@id": ORG_ID },
+    potentialAction: {
+      "@type": "SearchAction",
+      target: {
+        "@type": "EntryPoint",
+        urlTemplate: `${SITE_URL}/${locale}/blog?q={search_term_string}`,
+      },
+      "query-input": "required name=search_term_string",
+    },
+  };
+  return <JsonLd data={data} id="website-jsonld" />;
+}
+
+export type FaqEntry = { q: string; a: string };
+
+export function FaqJsonLd({ items }: { items: FaqEntry[] }) {
+  if (items.length === 0) return null;
+  const data: Json = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: items.map((it) => ({
+      "@type": "Question",
+      name: it.q,
+      acceptedAnswer: { "@type": "Answer", text: it.a },
+    })),
+  };
+  return <JsonLd data={data} />;
+}
+
 export function OrganizationJsonLd({ contact, locale }: { contact?: ContactInfo; locale: string }) {
   const data: Json = {
     "@context": "https://schema.org",

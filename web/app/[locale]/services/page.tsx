@@ -1,12 +1,11 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getServices, getPortfolioItems } from "@/utils/supabase/queries";
+import { getServices } from "@/utils/supabase/queries";
 import { ServiceIcon } from "@/components/service-icon";
-import { ServiceListJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
+import { ServiceListJsonLd, BreadcrumbJsonLd, FaqJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
-import { ServicesFAQ } from "@/components/services-faq";
-import { FeaturedCases } from "@/components/featured-cases";
+import { ServicesFAQ, DEFAULT_FAQS } from "@/components/services-faq";
 import { pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/services.css";
@@ -36,14 +35,12 @@ export default async function ServicesPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [services, featuredCases] = await Promise.all([
-    getServices(),
-    getPortfolioItems({ featured: true, limit: 3 }),
-  ]);
+  const services = await getServices();
 
   return (
     <main id="main">
       <ServiceListJsonLd services={services} locale={locale} />
+      <FaqJsonLd items={DEFAULT_FAQS} />
       <BreadcrumbJsonLd
         locale={locale}
         items={[
@@ -59,7 +56,7 @@ export default async function ServicesPage({
           <div className="page-hero-inner">
             <span className="eyebrow-pill">
               <span className="star">✦</span>
-              <span>บริการดิจิทัล · {services.length} services</span>
+              <span>บริการของเรา</span>
             </span>
             <h1 id="hero-title">วางระบบดิจิทัลให้แต่ละช่องทางทำงานไปทางเดียวกัน</h1>
             <p className="lead">
@@ -164,35 +161,12 @@ export default async function ServicesPage({
       </section>
 
 
-      {/* ============================================================ FEATURED CASES */}
-      {featuredCases.length > 0 && (
-        <section className="section section-tight" id="cases" aria-labelledby="cases-title">
-          <div className="container">
-            <Reveal className="section-header-row">
-              <div className="section-header">
-                <span className="eyebrow-chip is-blue">● ผลงานล่าสุด</span>
-                <h2 id="cases-title">ตัวอย่างงานที่ออกแบบจากโจทย์จริง</h2>
-                <p className="lead">ดูแนวทางการทำงานผ่านโปรเจกต์จริง ทั้งเว็บไซต์ แคมเปญ และระบบดิจิทัลที่ออกแบบให้เข้ากับเป้าหมายของแต่ละธุรกิจ</p>
-              </div>
-              <Link href="/portfolio" className="btn btn-ghost btn-arrow">
-                <span className="btn-label">ดูผลงานทั้งหมด</span>
-              </Link>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <FeaturedCases items={featuredCases} locale={locale} />
-            </Reveal>
-          </div>
-        </section>
-      )}
-
-
       {/* ============================================================ FAQ */}
       <section className="section section-tight" id="faq" aria-labelledby="faq-title">
         <div className="container">
           <Reveal className="section-header-center">
             <span className="eyebrow-chip">● คำถามที่พบบ่อย</span>
-            <h2 id="faq-title" style={{ margin: "var(--space-4) 0 var(--space-4)" }}>เรื่องที่ลูกค้ามักถามก่อนเริ่มงาน</h2>
+            <h2 id="faq-title" style={{ margin: "var(--space-4) 0 var(--space-4)", textWrap: "nowrap" }}>เรื่องที่ลูกค้ามักถามก่อนเริ่มงาน</h2>
             <p className="lead">ถ้ายังไม่แน่ใจว่าควรเริ่มจากบริการไหน ทักมาคุยกันก่อนได้</p>
           </Reveal>
 

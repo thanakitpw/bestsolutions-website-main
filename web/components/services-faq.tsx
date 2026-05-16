@@ -3,7 +3,7 @@ export type FAQItem = {
   a: string;
 };
 
-const DEFAULT_FAQS: FAQItem[] = [
+export const DEFAULT_FAQS: FAQItem[] = [
   {
     q: "ราคาเริ่มต้นเท่าไหร่?",
     a: "ราคาขึ้นกับขอบเขตงาน เป้าหมาย และความซับซ้อนของระบบ เล่าโจทย์คร่าว ๆ มาก่อนได้ แล้วเราจะช่วยประเมินช่วงงบประมาณที่เหมาะสม",

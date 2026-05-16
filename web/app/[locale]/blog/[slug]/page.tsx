@@ -31,6 +31,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const title = pickLocale(locale, article.title_th, article.title_en ?? article.title_th);
   const description = (article.seo_description ?? pickLocale(locale, article.excerpt_th, article.excerpt_en ?? article.excerpt_th ?? "")) ?? "";
   const fullTitle = article.seo_title ?? `${title} · Best Solutions`;
+  const ogImage = article.og_image ?? article.cover_image;
   return {
     title: { absolute: fullTitle },
     description,
@@ -41,9 +42,19 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description,
       path: `/blog/${slug}`,
       type: "article",
-      ...(article.cover_image ? { image: article.cover_image } : {}),
+      ...(ogImage ? { image: ogImage } : {}),
+      article: {
+        ...(article.published_at ? { publishedTime: article.published_at } : {}),
+        ...(article.updated_at ? { modifiedTime: article.updated_at } : {}),
+        ...(article.author_name ? { authors: [article.author_name] } : {}),
+      },
     }),
-    twitter: { card: "summary_large_image", title: fullTitle, description },
+    twitter: {
+      card: "summary_large_image",
+      title: fullTitle,
+      description,
+      ...(ogImage ? { images: [ogImage] } : {}),
+    },
   };
 }
 

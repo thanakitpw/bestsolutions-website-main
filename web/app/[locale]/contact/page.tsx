@@ -3,7 +3,7 @@ import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getSiteSetting } from "@/utils/supabase/queries";
 import { ContactForm } from "@/components/contact-form";
-import { BreadcrumbJsonLd } from "@/components/json-ld";
+import { BreadcrumbJsonLd, LocalBusinessJsonLd, FaqJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/contact.css";
@@ -50,6 +50,14 @@ export default async function ContactPage({
   const contactData = await getSiteSetting<ContactSetting>("contact");
   const contact = contactData ?? DEFAULT_CONTACT;
 
+  const faqs = [
+    { q: "นัดคุยฟรีจริงไหม มีเงื่อนไขอะไรหรือเปล่า?", a: "ฟรีจริง ไม่มีเงื่อนไข เราใช้เวลานี้เพื่อทำความเข้าใจธุรกิจ ฟังโจทย์ และแนะนำแนวทางเบื้องต้น คุณไม่ต้องเซ็นสัญญาหรือผูกมัดใด ๆ หลังคุย" },
+    { q: "ทีมตอบกลับเร็วแค่ไหน?", a: "ฟอร์มหรือ LINE ที่ส่งเข้ามาในเวลาทำการ ทีมจะพยายามตอบกลับโดยเร็ว และไม่เกิน 1 วันทำการ" },
+    { q: "ราคาประมาณเท่าไหร่?", a: "ราคาขึ้นกับขอบเขตงาน ขนาดเว็บไซต์ งบโฆษณา และเป้าหมายของธุรกิจ เล่าโจทย์คร่าว ๆ มาก่อนได้ แล้วเราจะประเมินช่วงงบประมาณให้เหมาะกับเคสของคุณ" },
+    { q: "ทำงานกับลูกค้าต่างจังหวัดได้ไหม?", a: "ได้ เราทำงานผ่าน Google Meet, LINE และเอกสารออนไลน์เป็นหลัก ลูกค้าไม่จำเป็นต้องเดินทางเข้ากรุงเทพฯ" },
+    { q: "มีตัวอย่างสัญญาหรือขอบเขตงานให้ดูก่อนไหม?", a: "ได้ เราสามารถส่งตัวอย่างเอกสาร ขอบเขตงาน และเงื่อนไขหลักให้พิจารณาก่อนตัดสินใจ เพื่อให้ทุกอย่างชัดเจนตั้งแต่ต้น" },
+  ];
+
   return (
     <main id="main">
       <BreadcrumbJsonLd
@@ -59,6 +67,8 @@ export default async function ContactPage({
           { name: locale === "en" ? "Contact" : "ติดต่อเรา", path: "/contact" },
         ]}
       />
+      <LocalBusinessJsonLd contact={contact} locale={locale} />
+      <FaqJsonLd items={faqs} />
 
       {/* ============================================================ HERO */}
       <section className="page-hero" aria-labelledby="hero-title">

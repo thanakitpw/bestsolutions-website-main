@@ -3,6 +3,7 @@ import { routing } from "@/i18n/routing";
 import {
   getArticleSitemapEntries,
   getPortfolioSitemapEntries,
+  getServiceSitemapEntries,
 } from "@/utils/supabase/queries";
 
 const SITE_URL =
@@ -16,7 +17,6 @@ const STATIC_PATHS: Array<{
   { path: "", changeFrequency: "weekly", priority: 1.0 },
   { path: "/about", changeFrequency: "monthly", priority: 0.7 },
   { path: "/services", changeFrequency: "monthly", priority: 0.9 },
-  { path: "/services/web-design", changeFrequency: "monthly", priority: 0.8 },
   { path: "/portfolio", changeFrequency: "weekly", priority: 0.8 },
   { path: "/blog", changeFrequency: "weekly", priority: 0.8 },
   { path: "/contact", changeFrequency: "monthly", priority: 0.7 },
@@ -32,9 +32,10 @@ function localizedAlternates(path: string): Record<string, string> {
 }
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const [articles, portfolio] = await Promise.all([
+  const [articles, portfolio, services] = await Promise.all([
     getArticleSitemapEntries(),
     getPortfolioSitemapEntries(),
+    getServiceSitemapEntries(),
   ]);
 
   const now = new Date();
@@ -60,6 +61,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
+  const serviceEntries: MetadataRoute.Sitemap = services.flatMap((s) =>
+    routing.locales.map((locale) => ({
+      url: `${SITE_URL}/${locale}/services/${s.slug}`,
+      lastModified: new Date(s.updated_at),
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+      alternates: { languages: localizedAlternates(`/services/${s.slug}`) },
+    })),
+  );
+
   const portfolioEntries: MetadataRoute.Sitemap = portfolio.flatMap((p) =>
     routing.locales.map((locale) => ({
       url: `${SITE_URL}/${locale}/portfolio/${p.slug}`,
@@ -70,5 +81,5 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     })),
   );
 
-  return [...staticEntries, ...articleEntries, ...portfolioEntries];
+  return [...staticEntries, ...serviceEntries, ...articleEntries, ...portfolioEntries];
 }
