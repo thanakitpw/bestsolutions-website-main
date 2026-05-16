@@ -62,6 +62,12 @@
 - [ ] title ≤60, meta desc ≤160, slug สื่อความ
 - [ ] อ่านลื่นภาษาไทย ไม่มีรูป AI-pattern (skill avoid-ai-writing)
 
+## Decision log (2026-05-16)
+- Cadence: ✅ **Ramp 1–2/วัน** (ยืนยัน) — scale ตามเงื่อนไข quality gate
+- รูป cover/OG: ⏸️ รอผู้ใช้ตัดสิน (ใช้ default OG ชั่วคราวถ้าเริ่ม)
+- Author: ⏸️ ยังไม่ตัดสิน
+- สถานะ: ⏸️ **ผู้ใช้สั่งหยุด ยังไม่เขียนบทความ** — S3 ค้างไว้ รอสัญญาณเริ่ม
+
 ## ค้างตัดสิน
 1. **Cadence** — ยืนยันเริ่มที่ Ramp 1–2/วัน (แนะนำ) หรือยืน 3–4/วันตั้งแต่แรก (เสี่ยง)
 2. **รูป cover/OG** — AI API / HTML→screenshot / default ชั่วคราว
