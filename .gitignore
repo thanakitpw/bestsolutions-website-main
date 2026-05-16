@@ -56,3 +56,9 @@ screencapture-*.jpg
 
 # WIP — pattern extraction for future template/skills (not project work)
 docs/extracted-patterns/
+
+# Secrets — service account / API keys (never commit)
+*-sa.json
+*service-account*.json
+bestsolutions-seo-*.json
+gsc-sa.json
