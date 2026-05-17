@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import Image from "next/image";
 import { getSiteSetting } from "@/utils/supabase/queries";
 import { BreadcrumbJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
@@ -29,12 +30,6 @@ type StatsSetting = {
   seo_days: string;
 };
 
-type FounderSetting = {
-  name: string;
-  role: string;
-  bio_th?: string;
-};
-
 export default async function AboutPage({
   params,
 }: {
@@ -43,10 +38,7 @@ export default async function AboutPage({
   const { locale } = await params;
   setRequestLocale(locale);
 
-  const [stats, founder] = await Promise.all([
-    getSiteSetting<StatsSetting>("stats"),
-    getSiteSetting<FounderSetting>("founder"),
-  ]);
+  const stats = await getSiteSetting<StatsSetting>("stats");
 
   return (
     <main id="main">
@@ -78,31 +70,39 @@ export default async function AboutPage({
       </section>
 
 
-      {/* ============================================================ FOUNDER STORY */}
-      <section className="section section-tight" id="founder" aria-labelledby="founder-title">
+      {/* ============================================================ ORIGIN STORY */}
+      <section className="section section-tight" id="origin" aria-labelledby="origin-title">
         <div className="container">
           <Reveal className="founder-grid">
 
-            <div className="founder-photo" role="img" aria-label="ภาพ Founder Best Solutions"></div>
+            <div className="founder-photo">
+              <Image
+                src="/about-start-workspace.webp"
+                alt="ภาพโต๊ะทำงานและการวางแผนดิจิทัลของทีม Best Solutions"
+                fill
+                className="founder-photo-img"
+                sizes="(max-width: 959px) 100vw, 40vw"
+              />
+            </div>
 
             <div className="founder-body">
               <span className="eyebrow-chip">● จุดเริ่มต้น</span>
-              <h2 id="founder-title" style={{ marginTop: "var(--space-4)", marginBottom: "var(--space-6)" }}>
+              <h2 id="origin-title" style={{ marginTop: "var(--space-4)", marginBottom: "var(--space-6)" }}>
                 ทำไมเราถึงเริ่มต้น Best Solutions
               </h2>
 
               <p>
-                ตลอดเวลาที่ทำงานในวงการ Digital Marketing ผมเห็นปัญหาที่เจ้าของธุรกิจเจอบ่อยมาก คือ
+                ตลอดเวลาที่ทำงานในวงการ Digital Marketing เราพบปัญหาที่เจ้าของธุรกิจเจอบ่อยมาก คือ
                 <strong>ความไม่ชัดเจน</strong> ทั้งเรื่องงบประมาณ ผลลัพธ์ ขั้นตอนทำงาน
                 และระบบที่ใช้งานต่อได้ยากหลังส่งมอบ
               </p>
 
               <div className="founder-quote">
-                "ผมอยากให้การทำดิจิทัลของธุรกิจไทยชัดเจนขึ้น วัดผลได้ขึ้น และไม่ซับซ้อนเกินจำเป็น"
+                “เราอยากให้การทำดิจิทัลของธุรกิจไทยชัดเจนขึ้น วัดผลได้ขึ้น และไม่ซับซ้อนเกินจำเป็น”
               </div>
 
               <p>
-                ทุกโปรเจกต์ของเราจึงเริ่มจากการ <strong>ฟัง</strong> ก่อน ทำความเข้าใจว่าธุรกิจกำลังเจอโจทย์อะไร
+                ทุกโปรเจกต์จึงเริ่มจากการ <strong>ฟัง</strong> ก่อน ทำความเข้าใจว่าธุรกิจกำลังเจอโจทย์อะไร
                 เป้าหมายคืออะไร และข้อจำกัดอยู่ตรงไหน จากนั้นค่อยวางแผนเป็นรอบงานสั้น ๆ
                 เพื่อให้เห็นความคืบหน้า ปรับทิศได้ และติดตามผลได้ต่อเนื่อง
               </p>
@@ -111,11 +111,6 @@ export default async function AboutPage({
                 วันนี้ Best Solutions มีทีมในกรุงเทพฯ ที่ดูแลงานเว็บไซต์ โฆษณา SEO โซเชียล Automation
                 และ Production ให้เชื่อมกันเป็นระบบเดียว ช่วยลดภาระการประสานงานหลายทีม และทำให้ภาพรวมของธุรกิจชัดขึ้น
               </p>
-
-              <div className="founder-sig">
-                <div className="founder-sig-name">{founder?.name ?? "ธนกิจ ใจทอง"} (Thanakit Chaithong)</div>
-                <div className="founder-sig-role">{founder?.role ?? "Founder & Lead Strategist"}</div>
-              </div>
             </div>
 
           </Reveal>

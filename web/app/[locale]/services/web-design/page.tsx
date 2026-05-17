@@ -112,7 +112,7 @@ export default async function WebDesignPage({
   const portfolioToShow = relatedPortfolio.length > 0 ? relatedPortfolio : allPortfolio.slice(0, 3);
 
   const heroVisual = "/website-mockup.png";
-  const deliverableVisual = relatedPortfolio[1]?.cover_image ?? allPortfolio[1]?.cover_image ?? null;
+  const deliverableVisual = "/services/web-design-deliverables.webp";
 
   const serviceName = service
     ? pickLocale(locale, service.name_th, service.name_en ?? service.name_th)
@@ -338,7 +338,7 @@ export default async function WebDesignPage({
               <MediaImage
                 className="ss-included-image"
                 src={deliverableVisual}
-                alt="ตัวอย่างผลงานเว็บไซต์"
+                alt="ภาพประกอบการส่งมอบเว็บไซต์พร้อม SEO tracking และ responsive design"
                 sizes="(min-width: 1024px) 480px, 100vw"
               />
             </Reveal>

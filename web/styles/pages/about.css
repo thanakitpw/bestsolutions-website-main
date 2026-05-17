@@ -69,22 +69,14 @@
 .founder-photo {
   aspect-ratio: 4 / 5;
   border-radius: var(--r-3xl);
-  background:
-    radial-gradient(circle at 30% 20%, rgba(255,179,71,0.6), transparent 60%),
-    linear-gradient(135deg, var(--color-orange-500), var(--color-orange-700) 70%, #5C1A02);
+  background: var(--color-surface-2);
   box-shadow: var(--shadow-card);
   position: relative;
   overflow: hidden;
 }
-.founder-photo::after {
-  content: "ภาพ Founder · ใส่จริงตอน Phase 2";
-  position: absolute;
-  inset: auto 0 var(--space-6) 0;
-  text-align: center;
-  color: rgba(255,255,255,0.7);
-  font-size: var(--text-xs);
-  letter-spacing: var(--tracking-wide);
-  text-transform: uppercase;
+.founder-photo-img {
+  object-fit: cover;
+  object-position: center;
 }
 
 .founder-body p {
@@ -107,20 +99,6 @@
   color: var(--color-text);
 }
 
-.founder-sig {
-  margin-top: var(--space-8);
-  padding-top: var(--space-6);
-  border-top: 1px solid var(--hairline);
-}
-.founder-sig-name {
-  font-weight: var(--weight-bold);
-  font-size: var(--text-lg);
-}
-.founder-sig-role {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  margin-top: 2px;
-}
 
 /* ================= VALUES ================= */
 .grid-values {
