@@ -104,7 +104,7 @@ export default async function ContactPage({
 
               <div className="contact-channels">
 
-                <a href={`https://line.me/R/ti/p/${contact.line}`} target="_blank" rel="noopener" className="contact-channel">
+                <a href="https://lin.ee/xB314y9" target="_blank" rel="noopener" className="contact-channel">
                   <div className="contact-channel-icon is-line" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19 4H5a3 3 0 0 0-3 3v8a3 3 0 0 0 3 3h2v3l4-3h8a3 3 0 0 0 3-3V7a3 3 0 0 0-3-3zM7 13H5v-3h1v2h1v1zm3 0H8.5v-3H10v3zm5-1.5L13 13h-1V10h1v1.5L14.5 10H15v3zm3.5 0H17V11h-1v-1h1v-1h1.5v3z" /></svg>
                   </div>
@@ -134,7 +134,7 @@ export default async function ContactPage({
                   </div>
                 </a>
 
-                <a href={`https://facebook.com/${contact.facebook.replace("@", "")}`} target="_blank" rel="noopener" className="contact-channel">
+                <a href="https://www.facebook.com/bestsolutionsagency" target="_blank" rel="noopener" className="contact-channel">
                   <div className="contact-channel-icon is-blue" aria-hidden="true">
                     <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.55 9.88v-7H8v-2.88h2.45v-2.2c0-2.42 1.44-3.76 3.65-3.76 1.06 0 2.16.18 2.16.18v2.38h-1.22c-1.2 0-1.58.75-1.58 1.51v1.81h2.69l-.43 2.88h-2.26v7A10 10 0 0 0 22 12z" /></svg>
                   </div>

@@ -33,10 +33,10 @@ function sameAs(contact: ContactInfo | undefined): string[] {
   if (!contact) return [];
   const links: string[] = [];
   if (contact.facebook) {
-    links.push(`https://facebook.com/${contact.facebook.replace(/^@/, "")}`);
+    links.push("https://www.facebook.com/bestsolutionsagency");
   }
   if (contact.line) {
-    links.push(`https://line.me/R/ti/p/${contact.line}`);
+    links.push("https://lin.ee/xB314y9");
   }
   return links;
 }

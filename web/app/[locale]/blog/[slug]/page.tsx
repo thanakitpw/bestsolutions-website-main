@@ -1,15 +1,19 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
+import rehypeSlug from "rehype-slug";
 import { getArticleBySlug, getArticles, getArticleSlugs } from "@/utils/supabase/queries";
 import { buildAlternates, buildOg } from "@/utils/metadata";
 import { ArticleJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { MediaImage } from "@/components/media-image";
 import { formatThaiDate, pickLocale } from "@/utils/format";
+import { extractHeadings } from "@/utils/toc";
+import { PostToc } from "@/components/post-toc";
 import "@/styles/pages/sample-post.css";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
@@ -71,6 +75,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   const title = pickLocale(locale, article.title_th, article.title_en ?? article.title_th);
   const body = pickLocale(locale, article.body_md_th, article.body_md_en ?? article.body_md_th);
+  const headings = extractHeadings(body ?? "");
   const related = allArticles.filter((a) => a.slug !== slug).slice(0, 3);
 
   const RELATED_GRADIENTS = [
@@ -99,7 +104,7 @@ export default async function BlogPostPage({ params }: Props) {
             <span className="post-cat">{article.category}</span>
             <h1 className="post-title">{title}</h1>
             <div className="post-meta">
-              <div className="post-author-avatar" aria-hidden="true"></div>
+              <Image className="post-author-avatar" src="/logo.webp" alt="" width={40} height={40} aria-hidden="true" />
               <span><strong>{article.author_name}</strong></span>
               <span>·</span>
               <span>{formatThaiDate(article.published_at)}</span>
@@ -123,19 +128,16 @@ export default async function BlogPostPage({ params }: Props) {
 
           <div className="post-layout">
 
-            {/* TOC placeholder — populated by client-side JS in future */}
-            <nav className="post-toc" aria-label="สารบัญบทความ">
-              <h2>สารบัญ</h2>
-            </nav>
+            <PostToc headings={headings} />
 
             {/* BODY */}
             <article className="post-body">
-              <ReactMarkdown rehypePlugins={[rehypeSanitize]}>
+              <ReactMarkdown rehypePlugins={[rehypeSanitize, rehypeSlug]}>
                 {body ?? ""}
               </ReactMarkdown>
 
               <div className="author-card">
-                <div className="author-card-avatar" aria-hidden="true"></div>
+                <Image className="author-card-avatar" src="/logo.webp" alt={`โลโก้ ${article.author_name}`} width={72} height={72} />
                 <div>
                   <div className="author-card-name">{article.author_name}</div>
                   <div className="author-card-role">Best Solutions Team</div>
