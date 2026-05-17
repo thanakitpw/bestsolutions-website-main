@@ -35,7 +35,7 @@
 @media (min-width: 768px) { .featured-card { grid-template-columns: 1.2fr 1fr; } }
 
 .featured-media {
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   background: linear-gradient(135deg, var(--color-orange-500), var(--color-peach));
 }
 @media (min-width: 768px) { .featured-media { aspect-ratio: auto; } }
