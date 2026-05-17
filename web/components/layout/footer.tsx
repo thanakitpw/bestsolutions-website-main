@@ -34,7 +34,7 @@ export async function Footer() {
                   <path d="M22 12a10 10 0 1 0-11.55 9.88v-7H8v-2.88h2.45v-2.2c0-2.42 1.44-3.76 3.65-3.76 1.06 0 2.16.18 2.16.18v2.38h-1.22c-1.2 0-1.58.75-1.58 1.51v1.81h2.69l-.43 2.88h-2.26v7A10 10 0 0 0 22 12z" />
                 </svg>
               </a>
-              <a href="tel:0953857029" aria-label="โทรศัพท์ 095-385-7029" role="listitem">
+              <a href="tel:0953854906" aria-label="โทรศัพท์ 095-385-4906" role="listitem">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
                   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z" />
                 </svg>
@@ -66,7 +66,7 @@ export async function Footer() {
           <div className="footer-col">
             <h4>{t("Footer.contactHeading")}</h4>
             <ul>
-              <li><a href="tel:0953857029">{t("Footer.phone")}</a></li>
+              <li><a href="tel:0953854906">{t("Footer.phone")}</a></li>
               <li><a href="mailto:info@bestsolutionscorp.com">{t("Footer.email")}</a></li>
               <li><a href="https://lin.ee/xB314y9" target="_blank" rel="noopener">{t("Footer.lineLabel")}</a></li>
               <li><a href="https://www.facebook.com/bestsolutionsagency" target="_blank" rel="noopener">{t("Footer.fbLabel")}</a></li>

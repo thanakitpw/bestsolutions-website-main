@@ -87,7 +87,7 @@ export function ContactForm({ lineHandle }: Props) {
             className="form-input"
             id="lead-phone"
             type="tel"
-            placeholder="095-385-7029"
+            placeholder="095-385-4906"
             autoComplete="tel"
             {...register("phone")}
           />

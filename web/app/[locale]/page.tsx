@@ -384,7 +384,8 @@ export default async function HomePage({
       </section>
 
 
-      {/* ============================================================ TESTIMONIALS */}
+      {/* ============================================================ TESTIMONIALS — ปิดชั่วคราวตามคำขอเจ้าของ (เปลี่ยน false เป็น true เพื่อเปิดกลับ) */}
+      {false && (
       <section className="section" id="testimonials" aria-labelledby="testi-title">
         <div className="container">
           <Reveal className="section-header" style={{ marginBottom: "var(--space-12)", maxWidth: 720 }}>
@@ -424,6 +425,7 @@ export default async function HomePage({
           </Reveal>
         </div>
       </section>
+      )}
 
 
       {/* ============================================================ WHO WE'RE FOR */}

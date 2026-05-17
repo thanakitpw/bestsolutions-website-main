@@ -32,7 +32,7 @@ type ContactSetting = {
 };
 
 const DEFAULT_CONTACT: ContactSetting = {
-  phone: "095-385-7029",
+  phone: "095-385-4906",
   email: "info@bestsolutionscorp.com",
   line: "@bestsolutions",
   facebook: "@bestsolutionsagency",

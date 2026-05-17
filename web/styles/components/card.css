@@ -225,9 +225,17 @@
 .card-blog .card-media {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
+  aspect-ratio: 16 / 9;
   background: var(--color-surface-alt);
   object-fit: cover;
+  border-top-left-radius: var(--r-3xl);
+  border-top-right-radius: var(--r-3xl);
+}
+/* next/image renders an absolutely-positioned <img>; ancestor Reveal transform
+   breaks the wrapper's overflow-clip, so round the image itself. */
+.card-blog .card-media img {
+  border-top-left-radius: var(--r-3xl);
+  border-top-right-radius: var(--r-3xl);
 }
 
 .card-blog .card-body {

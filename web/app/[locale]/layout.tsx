@@ -7,6 +7,7 @@ import { routing, type Locale } from "@/i18n/routing";
 import { lineSeedSansThai } from "@/lib/fonts";
 import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
+import { FloatingContact } from "@/components/floating-contact";
 import { LenisProvider } from "@/components/lenis-provider";
 import "../globals.css";
 
@@ -91,6 +92,7 @@ export default async function LocaleLayout({
             <Navbar />
             {children}
             <Footer />
+            <FloatingContact />
           </LenisProvider>
         </NextIntlClientProvider>
 
