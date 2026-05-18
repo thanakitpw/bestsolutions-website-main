@@ -25,8 +25,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
 type StatsSetting = { projects: string; years: string; roas: string; seo_days: string };
 
-const CATEGORIES = ["เว็บไซต์องค์กร / บริษัท", "เว็บไซต์ร้านค้าออนไลน์"];
-
 export default async function PortfolioPage({
   params,
 }: {
@@ -39,6 +37,10 @@ export default async function PortfolioPage({
     getPortfolioItems(),
     getSiteSetting<StatsSetting>("stats"),
   ]);
+
+  const categories = [...new Set(items.map((p) => p.category).filter(Boolean))].sort((a, b) =>
+    a.localeCompare(b, "th"),
+  );
 
   return (
     <main id="main">
@@ -68,7 +70,7 @@ export default async function PortfolioPage({
         <div className="container">
           <h2 id="works-title" style={{ position: "absolute", clip: "rect(0 0 0 0)", width: "1px", height: "1px", overflow: "hidden" }}>ผลงานทั้งหมด</h2>
 
-          <PortfolioFilter items={items} locale={locale} categories={CATEGORIES} />
+          <PortfolioFilter items={items} locale={locale} categories={categories} />
         </div>
       </section>
 

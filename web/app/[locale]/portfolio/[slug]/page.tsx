@@ -123,22 +123,64 @@ export default async function PortfolioDetailPage({ params }: Props) {
               )}
             </div>
 
-            {(item.results ?? []).length > 0 && (
-              <aside className="case-hero-results" aria-label="ผลลัพธ์ของโปรเจค">
-                <h3 className="case-hero-results-heading">ผลลัพธ์</h3>
-                <ul className="case-results-list">
-                  {(item.results ?? []).map((r: PortfolioResult, i) => {
-                    const tone = i === 0 ? "is-orange" : i === 2 ? "is-blue" : "";
-                    return (
-                      <li key={i} className={tone}>
-                        <div className="result-label">{r.label}</div>
-                        <div className={`result-num tabular ${tone}`}>{r.value}</div>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </aside>
-            )}
+            <aside className="case-hero-results" aria-label={locale === "en" ? "Project details" : "ข้อมูลโปรเจค"}>
+              {(item.results ?? []).length > 0 && (
+                <div className="case-aside-block">
+                  <h3 className="case-hero-results-heading">{locale === "en" ? "Results" : "ผลลัพธ์"}</h3>
+                  <ul className="case-results-list">
+                    {(item.results ?? []).map((r: PortfolioResult, i) => {
+                      const tone = i === 0 ? "is-orange" : i === 2 ? "is-blue" : "";
+                      return (
+                        <li key={i} className={tone}>
+                          <div className="result-label">{r.label}</div>
+                          <div className={`result-num tabular ${tone}`}>{r.value}</div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+
+              <div className="case-aside-block">
+                <h3 className="case-hero-results-heading">{locale === "en" ? "Project details" : "ข้อมูลโปรเจค"}</h3>
+                <dl className="case-facts">
+                  {item.category && (
+                    <div className="case-fact">
+                      <dt>{locale === "en" ? "Category" : "หมวดหมู่"}</dt>
+                      <dd>{item.category}</dd>
+                    </div>
+                  )}
+                  {item.client && (
+                    <div className="case-fact">
+                      <dt>{locale === "en" ? "Client" : "ลูกค้า"}</dt>
+                      <dd>{item.client}</dd>
+                    </div>
+                  )}
+                  {item.year && (
+                    <div className="case-fact">
+                      <dt>{locale === "en" ? "Year" : "ปี"}</dt>
+                      <dd>{item.year}</dd>
+                    </div>
+                  )}
+                  {item.duration && (
+                    <div className="case-fact">
+                      <dt>{locale === "en" ? "Duration" : "ระยะเวลา"}</dt>
+                      <dd>{item.duration}</dd>
+                    </div>
+                  )}
+                  {(item.tech_stack ?? []).length > 0 && (
+                    <div className="case-fact">
+                      <dt>{locale === "en" ? "Tech stack" : "เทคโนโลยี"}</dt>
+                      <dd className="case-fact-tags">
+                        {(item.tech_stack ?? []).map((t) => (
+                          <span key={t} className="case-fact-tag">{t}</span>
+                        ))}
+                      </dd>
+                    </div>
+                  )}
+                </dl>
+              </div>
+            </aside>
           </div>
         </div>
       </section>
@@ -146,11 +188,10 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
       <section className="section section-tight">
         <div className="container">
-          {item.cover_image ? (
+          {(item.gallery?.[0] ?? item.cover_image) ? (
             <CaseFrame
-              src={item.cover_image}
+              src={(item.gallery?.[0] ?? item.cover_image) as string}
               alt={`ภาพผลงาน ${item.title}`}
-              {...(item.live_url ? { url: item.live_url } : {})}
             />
           ) : (
             <MediaImage
