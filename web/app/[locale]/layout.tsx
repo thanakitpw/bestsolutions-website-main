@@ -9,6 +9,7 @@ import { Navbar } from "@/components/layout/navbar";
 import { Footer } from "@/components/layout/footer";
 import { FloatingContact } from "@/components/floating-contact";
 import { LenisProvider } from "@/components/lenis-provider";
+import { GtmScript, GtmNoScript } from "@/components/gtm";
 import "../globals.css";
 
 export const viewport: Viewport = {
@@ -85,6 +86,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} className={lineSeedSansThai.variable} suppressHydrationWarning>
       <body>
+        <GtmNoScript />
         <a href="#main" className="skip-link">{t("skipToMain")}</a>
 
         <NextIntlClientProvider messages={messages} locale={locale}>
@@ -97,6 +99,7 @@ export default async function LocaleLayout({
         </NextIntlClientProvider>
 
         <Script src="/scripts/motion.js" strategy="afterInteractive" />
+        <GtmScript />
       </body>
     </html>
   );
