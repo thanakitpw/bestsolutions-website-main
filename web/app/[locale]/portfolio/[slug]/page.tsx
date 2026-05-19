@@ -10,6 +10,7 @@ import { PortfolioJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { MediaImage } from "@/components/media-image";
 import { CaseFrame } from "@/components/case-frame";
+import { TrackView } from "@/components/track-view";
 import { pickLocale } from "@/utils/format";
 import type { PortfolioResult } from "@/utils/supabase/types";
 import "@/styles/pages/sample-case.css";
@@ -76,6 +77,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
   return (
     <main id="main">
+      <TrackView event="portfolio_view" slug={slug} />
       <PortfolioJsonLd item={item} locale={locale} />
       <BreadcrumbJsonLd
         locale={locale}

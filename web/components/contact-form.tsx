@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { submitLead } from "@/app/[locale]/contact/actions";
 import type { LeadFormData } from "@/app/[locale]/contact/actions";
+import { pushEvent } from "@/lib/gtm";
 
 const schema = z.object({
   name: z.string().min(2, "กรุณาใส่ชื่อ").max(100),
@@ -41,6 +42,7 @@ export function ContactForm({ lineHandle }: Props) {
     setServerError(null);
     const result = await submitLead(data);
     if (result.success) {
+      pushEvent({ event: "lead_submit", service: data.service, budget: data.budget });
       setSubmitted(true);
     } else {
       setServerError(result.error);

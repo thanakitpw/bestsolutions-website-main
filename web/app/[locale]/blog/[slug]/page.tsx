@@ -14,6 +14,7 @@ import { MediaImage } from "@/components/media-image";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import { extractHeadings } from "@/utils/toc";
 import { PostToc } from "@/components/post-toc";
+import { TrackView } from "@/components/track-view";
 import "@/styles/pages/sample-post.css";
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
@@ -86,6 +87,7 @@ export default async function BlogPostPage({ params }: Props) {
 
   return (
     <main id="main">
+      <TrackView event="blog_read" slug={slug} />
       <ArticleJsonLd article={article} locale={locale} />
       <BreadcrumbJsonLd
         locale={locale}
