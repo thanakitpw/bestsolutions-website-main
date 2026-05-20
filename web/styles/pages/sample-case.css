@@ -131,23 +131,22 @@
   gap: var(--space-3);
 }
 .case-body-hero li {
-  display: grid;
-  grid-template-columns: 8px 1fr;
-  align-items: start;
-  column-gap: var(--space-4);
+  position: relative;
+  padding-left: calc(8px + var(--space-4));
   font-size: var(--text-base);
   line-height: var(--leading-normal);
 }
 .case-body-hero li::before {
   content: "";
-  flex: 0 0 auto;
+  position: absolute;
+  left: 0;
+  top: 0.55em;
   width: 8px;
   height: 8px;
-  margin-top: 0.55em;
   border-radius: 50%;
   background: var(--color-orange-500);
 }
-.case-body-hero li p { margin: 0; grid-column: 2; }
+.case-body-hero li p { margin: 0; }
 .case-body-hero li p:first-of-type {
   font-weight: var(--weight-bold);
   color: var(--color-text);
