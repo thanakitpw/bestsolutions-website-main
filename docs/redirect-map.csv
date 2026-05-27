@@ -1,17 +1,28 @@
-old_path,new_path,status_code,notes
-/,/th,301,homepage; locale prefix added
-/about,/th/about,301,
-/services,/th/services,301,
-/portfolio,/th/portfolio,301,
-/blog,/th/blog,301,
-/contact,/th/contact,301,
-/services/ai-automation,/th/services/ai-automation,301,
-/services/ai-email,/th/services/ai-email,301,
-/services/website-design,/th/services/website-design,301,renamed to web-design? confirm slug consistency
-/portfolio/luxe-store-ecommerce,/th/portfolio/luxe-store-ecommerce,301,
-/portfolio/luxury-automotive-showcase,/th/portfolio/luxury-automotive-showcase,301,
-/blog/ai-automation,/th/blog/ai-automation,301,
-/blog/ai-automation-คืออะไร,/th/blog/ai-automation-คืออะไร,301,Thai-slug — must URL-encode in next.config redirects
-/blog/ai-automation-ecommerce,/th/blog/ai-automation-ecommerce,301,
-/blog/n8n-คืออะไร,/th/blog/n8n-คืออะไร,301,Thai-slug — must URL-encode
-/blog/online-marketing-for-business-digital-getting-started-increase-sales,/th/blog/online-marketing-for-business-digital-getting-started-increase-sales,301,long slug — consider shortening on new site (with redirect from old)
+old_path,new_path,status,notes
+# Implemented in web/next.config.ts redirects() — 308 permanent. Source of legacy URLs: GSC "Not found (404)" export 2026-05-27 (33 pages).
+/about-us/,/th/about,308,
+/our-services/,/th/services,308,
+/our-services/website-development/,/th/services/web-design,308,
+/our-services/facebook-ads/,/th/services/paid-ads,308,
+/our-services/facebook-page-instagram/,/th/services/social-media,308,
+/blog/2/,/th/blog,308,old pagination
+/blog/website/wordpress-คืออะไร-ทำไมหลายบริษั/,/th/blog/fast-wordpress-website-seo,308,Thai slug — source is %-encoded in next.config (Next matches encoded path)
+/blog/website/วิธีเลือกโดเมนเนม-หรือช/,/th/blog/fast-wordpress-website-seo,308,Thai slug — %-encoded; no domain article yet, closest WordPress/site post
+/blog/seo/robotstxt-is-an-important-for-seo/,/th/blog/what-is-seo-for-sme,308,closest SEO article
+/blog/service/online-advertising/,/th/services/paid-ads,308,old service page in blog tree
+/blog/service/kol-influencer/,/th/services/social-media,308,
+/blog/service/social-media-admin/,/th/services/social-media,308,
+/blog/service/motion-graphic/,/th/services/production,308,
+/blog/service/live-session/,/th/services/production,308,
+/blog/service/event-capture/,/th/services/production,308,
+/blog/service/graphic-design/,/th/services/production,308,
+/blog/service/online-content/,/th/services/production,308,
+/blog/marketing/get-to-know-quality-score/,/th/services/paid-ads,308,Quality Score = Google Ads metric
+/blog/marketing/instagram-marketing-tool/,/th/services/social-media,308,
+/blog/marketing/google-trends/,/th/blog,308,no equivalent — blog hub
+/blog/marketing/10-key-for-email-marketing/,/th/blog,308,no equivalent — blog hub
+/en,/th,307,EN locale not published yet (temporary)
+/en/:path*,/th/:path*,307,EN locale not published yet (temporary)
+# NOT handled here — separate properties / out of scope:
+# /wp-content/themes/astra/* ,, ,junk WP theme path — ignore (let 404/410)
+# https://esr.bestsolutionscorp.com/* ,, ,separate WooCommerce subdomain — fix on that host, not this Next.js app
