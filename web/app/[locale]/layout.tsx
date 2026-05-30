@@ -41,9 +41,10 @@ export async function generateMetadata({
     description: t("metaDescription"),
     alternates: {
       canonical: `/${locale}`,
+      // Only `th` is published — see note in utils/metadata.ts buildAlternates.
       languages: {
         th: "/th",
-        en: "/en",
+        "x-default": "/th",
       },
     },
     openGraph: {

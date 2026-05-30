@@ -14,11 +14,14 @@ function defaultOgImage(locale: string): string {
 
 export function buildAlternates(locale: string, path: string): Metadata["alternates"] {
   const canonical = `/${locale}${path}`;
+  // Only `th` is published. Declaring `en` here pointed hreflang at /en/* which
+  // 307-redirects back to /th (see next.config redirects) — an invalid target
+  // Google ignores. Add `en` back here (and in routing.ts) when EN ships.
   return {
     canonical,
     languages: {
       th: `/th${path}`,
-      en: `/en${path}`,
+      "x-default": `/th${path}`,
     },
   };
 }
