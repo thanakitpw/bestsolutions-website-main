@@ -100,6 +100,12 @@
   object-fit: contain;
   display: block;
 }
+.ss-hero-visual-generated {
+  max-width: 1120px;
+  margin-left: auto;
+  margin-right: auto;
+  filter: drop-shadow(0 28px 70px rgba(20, 20, 20, 0.12));
+}
 
 /* ================= MISSION ================= */
 .ss-mission { padding-top: clamp(60px, 8vw, 120px); padding-bottom: clamp(60px, 8vw, 120px); }

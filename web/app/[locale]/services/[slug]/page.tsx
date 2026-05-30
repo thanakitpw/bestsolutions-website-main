@@ -9,6 +9,7 @@ import { TrackView } from "@/components/track-view";
 import { Reveal } from "@/components/reveal";
 import { ProcessCarousel, type ProcessStep } from "@/components/process-carousel";
 import { ServicesFAQ, type FAQItem } from "@/components/services-faq";
+import { MediaImage } from "@/components/media-image";
 import { pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/service-single.css";
@@ -165,9 +166,21 @@ export default async function ServiceDetailPage({ params }: Props) {
             </div>
           </div>
 
-          <div className="ss-hero-icon-placeholder" aria-hidden="true">
-            <ServiceIcon name={service.icon} />
-          </div>
+          {slug === "automation" ? (
+            <div className="ss-hero-visual ss-hero-visual-generated">
+              <MediaImage
+                className="ss-hero-image"
+                src="/services/automation-hero-mockup.webp"
+                alt="ตัวอย่างหน้าจอระบบ Automation & AI สำหรับเชื่อม workflow, chatbot, CRM และ email"
+                priority
+                sizes="(min-width: 1280px) 1100px, 100vw"
+              />
+            </div>
+          ) : (
+            <div className="ss-hero-icon-placeholder" aria-hidden="true">
+              <ServiceIcon name={service.icon} />
+            </div>
+          )}
         </div>
       </section>
 
