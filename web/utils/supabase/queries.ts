@@ -7,7 +7,16 @@ import type { Database } from "./types";
 /**
  * Read helpers for RSC pages. RLS guarantees only published rows are returned to anon.
  * Each helper awaits cookies() and passes to the server client per Supabase docs.
+ *
+ * Scheduled publishing: an article is public only when status='published' AND
+ * published_at <= now(). RLS enforces this at the DB layer; the .lte() filters
+ * below mirror it in the query for clarity and defense-in-depth.
  */
+
+/** ISO timestamp used to gate scheduled (future-dated) articles. */
+function nowIso() {
+  return new Date().toISOString();
+}
 
 async function db() {
   const cookieStore = await cookies();
@@ -78,6 +87,7 @@ export async function getArticles(opts: { category?: string; limit?: number } = 
     .from("articles")
     .select("*")
     .eq("status", "published")
+    .lte("published_at", nowIso())
     .order("published_at", { ascending: false });
   if (opts.category) query = query.eq("category", opts.category);
   if (opts.limit) query = query.limit(opts.limit);
@@ -93,6 +103,7 @@ export async function getArticleBySlug(slug: string): Promise<Article | null> {
     .select("*")
     .eq("slug", slug)
     .eq("status", "published")
+    .lte("published_at", nowIso())
     .maybeSingle();
   if (error) throw error;
   return data;
@@ -127,7 +138,8 @@ export async function getArticleSlugs(): Promise<string[]> {
   const { data } = await staticDb()
     .from("articles")
     .select("slug")
-    .eq("status", "published");
+    .eq("status", "published")
+    .lte("published_at", nowIso());
   return (data ?? []).map((r) => r.slug);
 }
 
@@ -147,7 +159,8 @@ export async function getArticleSitemapEntries(): Promise<SitemapEntry[]> {
   const { data } = await staticDb()
     .from("articles")
     .select("slug, updated_at")
-    .eq("status", "published");
+    .eq("status", "published")
+    .lte("published_at", nowIso());
   return (data ?? []).map((r) => ({ slug: r.slug, updated_at: r.updated_at }));
 }
 

@@ -6,6 +6,11 @@ import {
   getServiceSitemapEntries,
 } from "@/utils/supabase/queries";
 
+// Regenerate hourly. Without this Next prerenders the sitemap once at build
+// (no cookies()/headers() in this route → static), so content published or
+// scheduled-live after deploy never reaches Google until the next deploy.
+export const revalidate = 3600;
+
 const SITE_URL =
   process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.bestsolutionscorp.com";
 
