@@ -19,6 +19,8 @@ const legacyRedirects = [
   { source: "/our-services", destination: "/th/services" },
   { source: "/our-services/website-development", destination: "/th/services/web-design" },
   { source: "/our-services/facebook-ads", destination: "/th/services/paid-ads" },
+  { source: "/our-services/google-ads", destination: "/th/services/paid-ads" },
+  { source: "/our-services/seo", destination: "/th/services/seo" },
   { source: "/our-services/facebook-page-instagram", destination: "/th/services/social-media" },
   { source: "/blog/2", destination: "/th/blog" },
 
