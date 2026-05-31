@@ -169,6 +169,37 @@ export function ServiceJsonLd({ service, locale }: { service: Service; locale: s
   return <JsonLd data={data} />;
 }
 
+export function LandingServiceJsonLd({
+  name,
+  description,
+  path,
+  locale,
+  priceFrom,
+}: {
+  name: string;
+  description: string;
+  path: string;
+  locale: string;
+  priceFrom?: number;
+}) {
+  const url = `${SITE_URL}/${locale}${path}`;
+  const data: Json = {
+    "@context": "https://schema.org",
+    "@type": "Service",
+    "@id": `${url}#service`,
+    name,
+    description,
+    serviceType: name,
+    url,
+    provider: { "@id": ORG_ID },
+    areaServed: { "@type": "Country", name: "Thailand" },
+    ...(priceFrom
+      ? { offers: { "@type": "Offer", price: priceFrom, priceCurrency: "THB", url } }
+      : {}),
+  };
+  return <JsonLd data={data} />;
+}
+
 export function ServiceListJsonLd({ services, locale }: { services: Service[]; locale: string }) {
   const data: Json = {
     "@context": "https://schema.org",

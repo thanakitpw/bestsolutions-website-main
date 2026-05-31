@@ -106,6 +106,10 @@
   margin-right: auto;
   filter: drop-shadow(0 28px 70px rgba(20, 20, 20, 0.12));
 }
+/* Rounded corners on generated hero mockups (automation service + lead-capture landing). */
+.ss-hero-visual-generated .ss-hero-image {
+  border-radius: var(--radius-2xl);
+}
 
 /* ================= MISSION ================= */
 .ss-mission { padding-top: clamp(60px, 8vw, 120px); padding-bottom: clamp(60px, 8vw, 120px); }
@@ -570,3 +574,35 @@
   border: 1px solid rgba(255, 255, 255, 0.25);
 }
 .btn.btn-on-light:hover { background: rgba(255, 255, 255, 0.18); }
+
+/* ===== Sub-system cards (automation hub) ===== */
+.ss-subsystem-grid {
+  display: grid;
+  gap: var(--space-6);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 360px));
+  justify-content: center;
+}
+.ss-subsystem-card {
+  position: relative;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.ss-subsystem-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-card-hover);
+}
+.ss-subsystem-badge {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--color-orange-700);
+  background: var(--color-orange-50);
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+@media (prefers-reduced-motion: reduce) {
+  .ss-subsystem-card { transition: none; }
+  .ss-subsystem-card:hover { transform: none; }
+}
