@@ -10,6 +10,7 @@ import { Footer } from "@/components/layout/footer";
 import { FloatingContact } from "@/components/floating-contact";
 import { LenisProvider } from "@/components/lenis-provider";
 import { GtmScript, GtmNoScript } from "@/components/gtm";
+import { MetaPixelScript, MetaPixelNoScript } from "@/components/meta-pixel";
 import "../globals.css";
 
 export const viewport: Viewport = {
@@ -88,6 +89,7 @@ export default async function LocaleLayout({
     <html lang={locale} className={lineSeedSansThai.variable} suppressHydrationWarning>
       <body>
         <GtmNoScript />
+        <MetaPixelNoScript />
         <a href="#main" className="skip-link">{t("skipToMain")}</a>
 
         <NextIntlClientProvider messages={messages} locale={locale}>
@@ -101,6 +103,7 @@ export default async function LocaleLayout({
 
         <Script src="/scripts/motion.js" strategy="afterInteractive" />
         <GtmScript />
+        <MetaPixelScript />
       </body>
     </html>
   );
