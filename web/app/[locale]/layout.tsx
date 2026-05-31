@@ -11,6 +11,7 @@ import { FloatingContact } from "@/components/floating-contact";
 import { LenisProvider } from "@/components/lenis-provider";
 import { GtmScript, GtmNoScript } from "@/components/gtm";
 import { MetaPixelScript, MetaPixelNoScript } from "@/components/meta-pixel";
+import { CtaTracker } from "@/components/cta-tracker";
 import "../globals.css";
 
 export const viewport: Viewport = {
@@ -103,6 +104,7 @@ export default async function LocaleLayout({
             {children}
             <Footer />
             <FloatingContact />
+            <CtaTracker />
           </LenisProvider>
         </NextIntlClientProvider>
 
