@@ -1,0 +1,297 @@
+/* Lead Capture landing — page-specific styles
+   (reuses ss-hero / ss-cta / ss-faq-list / ss-tick from service-single.css) */
+
+/* Section headers — service-single.css doesn't define this; match the site
+   convention (other pages set it in their own page CSS) so headings get
+   breathing room above the content grids instead of sitting flush against them. */
+.lc-page .section-header-center {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto var(--space-12);
+}
+
+/* shared card hover polish */
+.lc-pain-item,
+.lc-flow-step,
+.lc-benefit,
+.lc-step,
+.lc-pillar,
+.lc-get-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+/* ===== PAIN ===== */
+.lc-pain-list {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 768px) { .lc-pain-list { grid-template-columns: 1fr 1fr; } }
+.lc-pain-item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+.lc-pain-x {
+  flex: none;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  background: var(--color-orange-50);
+  color: var(--color-orange-500);
+}
+.lc-pain-item p { margin: 0; color: var(--color-text); line-height: 1.6; }
+
+/* ===== SOLUTION FLOW ===== */
+.lc-flow {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) { .lc-flow { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .lc-flow { grid-template-columns: repeat(5, 1fr); } }
+.lc-flow-step {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+.lc-flow-num {
+  width: 44px;
+  height: 44px;
+  margin: 0 auto var(--space-3);
+  border-radius: var(--radius-full);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  color: #fff;
+  background: linear-gradient(135deg, var(--color-orange-500), var(--color-peach));
+}
+.lc-flow-step h3 { margin: 0 0 var(--space-2); font-size: 1.05rem; }
+.lc-flow-step p { margin: 0; color: var(--color-text-muted); font-size: 0.92rem; line-height: 1.55; }
+
+/* ===== DEMO ===== */
+.lc-demo { display: grid; gap: var(--space-6); justify-items: center; }
+.lc-demo-media {
+  width: 100%;
+  max-width: 900px;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-card);
+}
+.lc-demo-actions { display: flex; justify-content: center; }
+
+/* ===== BENEFITS ===== */
+.lc-benefits {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+}
+@media (min-width: 640px) { .lc-benefits { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1024px) { .lc-benefits { grid-template-columns: repeat(4, 1fr); } }
+.lc-benefit {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+.lc-benefit-check {
+  display: inline-grid;
+  place-items: center;
+  width: 36px;
+  height: 36px;
+  margin-bottom: var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--color-blue-50);
+  color: var(--color-blue-700);
+  font-weight: 800;
+}
+.lc-benefit h3 { margin: 0 0 var(--space-2); font-size: 1.05rem; }
+.lc-benefit p { margin: 0; color: var(--color-text-muted); font-size: 0.92rem; line-height: 1.55; }
+
+/* ===== AUDIENCE ===== */
+.lc-audience { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; }
+.lc-chip {
+  background: var(--color-surface);
+  border-radius: var(--radius-full);
+  padding: var(--space-3) var(--space-6);
+  box-shadow: var(--shadow-sm);
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+/* ===== WHAT YOU GET ===== */
+.lc-get {
+  display: grid;
+  gap: var(--space-3);
+  grid-template-columns: 1fr;
+  max-width: 720px;
+  margin: 0 auto;
+}
+@media (min-width: 640px) { .lc-get { grid-template-columns: 1fr 1fr; } }
+.lc-get-item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: center;
+  background: var(--color-surface);
+  border-radius: var(--radius-md);
+  padding: var(--space-4);
+  box-shadow: var(--shadow-sm);
+}
+.lc-get-tick {
+  flex: none;
+  width: 26px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  display: grid;
+  place-items: center;
+  font-weight: 800;
+  background: var(--color-orange-500);
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+/* ===== PACKAGE ===== */
+.lc-packages {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+  align-items: stretch;
+  margin-top: var(--space-8);
+}
+
+@media (min-width: 980px) {
+  .lc-packages { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+.lc-package-card {
+  position: relative;
+  text-align: left;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: clamp(24px, 3vw, 32px);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+  height: 100%;
+}
+
+.lc-package-card.is-featured {
+  border-color: rgba(255, 87, 34, 0.45);
+  box-shadow: 0 24px 70px rgba(255, 87, 34, 0.14);
+}
+
+.lc-package-badge {
+  width: fit-content;
+  min-height: 32px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 87, 34, 0.1);
+  color: var(--color-orange-600);
+  font-size: 0.82rem;
+  font-weight: 800;
+  padding: 6px 12px;
+}
+
+.lc-package-badge.is-placeholder {
+  visibility: hidden;
+}
+
+.lc-package-head {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.lc-package-head h3 {
+  margin: 0;
+  font-size: clamp(1.45rem, 3vw, 2rem);
+  line-height: 1.08;
+}
+
+.lc-package-price { margin: 0; font-size: 1.5rem; color: var(--color-text); }
+.lc-package-price strong { color: var(--color-orange-500); }
+.lc-package-note { margin: 0; color: var(--color-text-muted); font-size: 0.92rem; }
+.lc-package-list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); align-content: start; text-align: left; }
+.lc-package-list li { display: flex; gap: var(--space-3); align-items: flex-start; line-height: 1.45; }
+
+.lc-package-card .btn {
+  width: 100%;
+  margin-top: auto;
+}
+
+/* ===== PROCESS ===== */
+.lc-steps { display: grid; gap: var(--space-4); grid-template-columns: 1fr; }
+@media (min-width: 768px) { .lc-steps { grid-template-columns: repeat(2, 1fr); } }
+.lc-step {
+  display: flex;
+  gap: var(--space-4);
+  align-items: flex-start;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+}
+.lc-step-num { flex: none; font-weight: 800; font-size: 1.4rem; color: var(--color-orange-500); }
+.lc-step-body h3 { margin: 0 0 var(--space-2); font-size: 1.05rem; }
+.lc-step-body p { margin: 0; color: var(--color-text-muted); font-size: 0.92rem; line-height: 1.55; }
+
+/* ===== TRUST ===== */
+.lc-trust-pillars {
+  display: grid;
+  gap: var(--space-4);
+  grid-template-columns: 1fr;
+  margin-bottom: var(--space-8);
+}
+@media (min-width: 768px) { .lc-trust-pillars { grid-template-columns: repeat(3, 1fr); } }
+.lc-pillar {
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+}
+.lc-pillar h3 { margin: 0 0 var(--space-2); font-size: 1.05rem; }
+.lc-pillar p { margin: 0; color: var(--color-text-muted); font-size: 0.92rem; line-height: 1.6; }
+.lc-trust-actions { display: flex; flex-wrap: wrap; gap: var(--space-3); justify-content: center; }
+
+/* ===== hover (pointer devices) ===== */
+@media (hover: hover) {
+  .lc-pain-item:hover,
+  .lc-flow-step:hover,
+  .lc-benefit:hover,
+  .lc-step:hover,
+  .lc-pillar:hover,
+  .lc-get-item:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+  }
+}
+
+/* ===== reduced motion ===== */
+@media (prefers-reduced-motion: reduce) {
+  .lc-pain-item,
+  .lc-flow-step,
+  .lc-benefit,
+  .lc-step,
+  .lc-pillar,
+  .lc-get-item {
+    transition: none;
+  }
+  .lc-pain-item:hover,
+  .lc-flow-step:hover,
+  .lc-benefit:hover,
+  .lc-step:hover,
+  .lc-pillar:hover,
+  .lc-get-item:hover {
+    transform: none;
+  }
+}

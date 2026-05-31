@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -9,6 +10,7 @@ import { TrackView } from "@/components/track-view";
 import { Reveal } from "@/components/reveal";
 import { ProcessCarousel, type ProcessStep } from "@/components/process-carousel";
 import { ServicesFAQ, type FAQItem } from "@/components/services-faq";
+import { MediaImage } from "@/components/media-image";
 import { pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/service-single.css";
@@ -109,6 +111,34 @@ const FAQS_BY_SLUG: Record<string, FAQItem[]> = {
   ],
 };
 
+type SubSystem = {
+  slug: string;
+  name: string;
+  tagline: string;
+  bullets: string[];
+  icon: ReactNode;
+};
+
+const LEAD_CAPTURE_ICON = (
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round"><path d="M3 7l9 6 9-6" /><rect x="3" y="5" width="18" height="14" rx="2" /></svg>
+);
+
+const SUB_SYSTEMS_BY_SLUG: Record<string, SubSystem[]> = {
+  automation: [
+    {
+      slug: "lead-capture",
+      name: "Lead Capture Automation",
+      tagline: "ระบบเก็บ Lead อัตโนมัติ แจ้งเตือนทีมขายผ่าน LINE ทันที",
+      bullets: [
+        "ฟอร์ม → Google Sheets → LINE เด้งทันที",
+        "ลด Lead หลุด ตามลูกค้าเร็วขึ้น",
+        "เริ่มต้น 12,000 บาท",
+      ],
+      icon: LEAD_CAPTURE_ICON,
+    },
+  ],
+};
+
 export default async function ServiceDetailPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
@@ -122,6 +152,7 @@ export default async function ServiceDetailPage({ params }: Props) {
 
   const processSteps = PROCESS_STEPS_BY_SLUG[slug];
   const faqs = FAQS_BY_SLUG[slug];
+  const subSystems = SUB_SYSTEMS_BY_SLUG[slug];
 
   return (
     <main id="main" className="service-single">
@@ -165,9 +196,21 @@ export default async function ServiceDetailPage({ params }: Props) {
             </div>
           </div>
 
-          <div className="ss-hero-icon-placeholder" aria-hidden="true">
-            <ServiceIcon name={service.icon} />
-          </div>
+          {slug === "automation" ? (
+            <div className="ss-hero-visual ss-hero-visual-generated">
+              <MediaImage
+                className="ss-hero-image"
+                src="/services/automation-hero-mockup-hd.webp"
+                alt="ตัวอย่างหน้าจอระบบ Automation & AI สำหรับเชื่อม workflow, chatbot, CRM และ email"
+                priority
+                sizes="(min-width: 1280px) 1100px, 100vw"
+              />
+            </div>
+          ) : (
+            <div className="ss-hero-icon-placeholder" aria-hidden="true">
+              <ServiceIcon name={service.icon} />
+            </div>
+          )}
         </div>
       </section>
 
@@ -198,6 +241,43 @@ export default async function ServiceDetailPage({ params }: Props) {
           </Reveal>
         </div>
       </section>
+
+      {/* ============================================================ SUB-SYSTEMS */}
+      {subSystems && (
+        <section className="section section-tight ss-subsystems" id="systems" aria-labelledby="systems-title">
+          <div className="container">
+            <Reveal className="section-header-center">
+              <span className="eyebrow-chip">● ระบบที่พร้อมใช้งาน</span>
+              <h2 id="systems-title" style={{ margin: "var(--space-4) 0 var(--space-4)" }}>
+                ระบบ Automation ย่อยที่แยกใช้งานได้ทันที
+              </h2>
+              <p className="lead">เลือกเฉพาะระบบที่ธุรกิจคุณต้องการ เริ่มจากระบบเดียวก่อนแล้วค่อยต่อยอด</p>
+            </Reveal>
+
+            <Reveal className="ss-subsystem-grid" delay={0.1}>
+              {subSystems.map((sys) => (
+                <Link
+                  key={sys.slug}
+                  href={`/services/automation/${sys.slug}`}
+                  className="card card-service ss-subsystem-card"
+                  aria-label={`ดูรายละเอียดระบบ ${sys.name}`}
+                >
+                  <div className="card-icon is-orange" aria-hidden="true">{sys.icon}</div>
+                  <span className="ss-subsystem-badge">ระบบ</span>
+                  <h3 className="card-title">{sys.name}</h3>
+                  <p className="card-desc">{sys.tagline}</p>
+                  <ul className="service-features">
+                    {sys.bullets.map((b) => (
+                      <li key={b} className="service-feature">{b}</li>
+                    ))}
+                  </ul>
+                  <span className="card-link">ดูรายละเอียด</span>
+                </Link>
+              ))}
+            </Reveal>
+          </div>
+        </section>
+      )}
 
       {/* ============================================================ PROCESS */}
       {processSteps && (
