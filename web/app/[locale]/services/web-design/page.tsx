@@ -6,6 +6,7 @@ import { ServiceJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { MediaImage } from "@/components/media-image";
 import { ProcessCarousel, type ProcessStep } from "@/components/process-carousel";
+import { TrackView } from "@/components/track-view";
 import { pickLocale } from "@/utils/format";
 import { buildPageMetadata } from "@/utils/metadata";
 import "@/styles/pages/web-design.css";
@@ -123,6 +124,7 @@ export default async function WebDesignPage({
 
   return (
     <main id="main" className="service-single">
+      <TrackView event="service_view" slug="web-design" />
       {service ? <ServiceJsonLd service={service} locale={locale} /> : null}
       <BreadcrumbJsonLd
         locale={locale}
