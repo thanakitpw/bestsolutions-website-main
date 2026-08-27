@@ -31,9 +31,6 @@ export function ServicesAccordion({ items }: { items: AccordionItem[] }) {
               onClick={() => setOpenIndex((prev) => (prev === i ? null : i))}
             >
               <h3 className="acc-item-title">{item.title}</h3>
-              <span className="acc-item-num" aria-hidden="true">
-                ({String(i + 1).padStart(2, "0")})
-              </span>
             </button>
             <div
               id={`acc-body-${item.id}`}

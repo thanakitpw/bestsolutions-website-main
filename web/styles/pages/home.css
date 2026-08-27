@@ -6,13 +6,12 @@
 /* ================= HERO ================= */
 .hero {
   position: relative;
-  min-height: 100dvh;
-  padding-top: 140px;
-  padding-bottom: var(--space-24);
+  padding-top: 130px;
+  padding-bottom: var(--space-20);
   overflow: hidden;
 }
 @media (min-width: 768px) {
-  .hero { padding-top: 216px; padding-bottom: var(--space-36); }
+  .hero { padding-top: 176px; padding-bottom: var(--space-24); }
 }
 
 .hero-blob {
@@ -45,21 +44,55 @@
 }
 
 .hero h1 {
-  max-width: min(100%, 980px);
-  margin: var(--space-8) auto var(--space-10);
-  line-height: 1.08;
+  max-width: min(100%, 900px);
+  margin: var(--space-6) auto var(--space-6);
+  font-size: clamp(30px, 4.6vw, 56px);
+  line-height: 1.16;
   text-align: center;
+  text-wrap: balance;
 }
 
-.hero-title-line {
-  display: block;
-  white-space: nowrap;
+.hero-title-accent {
+  color: var(--color-orange-500);
 }
 
-.hero p.lead {
-  max-width: 660px;
-  margin: 0 auto var(--space-10);
+.hero-sub {
+  max-width: 720px;
+  margin: 0 auto var(--space-2);
+  font-size: var(--text-lg);
+  line-height: var(--leading-normal);
   color: #5F5E59;
+}
+.hero-sub strong {
+  color: var(--color-text);
+  font-weight: var(--weight-bold);
+}
+
+/* Benefit list — pipe-separated on one line, stacked when it cannot fit. */
+.hero-benefits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-2) var(--space-4);
+  margin: var(--space-5) 0 var(--space-8);
+  padding: 0;
+  list-style: none;
+}
+.hero-benefits li {
+  position: relative;
+  font-size: var(--text-base);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+}
+.hero-benefits li + li::before {
+  content: "";
+  position: absolute;
+  left: calc(var(--space-4) / -2);
+  top: 50%;
+  width: 1px;
+  height: 14px;
+  transform: translateY(-50%);
+  background: var(--hairline-strong);
 }
 
 .hero-actions {
@@ -82,42 +115,101 @@
   border-color: var(--color-blue-500);
 }
 
-.hero-trust {
+/* Hero artwork slot — dashed placeholder until the artwork lands. */
+.hero-visual {
+  position: relative;
+  z-index: 1;
+  max-width: 1040px;
+  margin: var(--space-12) auto 0;
+}
+
+.hero-visual-media,
+.hero-visual-placeholder {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  border-radius: var(--r-2xl);
+}
+.hero-visual-media {
+  box-shadow: var(--shadow-card-hover);
+}
+.hero-visual-placeholder {
   display: flex;
-  flex-wrap: wrap;
-  gap: var(--space-6) var(--space-12);
-  align-items: baseline;
+  flex-direction: column;
+  align-items: center;
   justify-content: center;
+  gap: var(--space-2);
+  background: rgb(255 255 255 / 0.45);
+  border: 1px dashed var(--hairline-strong);
+  color: var(--color-text-subtle);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+.hero-visual-placeholder small {
+  font-size: var(--text-xs);
+  opacity: 0.75;
+}
+
+/* Service badges pinned to the artwork — hidden on small screens. */
+.hero-badge {
+  display: none;
+  position: absolute;
+  padding: 9px 16px;
+  background: var(--color-surface);
+  border-radius: var(--r-full);
+  box-shadow: var(--shadow-pill);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
+  white-space: nowrap;
+}
+@media (min-width: 768px) {
+  .hero-badge { display: inline-flex; }
+}
+.hero-badge-1 { top: -18px; left: -12px; }
+.hero-badge-2 { top: 14%; right: -16px; }
+.hero-badge-3 { bottom: 12%; left: -20px; }
+
+@media (min-width: 1200px) {
+  .hero-badge-1 { left: -46px; }
+  .hero-badge-2 { right: -52px; }
+  .hero-badge-3 { left: -58px; }
+}
+
+/* Client logos above the fold — the fastest credibility signal we have. */
+.hero-proof {
   margin-top: var(--space-16);
   padding-top: var(--space-8);
   border-top: 1px solid var(--hairline);
 }
-
-.hero-trust-label {
+.hero-proof-label {
+  margin: 0;
   font-size: var(--text-xs);
   letter-spacing: var(--tracking-eyebrow);
   text-transform: uppercase;
   color: var(--color-text-subtle);
 }
-
-.hero-trust-stats {
+.hero-proof-logos {
+  margin-top: var(--space-6);
   display: flex;
-  gap: var(--space-10);
   flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-6) var(--space-10);
 }
-
-.hero-trust-stat .num {
-  font-family: var(--font-display);
-  font-size: var(--text-2xl);
-  font-weight: var(--weight-heavy);
-  letter-spacing: var(--tracking-tight);
-  line-height: 1;
+.hero-proof-logos img {
+  width: auto;
+  height: auto;
+  max-height: 32px;
+  max-width: 112px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.48;
+  transition: filter var(--t-base) var(--ease),
+              opacity var(--t-base) var(--ease);
 }
-
-.hero-trust-stat .lbl {
-  font-size: var(--text-sm);
-  color: var(--color-text-muted);
-  margin-top: var(--space-2);
+.hero-proof-logos img:hover {
+  filter: grayscale(0);
+  opacity: 1;
 }
 
 .hero-scroll {
@@ -155,63 +247,10 @@
 }
 
 /* Floating service pills — layered around hero */
-.hero-pills {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-}
-
-.hero-pill {
-  position: absolute;
-  display: inline-flex;
-  align-items: center;
-  gap: var(--space-2);
-  padding: 12px 20px;
-  background: rgba(255, 255, 255, 0.82);
-  border-radius: var(--r-full);
-  box-shadow: 0 16px 42px -28px rgba(0, 0, 0, 0.34);
-  font-size: var(--text-sm);
-  font-weight: var(--weight-bold);
-  white-space: nowrap;
-  opacity: 0.92;
-  animation: pill-float 7s ease-in-out infinite alternate;
-}
-
-.hero-pill svg {
-  width: 18px; height: 18px;
-  flex: 0 0 auto;
-}
-
-.hero-pill-1 {
-  top: 300px; left: 7%;
-  color: var(--color-orange-700);
-  transform: rotate(-2deg);
-  animation-delay: 0s;
-}
-.hero-pill-2 {
-  top: 250px; right: 7%;
-  color: var(--color-blue-500);
-  transform: rotate(2deg);
-  animation-delay: -2s;
-}
-.hero-pill-3 {
-  top: 540px; right: 6%;
-  transform: rotate(-1deg);
-  animation-delay: -4s;
-}
-
-@keyframes pill-float {
-  from { transform: translateY(0) rotate(var(--rot, 0deg)); }
-  to   { transform: translateY(-10px) rotate(var(--rot, 0deg)); }
-}
 
 @media (max-width: 1100px) {
   .hero h1 { max-width: min(100%, 880px); }
-  .hero-pill-1 { top: 248px; left: 2%; }
-  .hero-pill-2 { top: 206px; right: 2%; }
-  .hero-pill-3 { top: 490px; right: 3%; }
-}
+      }
 
 @media (max-width: 768px) {
   .hero {
@@ -236,24 +275,7 @@
   .hero-actions {
     margin-top: var(--space-10);
   }
-  .hero-pills {
-    position: static;
-    display: flex;
-    gap: var(--space-2);
-    flex-wrap: wrap;
-    justify-content: center;
-    margin-bottom: var(--space-6);
-    z-index: auto;
-  }
-  .hero-pill {
-    position: static;
-    animation: none;
-    transform: none !important;
-    padding: 10px 16px;
-    font-size: 13px;
-  }
-  .hero-pill-3 { display: none; }
-}
+      }
 
 @media (max-width: 480px) {
   .hero h1 { max-width: 11ch; }
@@ -349,10 +371,6 @@
   box-shadow: var(--shadow-md);
   transform: translateY(-1px);
 }
-.acc-item:not(.is-open):hover .acc-item-num {
-  color: var(--color-text);
-}
-
 .acc-item-head {
   display: flex;
   align-items: center;
@@ -382,15 +400,6 @@
   color: inherit;
   transition: font-size var(--t-base) var(--ease-out), color var(--t-base) var(--ease-out);
 }
-
-.acc-item-num {
-  font-size: var(--text-sm);
-  color: var(--color-text-subtle);
-  font-weight: var(--weight-regular);
-  font-variant-numeric: tabular-nums;
-  flex: 0 0 auto;
-}
-
 /* Collapsible body — uses grid-rows trick for smooth animation */
 .acc-item-body {
   display: grid;
@@ -454,11 +463,7 @@
   border-radius: var(--r-3xl);
   padding: var(--space-10) var(--space-10);
   box-shadow: var(--shadow-card);
-}
-.acc-item.is-open .acc-item-num {
-  color: var(--color-text-on-dark-subtle);
-}
-.acc-item.is-open .acc-item-title {
+}.acc-item.is-open .acc-item-title {
   font-size: var(--text-3xl);
 }
 .acc-item.is-open .acc-item-body {
@@ -779,17 +784,36 @@
   gap: var(--space-5);
 }
 
-.brand-grid {
+/* Logo carousel — CSS-only marquee. Tiles carry margin-right instead of the
+   track using `gap`, so the duplicated half lines up exactly at -50%. */
+.brand-marquee {
+  position: relative;
   margin-top: var(--space-3);
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--space-3);
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
+  mask-image: linear-gradient(90deg, transparent, #000 6%, #000 94%, transparent);
 }
-@media (min-width: 480px) {
-  .brand-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+.brand-track {
+  display: flex;
+  width: max-content;
+  animation: brand-scroll 46s linear infinite;
+}
+
+.brand-marquee:hover .brand-track,
+.brand-marquee:focus-within .brand-track {
+  animation-play-state: paused;
+}
+
+@keyframes brand-scroll {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
 .brand-tile {
+  flex: 0 0 auto;
+  width: 168px;
+  margin-right: var(--space-3);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -805,8 +829,7 @@
   box-shadow: 0 14px 30px -12px rgb(0 0 0 / 0.5);
 }
 
-/* Muted by default so the grid reads as one texture; the hovered logo comes
-   forward in full colour. */
+/* Muted so the strip reads as one texture; the hovered logo comes forward. */
 .brand-logo {
   width: auto;
   max-width: 100%;
@@ -814,13 +837,23 @@
   max-height: 44px;
   object-fit: contain;
   filter: grayscale(1);
-  opacity: 0.6;
+  opacity: 0.82;
   transition: filter var(--t-base) var(--ease),
               opacity var(--t-base) var(--ease);
 }
 .brand-tile:hover .brand-logo {
   filter: grayscale(0);
   opacity: 1;
+}
+
+/* No auto-motion when the visitor asked for none — swipe/scroll instead. */
+@media (prefers-reduced-motion: reduce) {
+  .brand-track { animation: none; }
+  .brand-marquee {
+    overflow-x: auto;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
 }
 
 /* ============== Process / How We Work ============== */

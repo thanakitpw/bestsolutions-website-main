@@ -62,6 +62,11 @@ const SERVICES_WITH_DETAIL = new Set(["web-design"]);
 /** Collage of client sites — set to the file path once the artwork lands. */
 const BRANDS_VISUAL: string | null = "/client-website-showcase.webp";
 
+const HERO_BENEFITS = ["ใช้งานง่าย", "วัดผลได้", "ต่อยอดได้จริง"];
+
+/** Hero artwork — set to the file path once the visual lands. */
+const HERO_VISUAL: string | null = null;
+
 type Brand = { name: string; logo: string; width: number; height: number };
 
 /** Client logos live in web/public/brands/ — exported at 2x the tile height. */
@@ -85,8 +90,9 @@ const HERO_COPY = {
   previousEyebrow: "Digital Marketing Agency · Bangkok",
   oldEyebrow: "AI-Driven Agency · กรุงเทพฯ",
   oldEyebrowAlt: "AI-Driven Agency",
-  title: "วางระบบดิจิทัล ให้ธุรกิจเติบโตอย่างมั่นคง",
-  previousTitle: "วางระบบการตลาดออนไลน์ ให้ธุรกิจเติบโตอย่างเป็นขั้นตอน",
+  title: "รับทำเว็บไซต์ธุรกิจ พร้อมระบบการตลาดที่วัดผลได้จริง",
+  previousTitle: "วางระบบดิจิทัล ให้ธุรกิจเติบโตอย่างมั่นคง",
+  olderTitle: "วางระบบการตลาดออนไลน์ ให้ธุรกิจเติบโตอย่างเป็นขั้นตอน",
   legacyTitle: "ทำการตลาดออนไลน์ที่วัดผลได้จริง",
 };
 
@@ -126,7 +132,7 @@ export default async function HomePage({
 
   const heroTitle =
     heroTitleFromSetting &&
-    ![HERO_COPY.previousTitle, HERO_COPY.legacyTitle].includes(heroTitleFromSetting)
+    ![HERO_COPY.previousTitle, HERO_COPY.olderTitle, HERO_COPY.legacyTitle].includes(heroTitleFromSetting)
       ? heroTitleFromSetting
       : HERO_COPY.title;
   const heroEyebrow =
@@ -152,27 +158,6 @@ export default async function HomePage({
         <div className="hero-blob" aria-hidden="true"></div>
 
         <div className="container">
-          <div className="hero-pills" aria-hidden="true">
-            <span className="hero-pill hero-pill-1">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
-                <rect x="3" y="4" width="18" height="14" rx="2" /><path d="M3 8h18" />
-              </svg>
-              เว็บไซต์
-            </span>
-            <span className="hero-pill hero-pill-2">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
-                <circle cx="11" cy="11" r="7" /><path d="M21 21l-4.5-4.5" />
-              </svg>
-              SEO
-            </span>
-            <span className="hero-pill hero-pill-3">
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={1.75} strokeLinecap="round" strokeLinejoin="round">
-                <path d="M12 2l2.5 5.5L20 10l-5.5 2.5L12 18l-2.5-5.5L4 10l5.5-2.5L12 2z" />
-              </svg>
-              AI Automation System
-            </span>
-          </div>
-
           <div className="hero-inner">
             <span className="eyebrow-pill">
               <span className="star">✦</span>
@@ -181,17 +166,26 @@ export default async function HomePage({
             <h1 id="hero-title">
               {heroTitle === HERO_COPY.title ? (
                 <>
-                  <span className="hero-title-line">วางระบบดิจิทัล</span>
-                  <span className="hero-title-line">ให้ธุรกิจเติบโตอย่างมั่นคง</span>
+                  รับทำเว็บไซต์ธุรกิจ พร้อมระบบการตลาดที่
+                  <span className="hero-title-accent">วัดผลได้จริง</span>
                 </>
               ) : (
                 heroTitle
               )}
             </h1>
-            <p className="lead">
-              เราช่วยออกแบบเว็บไซต์ ทำ SEO วางแคมเปญโฆษณา และใช้ Automation ลดงานซ้ำ
-              เพื่อให้ธุรกิจของคุณมีระบบดิจิทัลที่ดูดี ใช้งานง่าย และวัดผลได้ต่อเนื่อง
+
+            <p className="hero-sub">
+              กำลังมองหาเว็บไซต์ใหม่ที่ตอบโจทย์ธุรกิจ หรืออยากให้เว็บไซต์เดิมทำงานได้ดีกว่านี้?
             </p>
+            <p className="hero-sub">
+              <strong>Best Solutions</strong> ดูแลให้ตั้งแต่ออกแบบเว็บไซต์ ทำ SEO
+              ไปจนถึงแคมเปญโฆษณาและระบบ Automation
+            </p>
+            <ul className="hero-benefits">
+              {HERO_BENEFITS.map((b) => (
+                <li key={b}>{b}</li>
+              ))}
+            </ul>
 
             <div className="hero-actions">
               <Link href="/contact" className="btn btn-primary btn-lg btn-arrow">
@@ -200,6 +194,46 @@ export default async function HomePage({
               <Link href="/portfolio" className="btn btn-secondary btn-lg">
                 <span className="btn-label">ดูผลงานของเรา</span>
               </Link>
+            </div>
+
+          </div>
+
+          <div className="hero-visual">
+            {HERO_VISUAL ? (
+              <MediaImage
+                className="hero-visual-media"
+                src={HERO_VISUAL}
+                alt="ตัวอย่างเว็บไซต์ธุรกิจที่ Best Solutions ออกแบบ"
+                sizes="(min-width: 1280px) 1040px, 100vw"
+                priority
+              />
+            ) : (
+              <div className="hero-visual-placeholder" role="img" aria-label="พื้นที่สำหรับภาพหน้าปกเว็บไซต์">
+                <span>ภาพหน้าปก Hero</span>
+                <small>2080 × 1170 px · 16:9</small>
+              </div>
+            )}
+
+            <span className="hero-badge hero-badge-1">เว็บไซต์ธุรกิจ</span>
+            <span className="hero-badge hero-badge-2">Google &amp; Meta Ads</span>
+            <span className="hero-badge hero-badge-3">SEO ติดอันดับ</span>
+          </div>
+
+          <div className="hero-inner">
+            <div className="hero-proof">
+              <p className="hero-proof-label">ลูกค้าที่ไว้วางใจให้เราดูแล</p>
+              <div className="hero-proof-logos">
+                {BRANDS.slice(0, 6).map((b) => (
+                  <Image
+                    key={b.name}
+                    src={b.logo}
+                    alt={`โลโก้ ${b.name}`}
+                    width={b.width}
+                    height={b.height}
+                    loading="lazy"
+                  />
+                ))}
+              </div>
             </div>
 
           </div>
@@ -392,35 +426,50 @@ export default async function HomePage({
             <Reveal className="brands-content" delay={0.1}>
               <h2 id="brands-title">ลูกค้าที่ใช้บริการกับเรา</h2>
               <p className="lead">
-                ธุรกิจหลากหลายประเภทเลือกให้เราดูแลงานเว็บไซต์ โฆษณา SEO และระบบ Automation
-                ตั้งแต่บริษัทจดทะเบียน โรงแรม คลินิก ไปจนถึงมูลนิธิและธุรกิจ SME
+                ตลอดการทำงานที่ผ่านมา เราได้รับความไว้วางใจจากธุรกิจหลากหลายประเภท
+                ตั้งแต่บริษัทมหาชนและกลุ่มธุรกิจการเงิน โรงแรม คลินิกความงามและทันตกรรม
+                ผู้ผลิตและจัดจำหน่ายวัสดุก่อสร้าง ไปจนถึงธุรกิจ SME ที่กำลังเริ่มวางระบบออนไลน์อย่างจริงจัง
+              </p>
+              <p className="lead">
+                แต่ละธุรกิจมีโจทย์ไม่เหมือนกัน บางรายต้องการเว็บไซต์ที่ดูน่าเชื่อถือและพาลูกค้าไปถึงการติดต่อ
+                บางรายอยากให้งบโฆษณาทำงานได้คุ้มกว่าเดิม บางรายต้องการระบบหลังบ้านที่ช่วยลดงานซ้ำของทีม
+                เราจึงเริ่มจากการทำความเข้าใจเป้าหมายและข้อจำกัดก่อนเสมอ แล้วค่อยเลือกเครื่องมือให้เหมาะกับบริบทและงบประมาณจริง
               </p>
 
-              <div className="brand-grid">
-                {BRANDS.map((b) => (
-                  <div className="brand-tile" key={b.name}>
-                    {b.logo.endsWith(".svg") ? (
-                      // eslint-disable-next-line @next/next/no-img-element -- next/image rejects SVG without dangerouslyAllowSVG
-                      <img
-                        src={b.logo}
-                        alt={`โลโก้ ${b.name}`}
-                        width={b.width}
-                        height={b.height}
-                        className="brand-logo"
-                        loading="lazy"
-                      />
-                    ) : (
-                      <Image
-                        src={b.logo}
-                        alt={`โลโก้ ${b.name}`}
-                        width={b.width}
-                        height={b.height}
-                        className="brand-logo"
-                        loading="lazy"
-                      />
-                    )}
-                  </div>
-                ))}
+              <div
+                className="brand-marquee"
+                role="group"
+                aria-label="โลโก้ลูกค้าที่ใช้บริการกับ Best Solutions"
+              >
+                <div className="brand-track">
+                  {[...BRANDS, ...BRANDS].map((b, i) => {
+                    const clone = i >= BRANDS.length;
+                    return (
+                      <div className="brand-tile" key={`${b.name}-${i}`} aria-hidden={clone || undefined}>
+                        {b.logo.endsWith(".svg") ? (
+                          // eslint-disable-next-line @next/next/no-img-element -- next/image rejects SVG without dangerouslyAllowSVG
+                          <img
+                            src={b.logo}
+                            alt={clone ? "" : `โลโก้ ${b.name}`}
+                            width={b.width}
+                            height={b.height}
+                            className="brand-logo"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <Image
+                            src={b.logo}
+                            alt={clone ? "" : `โลโก้ ${b.name}`}
+                            width={b.width}
+                            height={b.height}
+                            className="brand-logo"
+                            loading="lazy"
+                          />
+                        )}
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
             </Reveal>
           </div>
