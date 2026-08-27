@@ -70,6 +70,7 @@ git checkout -b restore design-v1   # เอากลับมาทำต่อ
 - Tables (T3.1): `articles`, `portfolio_items`, `services`, `testimonials`, `leads`, `site_settings` — column-per-locale (`title_th`/`title_en`)
 - RLS: anon SELECT where `status='published'`; auth full CRUD
 - Storage buckets: `images/blog-covers`, `images/portfolio`, `images/services`, `images/og`
+- **รูปที่ทับไฟล์เดิม ต้องขยับ `?v=` ท้าย URL ด้วย** — `cover_image` เก็บเป็น `<url>?v=<epoch ของ last-modified>` เพราะ Next.js Image Optimizer ใช้ URL เป็น cache key ถ้าไม่เปลี่ยน query คนที่เคยเข้าเว็บจะเห็นรูปเก่าจนกว่า TTL จะหมด (บน Vercel ล้าง cache เองไม่ได้)
 - Admin = Supabase Studio ก่อน launch; ทำ admin UI หลัง launch (เฉพาะ T7.6 lead inbox ใน v1)
 - API key naming: `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 
