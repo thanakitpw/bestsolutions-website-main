@@ -49,7 +49,6 @@ export async function Footer() {
               <li><Link href="/services">ทำโฆษณา Meta &amp; Google</Link></li>
               <li><Link href="/services">SEO</Link></li>
               <li><Link href="/services">AI Automation</Link></li>
-              <li><Link href="/services">Production</Link></li>
             </ul>
           </div>
 

@@ -11,7 +11,6 @@ export async function Navbar() {
     { slug: "paid-ads", label: t("Nav.paidAds") },
     { slug: "social-media", label: t("Nav.socialMedia") },
     { slug: "automation", label: t("Nav.automation") },
-    { slug: "production", label: t("Nav.production") },
   ];
 
   return (

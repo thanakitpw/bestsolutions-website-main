@@ -79,9 +79,11 @@ docs/       # ADRs, redirect map, open questions
 
 ## บริการ & หน้า
 
-7 services: รับทำเว็บไซต์, ยิงแอดโฆษณา, ดูแลเพจ, SEO, AI Automation, AI ตอบอีเมล, Production
+5 services (published ใน Supabase): รับทำเว็บไซต์, SEO, ยิงแอด Meta & Google, ดูแลโซเชียลมีเดีย, Automation & AI
 6 หน้า: Home, About, Services (+detail), Portfolio (+case), Blog (+post), Contact
-Portfolio categories: Web Design, E-Commerce, Online Marketing, SEO, Branding, Video & Content
+Portfolio categories: Web Design, E-Commerce, Online Marketing, SEO, Branding
+
+> Production / วิดีโอ ถูกตัดออกจากบริการ (ส.ค. 2026) — row `production` ใน `services` ตั้ง `status='draft'` ไว้ ยังไม่ลบ กู้คืนได้โดยเปลี่ยน status กลับ ส่วน legacy redirect ที่เคยชี้หน้านี้ re-point ไป social-media / services hub แล้ว
 
 ## Out of scope (non-goals)
 

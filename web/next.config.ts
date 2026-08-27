@@ -33,15 +33,21 @@ const legacyRedirects = [
   { source: "/blog/website/%E0%B8%A7%E0%B8%B4%E0%B8%98%E0%B8%B5%E0%B9%80%E0%B8%A5%E0%B8%B7%E0%B8%AD%E0%B8%81%E0%B9%82%E0%B8%94%E0%B9%80%E0%B8%A1%E0%B8%99%E0%B9%80%E0%B8%99%E0%B8%A1-%E0%B8%AB%E0%B8%A3%E0%B8%B7%E0%B8%AD%E0%B8%8A", destination: "/th/blog/fast-wordpress-website-seo" },
   { source: "/blog/seo/robotstxt-is-an-important-for-seo", destination: "/th/blog/what-is-seo-for-sme" },
 
-  // Old "blog/service/*" entries were really service pages → closest service
+  // Old "blog/service/*" entries were really service pages → closest service.
+  // The production/video service was retired (Aug 2026); its former targets now
+  // point at social-media for content work, else the services hub.
   { source: "/blog/service/online-advertising", destination: "/th/services/paid-ads" },
   { source: "/blog/service/kol-influencer", destination: "/th/services/social-media" },
   { source: "/blog/service/social-media-admin", destination: "/th/services/social-media" },
-  { source: "/blog/service/motion-graphic", destination: "/th/services/production" },
-  { source: "/blog/service/live-session", destination: "/th/services/production" },
-  { source: "/blog/service/event-capture", destination: "/th/services/production" },
-  { source: "/blog/service/graphic-design", destination: "/th/services/production" },
-  { source: "/blog/service/online-content", destination: "/th/services/production" },
+  { source: "/blog/service/motion-graphic", destination: "/th/services/social-media" },
+  { source: "/blog/service/graphic-design", destination: "/th/services/social-media" },
+  { source: "/blog/service/online-content", destination: "/th/services/social-media" },
+  { source: "/blog/service/live-session", destination: "/th/services" },
+  { source: "/blog/service/event-capture", destination: "/th/services" },
+
+  // Retired service page — was live on the Next.js site, so keep it out of 404s.
+  { source: "/th/services/production", destination: "/th/services" },
+  { source: "/services/production", destination: "/th/services" },
 
   // Old marketing posts → closest service when topical, else blog hub
   { source: "/blog/marketing/get-to-know-quality-score", destination: "/th/services/paid-ads" },

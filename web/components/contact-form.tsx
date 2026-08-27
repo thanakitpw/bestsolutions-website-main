@@ -118,7 +118,6 @@ export function ContactForm({ lineHandle }: Props) {
           <option value="seo">SEO</option>
           <option value="social-media">ดูแลโซเชียลมีเดีย</option>
           <option value="ai-automation">Automation &amp; AI</option>
-          <option value="production">Production (Video &amp; Content)</option>
         </select>
       </div>
 

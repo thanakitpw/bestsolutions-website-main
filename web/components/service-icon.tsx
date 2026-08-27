@@ -55,13 +55,6 @@ export function ServiceIcon({ name, className }: Props) {
           <path d="m22 7-10 6L2 7" />
         </svg>
       );
-    case "video":
-      return (
-        <svg {...svgProps} className={className}>
-          <rect x="2" y="6" width="14" height="12" rx="2" />
-          <path d="m22 8-6 4 6 4z" />
-        </svg>
-      );
     default:
       return (
         <svg {...svgProps} className={className}>

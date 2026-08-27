@@ -12,11 +12,11 @@ old_path,new_path,status,notes
 /blog/service/online-advertising/,/th/services/paid-ads,308,old service page in blog tree
 /blog/service/kol-influencer/,/th/services/social-media,308,
 /blog/service/social-media-admin/,/th/services/social-media,308,
-/blog/service/motion-graphic/,/th/services/production,308,
-/blog/service/live-session/,/th/services/production,308,
-/blog/service/event-capture/,/th/services/production,308,
-/blog/service/graphic-design/,/th/services/production,308,
-/blog/service/online-content/,/th/services/production,308,
+/blog/service/motion-graphic/,/th/services/social-media,308,
+/blog/service/live-session/,/th/services,308,
+/blog/service/event-capture/,/th/services,308,
+/blog/service/graphic-design/,/th/services/social-media,308,
+/blog/service/online-content/,/th/services/social-media,308,
 /blog/marketing/get-to-know-quality-score/,/th/services/paid-ads,308,Quality Score = Google Ads metric
 /blog/marketing/instagram-marketing-tool/,/th/services/social-media,308,
 /blog/marketing/google-trends/,/th/blog,308,no equivalent — blog hub
@@ -26,3 +26,4 @@ old_path,new_path,status,notes
 # NOT handled here — separate properties / out of scope:
 # /wp-content/themes/astra/* ,, ,junk WP theme path — ignore (let 404/410)
 # https://esr.bestsolutionscorp.com/* ,, ,separate WooCommerce subdomain — fix on that host, not this Next.js app
+/th/services/production,/th/services,308,retired service (Aug 2026)

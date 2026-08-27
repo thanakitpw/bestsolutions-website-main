@@ -60,7 +60,7 @@ export default async function ServicesPage({
             </span>
             <h1 id="hero-title">วางระบบดิจิทัลให้แต่ละช่องทางทำงานไปทางเดียวกัน</h1>
             <p className="lead">
-              ตั้งแต่เว็บไซต์ SEO โฆษณา โซเชียล Automation ไปจนถึง Production
+              ตั้งแต่เว็บไซต์ SEO โฆษณา โซเชียล ไปจนถึง Automation
               เราช่วยจัดแต่ละส่วนให้เชื่อมกันเป็นระบบ เพื่อให้ทีมทำงานง่ายขึ้นและเห็นผลได้ชัดเจนขึ้น
             </p>
 
