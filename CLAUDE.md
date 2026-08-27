@@ -45,6 +45,24 @@ docs/       # ADRs, redirect map, open questions
 - **Light theme only** (non-goal: dark mode)
 - Tokens: `prototype/styles/tokens.css` — single source of truth, lift to `web/app/globals.css` `@theme` ใน T2.4
 
+### Design Snapshot v1 (ส.ค. 2026)
+
+ดีไซน์ชุดนี้ถูก freeze ไว้ก่อนรื้อทำใหม่ทั้งเว็บ — commit `e6b6652`
+
+| | |
+|---|---|
+| Tag | `design-v1` (annotated, push ขึ้น origin แล้ว) |
+| Branch สำรอง | `design/v1-aigocy` |
+
+```bash
+git checkout design-v1              # เปิดดูเฉย ๆ
+git checkout -b restore design-v1   # เอากลับมาทำต่อ
+```
+
+⚠️ Snapshot นี้เก็บ **เฉพาะโค้ด** — 2 อย่างนี้ไม่ได้ไปด้วย:
+- `web/.env.local` ไม่อยู่ใน git → ต้องเก็บสำรองแยกเอง ไม่งั้น checkout กลับมาแล้วรันไม่ได้
+- ข้อมูลและ schema ใน Supabase ไม่ถูก version → ถ้ารื้อ schema เมื่อไหร่ ให้ dump ตารางเก็บก่อน ไม่งั้นโค้ด `design-v1` จะรันกับ DB ใหม่ไม่ได้
+
 ## Supabase
 
 - **Project ใหม่:** `dhftyjnzqkyocfhtmjet.supabase.co` (greenfield — โปรเจคเก่าตัดทิ้ง)

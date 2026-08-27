@@ -19,6 +19,9 @@
     "socialMedia": "Social Media Management",
     "automation": "Automation & AI"
   },
+  "Topbar": {
+    "hours": "Mon–Fri 9:00–18:00"
+  },
   "Footer": {
     "tagline": "Full-stack digital agency in Bangkok — web design, paid ads, SEO, and AI automation, all in one team",
     "servicesHeading": "Services",

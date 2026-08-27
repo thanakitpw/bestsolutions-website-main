@@ -1,3 +1,4 @@
+import Image from "next/image";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import {
@@ -17,7 +18,7 @@ import {
 import { Reveal } from "@/components/reveal";
 import { HeroScrollLink } from "@/components/hero-scroll-link";
 import { MediaImage } from "@/components/media-image";
-import { formatThaiDate, pickLocale } from "@/utils/format";
+import { pickLocale } from "@/utils/format";
 import "@/styles/pages/home.css";
 
 type HeroSetting = {
@@ -54,9 +55,30 @@ const TESTI_GRADIENTS = [
 
 const SERVICES_WITH_DETAIL = new Set(["web-design"]);
 
-const BLOG_CATEGORY_TONE: Record<string, string> = {
-  "Digital Marketing": "is-blue",
-};
+/**
+ * Client logos. Add the file to web/public/brands/ and set `logo` to its path —
+ * a brand without one falls back to a wordmark tile so the grid stays complete.
+ */
+/** Collage of client sites — set to the file path once the artwork lands. */
+const BRANDS_VISUAL: string | null = "/client-website-showcase.webp";
+
+type Brand = { name: string; logo: string; width: number; height: number };
+
+/** Client logos live in web/public/brands/ — exported at 2x the tile height. */
+const BRANDS: Brand[] = [
+  { name: "AIRA Leasing", logo: "/brands/aira-leasing.webp", width: 240, height: 120 },
+  { name: "Blue Rich Material Products", logo: "/brands/blue-rich-material-products.webp", width: 135, height: 120 },
+  { name: "De Beau Clinic", logo: "/brands/de-beau-clinic.webp", width: 296, height: 120 },
+  { name: "HTC Home Tools Center", logo: "/brands/htc-home-tools-center.webp", width: 258, height: 120 },
+  { name: "Infinite Material and Technology", logo: "/brands/infinite-material-technology.webp", width: 126, height: 120 },
+  { name: "Natchaya Clinic", logo: "/brands/natchaya-clinic.webp", width: 371, height: 120 },
+  { name: "Orange Smile Dental Clinic", logo: "/brands/orange-smile-dental-clinic.webp", width: 123, height: 120 },
+  { name: "SUPP", logo: "/brands/supp.webp", width: 400, height: 114 },
+  { name: "SUPP Space", logo: "/brands/supp-space.webp", width: 203, height: 120 },
+  { name: "TFI", logo: "/brands/tfi.webp", width: 347, height: 120 },
+  { name: "Uoneplus Group", logo: "/brands/uoneplus-group.webp", width: 120, height: 120 },
+  { name: "TwoDesk Studio", logo: "/brands/twodesk-studio.svg", width: 554, height: 88 },
+];
 
 const HERO_COPY = {
   eyebrow: "Digital Marketing Agency",
@@ -87,7 +109,7 @@ export default async function HomePage({
       getServices(),
       getPortfolioItems({ featured: true, limit: 3 }),
       getFeaturedTestimonials(3),
-      getArticles({ limit: 3 }),
+      getArticles({ limit: 6 }),
       getSiteSetting<HeroSetting>("hero"),
       getSiteSetting<StatsSetting>("stats"),
       getSiteSetting<ContactInfo>("contact"),
@@ -191,12 +213,44 @@ export default async function HomePage({
       </section>
 
 
+      {/* ============================================================ SERVICES */}
+      <section className="section" id="services" aria-labelledby="services-title">
+        <div className="container">
+          <div className="services-split">
+            <Reveal className="services-split-left">
+              <h2 id="services-title">บริการของเรา</h2>
+              <p className="lead" style={{textWrap: "pretty"}}>
+                ตั้งแต่เว็บไซต์ SEO แคมเปญโฆษณา โซเชียล ไปจนถึง Automation เราช่วยจัดแต่ละส่วนให้เชื่อมกันเป็นระบบเดียว เพื่อให้ทีมของคุณทำงานง่ายขึ้นและเห็นผลได้ชัดเจนขึ้น
+              </p>
+              <Link href="/services" className="btn btn-primary btn-arrow services-split-cta">
+                <span className="btn-label">ดูบริการทั้งหมด</span>
+              </Link>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <ServicesAccordion
+                items={homeServices.map((s) => ({
+                  id: s.id,
+                  href: serviceHref(s.slug),
+                  title: pickLocale(locale, s.name_th, s.name_en ?? s.name_th),
+                  summary: pickLocale(locale, s.summary_th, s.summary_en ?? s.summary_th),
+                  features:
+                    (locale === "en"
+                      ? s.features_en ?? s.features_th
+                      : s.features_th) ?? [],
+                }))}
+              />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+
       {/* ============================================================ PROBLEM */}
-      <section className="section section-tight" id="problem" aria-labelledby="problem-title">
+      <section className="section section-tight problem-section" id="problem" aria-labelledby="problem-title">
         <div className="container">
           <Reveal className="section-header section-header-center">
-            <span className="eyebrow-chip">● ปัญหาที่เจอบ่อย</span>
-            <h2 id="problem-title" style={{textWrap: "balance"}}>ถ้าระบบดิจิทัลยังทำงานแยกกัน ธุรกิจก็โตได้ช้ากว่าที่ควร</h2>
+            <h2 id="problem-title">ปัญหาที่เจอบ่อย</h2>
             <p className="lead">หลายธุรกิจมีเว็บไซต์ โฆษณา SEO และเครื่องมือครบแล้ว แต่แต่ละส่วนยังไม่เชื่อมกัน ทำให้ทีมทำงานซ้ำ เสียโอกาส และมองภาพผลลัพธ์ได้ไม่ชัด</p>
           </Reveal>
 
@@ -235,47 +289,12 @@ export default async function HomePage({
       </section>
 
 
-      {/* ============================================================ SERVICES */}
-      <section className="section" id="services" aria-labelledby="services-title">
-        <div className="container">
-          <div className="services-split">
-            <Reveal className="services-split-left">
-              <span className="eyebrow-chip">● บริการของเรา</span>
-              <h2 id="services-title" style={{textWrap: "balance"}}>วางระบบการตลาดดิจิทัล ให้ทำงานต่อเนื่อง</h2>
-              <p className="lead" style={{textWrap: "pretty"}}>
-                ตั้งแต่เว็บไซต์ SEO แคมเปญโฆษณา โซเชียล ไปจนถึง Automation เราช่วยจัดแต่ละส่วนให้เชื่อมกันเป็นระบบเดียว เพื่อให้ทีมของคุณทำงานง่ายขึ้นและเห็นผลได้ชัดเจนขึ้น
-              </p>
-              <Link href="/services" className="btn btn-primary btn-arrow services-split-cta">
-                <span className="btn-label">ดูบริการทั้งหมด</span>
-              </Link>
-            </Reveal>
-
-            <Reveal delay={0.1}>
-              <ServicesAccordion
-                items={homeServices.map((s) => ({
-                  id: s.id,
-                  href: serviceHref(s.slug),
-                  title: pickLocale(locale, s.name_th, s.name_en ?? s.name_th),
-                  summary: pickLocale(locale, s.summary_th, s.summary_en ?? s.summary_th),
-                  features:
-                    (locale === "en"
-                      ? s.features_en ?? s.features_th
-                      : s.features_th) ?? [],
-                }))}
-              />
-            </Reveal>
-          </div>
-        </div>
-      </section>
-
-
       {/* ============================================================ FEATURED PORTFOLIO */}
       <section className="section section-tight" id="featured" aria-labelledby="featured-title">
         <div className="container">
           <Reveal className="section-header-row">
             <div className="section-header">
-              <span className="eyebrow-chip is-blue">● ผลงานล่าสุด</span>
-              <h2 id="featured-title">ตัวอย่างงาน</h2>
+              <h2 id="featured-title">ตัวอย่างผลงานรับทำเว็บไซต์</h2>
               <p className="lead">ดูแนวทางการทำงานผ่านโปรเจกต์จริง ทั้งเว็บไซต์ แคมเปญ และระบบดิจิทัลที่ออกแบบให้เข้ากับเป้าหมายของแต่ละธุรกิจ</p>
             </div>
             <Link href="/portfolio" className="btn btn-ghost btn-arrow">
@@ -317,8 +336,7 @@ export default async function HomePage({
       <section className="section" id="process" aria-labelledby="process-title">
         <div className="container">
           <Reveal className="section-header section-header-center">
-            <span className="eyebrow-chip is-blue">● วิธีการทำงาน</span>
-            <h2 id="process-title" style={{textWrap: "balance"}}>เริ่มจากเข้าใจโจทย์ แล้วค่อยวางระบบให้เหมาะกับธุรกิจ</h2>
+            <h2 id="process-title">ขั้นตอนการทำงาน</h2>
             <p className="lead" style={{textWrap: "pretty"}}>ทุกโปรเจกต์เริ่มจากการทำความเข้าใจธุรกิจ ก่อนแปลงเป็นแผนงานที่ชัดเจน เพื่อให้รู้ตั้งแต่ต้นว่าต้องเตรียมอะไร จะได้อะไร และควรวัดผลอย่างไร</p>
           </Reveal>
 
@@ -351,13 +369,71 @@ export default async function HomePage({
       </section>
 
 
+      {/* ============================================================ CLIENT BRANDS */}
+      <section className="section brands-section" id="brands" aria-labelledby="brands-title">
+        <div className="container">
+          <div className="brands-split">
+            <Reveal className="brands-visual">
+              {BRANDS_VISUAL ? (
+                <MediaImage
+                  className="brands-visual-media"
+                  src={BRANDS_VISUAL}
+                  alt="ภาพจำลองเว็บไซต์ธุรกิจที่ Best Solutions ออกแบบ แสดงบนคอมพิวเตอร์ แล็ปท็อป แท็บเล็ต และมือถือ"
+                  sizes="(min-width: 1024px) 50vw, 100vw"
+                />
+              ) : (
+                <div className="brands-visual-placeholder" role="img" aria-label="พื้นที่สำหรับภาพตัวอย่างผลงาน">
+                  <span>ภาพตัวอย่างผลงาน</span>
+                  <small>1600 × 1200 px</small>
+                </div>
+              )}
+            </Reveal>
+
+            <Reveal className="brands-content" delay={0.1}>
+              <h2 id="brands-title">ลูกค้าที่ใช้บริการกับเรา</h2>
+              <p className="lead">
+                ธุรกิจหลากหลายประเภทเลือกให้เราดูแลงานเว็บไซต์ โฆษณา SEO และระบบ Automation
+                ตั้งแต่บริษัทจดทะเบียน โรงแรม คลินิก ไปจนถึงมูลนิธิและธุรกิจ SME
+              </p>
+
+              <div className="brand-grid">
+                {BRANDS.map((b) => (
+                  <div className="brand-tile" key={b.name}>
+                    {b.logo.endsWith(".svg") ? (
+                      // eslint-disable-next-line @next/next/no-img-element -- next/image rejects SVG without dangerouslyAllowSVG
+                      <img
+                        src={b.logo}
+                        alt={`โลโก้ ${b.name}`}
+                        width={b.width}
+                        height={b.height}
+                        className="brand-logo"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <Image
+                        src={b.logo}
+                        alt={`โลโก้ ${b.name}`}
+                        width={b.width}
+                        height={b.height}
+                        className="brand-logo"
+                        loading="lazy"
+                      />
+                    )}
+                  </div>
+                ))}
+              </div>
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+
       {/* ============================================================ STATS BAND */}
       <section className="section section-tight" aria-labelledby="stats-title">
         <div className="container">
           <Reveal className="stats-band">
             <div className="section-header" style={{ marginBottom: "var(--space-12)" }}>
-              <span className="eyebrow-chip">● ตัวเลขจากการทำงานจริง</span>
-              <h2 id="stats-title">ประสบการณ์ที่มีคุณภาพ</h2>
+              <h2 id="stats-title">ผลลัพธ์จากการทำงาน</h2>
             </div>
 
             <div className="grid-3" style={{ gap: "var(--space-6)" }}>
@@ -389,8 +465,7 @@ export default async function HomePage({
       <section className="section" id="testimonials" aria-labelledby="testi-title">
         <div className="container">
           <Reveal className="section-header" style={{ marginBottom: "var(--space-12)", maxWidth: 720 }}>
-            <span className="eyebrow-chip">● เสียงจากลูกค้า</span>
-            <h2 id="testi-title">เสียงตอบรับจากลูกค้าจริง</h2>
+            <h2 id="testi-title">เสียงจากลูกค้า</h2>
           </Reveal>
 
           <Reveal className="grid-3" delay={0.1}>
@@ -433,8 +508,7 @@ export default async function HomePage({
         <div className="container">
           <div className="audience-split">
             <Reveal className="audience-intro">
-              <span className="eyebrow-chip">● เหมาะกับใคร</span>
-              <h2 id="audience-title">เหมาะกับธุรกิจที่อยากให้ช่องทางออนไลน์ทำงานเป็นระบบมากขึ้น</h2>
+              <h2 id="audience-title">เหมาะกับใคร</h2>
               <p className="lead">ไม่ว่าธุรกิจจะเพิ่งเริ่ม หรือมีเว็บไซต์ เพจ และแคมเปญอยู่แล้ว หากอยากให้ทุกส่วนเดินไปทางเดียวกัน เราช่วยวางระบบให้ชัดขึ้นได้</p>
             </Reveal>
 
@@ -472,45 +546,41 @@ export default async function HomePage({
       {/* ============================================================ BLOG TEASER */}
       <section className="section section-tight" id="blog" aria-labelledby="blog-title">
         <div className="container">
-          <Reveal className="section-header-row">
-            <div className="section-header">
-              <span className="eyebrow-chip is-blue">● บทความล่าสุด</span>
-              <h2 id="blog-title">แชร์มุมมองและเทคนิคน่ารู้</h2>
-              <p className="lead">รวมบทความจากประสบการณ์ทำงานจริง เพื่อให้เจ้าของธุรกิจนำไปปรับใช้ได้ง่ายขึ้น</p>
-            </div>
-            <Link href="/blog" className="btn btn-ghost btn-arrow">
-              <span className="btn-label">อ่านบทความทั้งหมด</span>
+          <Reveal className="blog-teaser-head">
+            <h2 id="blog-title">บทความล่าสุด</h2>
+            <Link href="/blog" className="link-arrow">
+              <span>ดูทั้งหมด</span>
+              <span className="link-arrow-dot" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M5 12h13M13 6l6 6-6 6" />
+                </svg>
+              </span>
             </Link>
           </Reveal>
 
-          <Reveal className="grid-3" delay={0.1}>
+          <Reveal className="blog-teaser-grid" delay={0.1}>
             {articles.map((a, i) => {
               const title = pickLocale(locale, a.title_th, a.title_en ?? a.title_th);
               const excerpt = pickLocale(locale, a.excerpt_th, a.excerpt_en ?? a.excerpt_th);
-              const tone = BLOG_CATEGORY_TONE[a.category] ?? "";
               return (
-                <Link key={a.id} href={`/blog/${a.slug}`} className="card card-blog">
+                <Link key={a.id} href={`/blog/${a.slug}`} className="blog-teaser-card">
                   <MediaImage
-                    className="card-media"
+                    className="blog-teaser-media"
                     src={a.cover_image}
                     alt={`ภาพประกอบบทความ ${title}`}
                     gradient={BLOG_GRADIENTS[i % BLOG_GRADIENTS.length]}
-                    sizes="(min-width: 1280px) 400px, (min-width: 768px) 33vw, 100vw"
+                    sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
                   />
-                  <div className="card-body">
-                    <span className={`card-category ${tone}`}>{a.category}</span>
-                    <h3 className="card-title">{title}</h3>
-                    {excerpt ? <p className="card-excerpt">{excerpt}</p> : null}
-                    <span className="card-meta">
-                      <span>{formatThaiDate(a.published_at)}</span>
-                      {a.author_name ? (
-                        <>
-                          <span className="card-meta-dot"></span>
-                          <span>{a.author_name}</span>
-                        </>
-                      ) : null}
+                  <h3 className="blog-teaser-title">{title}</h3>
+                  {excerpt ? <p className="blog-teaser-excerpt">{excerpt}</p> : null}
+                  <span className="link-arrow blog-teaser-more">
+                    <span>อ่านเพิ่มเติม</span>
+                    <span className="link-arrow-dot" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round">
+                        <path d="M5 12h13M13 6l6 6-6 6" />
+                      </svg>
                     </span>
-                  </div>
+                  </span>
                 </Link>
               );
             })}

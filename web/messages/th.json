@@ -19,6 +19,9 @@
     "socialMedia": "ดูแลโซเชียลมีเดีย",
     "automation": "ระบบ Automation & AI"
   },
+  "Topbar": {
+    "hours": "จันทร์–ศุกร์ 9:00–18:00"
+  },
   "Footer": {
     "tagline": "Digital Agency ครบวงจร — ดูแลตั้งแต่ออกแบบเว็บ ทำโฆษณา ทำ SEO จนถึง AI Automation ครบในทีมเดียว",
     "servicesHeading": "บริการ",

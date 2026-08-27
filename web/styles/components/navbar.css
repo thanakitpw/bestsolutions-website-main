@@ -1,50 +1,45 @@
 /* =============================================================================
-   Floating pill navbar
-   Direction C — Aigocy-true. Backdrop-blur glass, centered, fixed top.
+   Two-tier site header
+   Row 1 = orange topbar (contact details), row 2 = main nav.
+   Brand column spans both rows from 900px up (mirrors the reference layout).
    Depends on: button.css (.btn / .btn-primary for CTA).
    ============================================================================= */
 
-.navbar-wrap {
+.site-header {
+  --gutter: max(var(--space-4), calc((100vw - var(--container-max)) / 2));
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: var(--z-sticky);
-  display: flex;
-  justify-content: center;
-  padding: 16px var(--space-4) 0;
-  pointer-events: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "top"
+    "nav";
+  background: var(--color-surface);
+  box-shadow: 0 14px 34px -28px rgb(0 0 0 / 0.5);
 }
 
-.navbar {
-  pointer-events: auto;
-  width: min(92%, 1080px);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: var(--space-6);
-  padding: 12px 14px 12px var(--space-6);
-  background: rgba(255, 255, 255, 0.70);
-  -webkit-backdrop-filter: saturate(160%) blur(16px);
-  backdrop-filter: saturate(160%) blur(16px);
-  border: 1px solid var(--hairline);
-  border-radius: var(--r-full);
-  box-shadow: var(--shadow-pill);
-}
-
-@media (min-width: 768px) {
-  .navbar {
-    width: min(82%, 1080px);
+@media (min-width: 900px) {
+  .site-header {
+    --gutter: max(var(--space-6), calc((100vw - var(--container-max)) / 2));
   }
 }
 
+/* Anchor links must clear the fixed header. */
+html {
+  scroll-padding-top: 120px;
+}
+
 /* -------------------------------------------------------------------------
-   Brand
+   Brand — sits on the nav row, left of the links
    ------------------------------------------------------------------------- */
-.navbar-brand {
+.site-header-brand {
   display: inline-flex;
   align-items: center;
   gap: var(--space-3);
+  flex-shrink: 0;
   font-family: var(--font-display);
   font-weight: var(--weight-bold);
   font-size: var(--text-base);
@@ -53,10 +48,212 @@
   text-decoration: none;
 }
 
+.site-header-brand:focus-visible {
+  outline: none;
+  box-shadow: var(--shadow-glow-orange);
+  border-radius: var(--r-xl);
+}
+
+@media (min-width: 900px) {
+  .site-header-brand {
+    font-size: var(--text-lg);
+  }
+}
+
 .navbar-brand-mark {
   width: auto;
-  height: 28px;
+  height: 30px;
   flex-shrink: 0;
+}
+
+@media (min-width: 900px) {
+  .navbar-brand-mark {
+    height: 40px;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Topbar — brand orange strip carrying contact details.
+   White on #FF5A1F measures 3.1:1, under the 4.5:1 WCAG AA floor for small
+   text — kept at the founder's request; deepening the bar to --color-orange-800
+   is the fix if the Lighthouse a11y score has to clear 95.
+   ------------------------------------------------------------------------- */
+.topbar {
+  grid-area: top;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: var(--space-5);
+  min-height: 36px;
+  padding-inline: var(--gutter);
+  background: var(--color-orange-500);
+  color: var(--color-text-on-dark);
+  font-size: var(--text-sm);
+  font-weight: var(--weight-medium);
+}
+
+@media (min-width: 900px) {
+  .topbar {
+    gap: var(--space-8);
+  }
+}
+
+.topbar-info {
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.topbar-item {
+  display: inline-flex;
+  align-items: center;
+}
+
+.topbar-item + .topbar-item {
+  position: relative;
+  margin-left: var(--space-5);
+  padding-left: var(--space-5);
+}
+
+.topbar-item + .topbar-item::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  height: 15px;
+  transform: translateY(-50%);
+  background: rgb(255 255 255 / 0.38);
+}
+
+.topbar-item > span,
+.topbar-item > a,
+.topbar-hours {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  min-height: 36px;
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+/* Bar is 36px tall, so the tap target is extended past its visual bounds. */
+.topbar-item > a::after {
+  content: "";
+  position: absolute;
+  inset: -4px -6px;
+}
+
+.topbar-item > a:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.topbar-item > a:focus-visible {
+  outline: 2px solid var(--color-text-on-dark);
+  outline-offset: -2px;
+  border-radius: var(--r-sm);
+}
+
+.topbar svg {
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.topbar-aside {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-4);
+  flex-shrink: 0;
+}
+
+.topbar-hours {
+  opacity: 0.9;
+}
+
+.topbar-social {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.topbar-social a {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: rgb(255 255 255 / 0.9);
+  color: var(--color-orange-700);
+  transition: background var(--t-base) var(--ease),
+              transform var(--t-base) var(--ease);
+}
+
+/* Keeps the visual dot at 32px while the tap target reaches 44px. */
+.topbar-social a::after {
+  content: "";
+  position: absolute;
+  inset: -9px;
+}
+
+.topbar-social a:hover {
+  background: var(--color-surface);
+  transform: translateY(-1px);
+}
+
+.topbar-social a:focus-visible {
+  outline: 2px solid var(--color-text-on-dark);
+  outline-offset: 2px;
+}
+
+.topbar-social svg {
+  width: 15px;
+  height: 15px;
+}
+
+/* Progressive disclosure — narrow screens keep only phone + social. */
+.topbar-item-email,
+.topbar-hours {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .topbar-item-email {
+    display: inline-flex;
+  }
+}
+
+@media (min-width: 1100px) {
+  .topbar-hours {
+    display: inline-flex;
+  }
+}
+
+/* -------------------------------------------------------------------------
+   Nav row
+   ------------------------------------------------------------------------- */
+.navbar {
+  grid-area: nav;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 8px var(--gutter);
+}
+
+@media (min-width: 900px) {
+  .navbar {
+    gap: var(--space-8);
+    padding: 12px var(--gutter) 16px;
+  }
 }
 
 /* -------------------------------------------------------------------------
@@ -65,7 +262,7 @@
 .navbar-nav {
   display: none;
   align-items: center;
-  gap: var(--space-8);
+  gap: var(--space-6);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -74,8 +271,8 @@
 .navbar-nav > li > a {
   position: relative;
   font-size: var(--text-base);
-  font-weight: var(--weight-medium);
-  color: var(--color-text-muted);
+  font-weight: var(--weight-bold);
+  color: var(--color-text);
   text-decoration: none;
   padding: 6px 2px;
   transition: color var(--t-base) var(--ease);
@@ -115,7 +312,7 @@
 
 @media (min-width: 900px) {
   .navbar-nav {
-    display: inline-flex;
+    display: flex;
   }
 }
 
@@ -326,8 +523,8 @@
   transform: translateX(-50%) translateY(-6px);
   list-style: none;
   margin: 0;
-  padding: 6px;
-  min-width: 220px;
+  padding: 8px;
+  min-width: 260px;
   background: var(--color-surface);
   -webkit-backdrop-filter: saturate(160%) blur(16px);
   backdrop-filter: saturate(160%) blur(16px);
@@ -358,9 +555,11 @@
 }
 
 .navbar-dropdown li a {
-  display: block;
-  padding: 9px 14px;
-  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 16px;
+  font-size: var(--text-base);
   font-weight: var(--weight-medium);
   color: var(--color-text-muted);
   text-decoration: none;
@@ -443,5 +642,32 @@
 }
 
 .navbar-drawer-subnav a:hover {
+  color: var(--color-orange-700);
+}
+
+/* -------------------------------------------------------------------------
+   Mobile drawer — contact details (topbar equivalent)
+   ------------------------------------------------------------------------- */
+.navbar-drawer-contact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  list-style: none;
+  margin: 0;
+  padding: var(--space-5) 0 0;
+  border-top: 1px solid var(--hairline-strong);
+}
+
+.navbar-drawer-contact a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  font-size: var(--text-base);
+  font-weight: var(--weight-medium);
+  color: var(--color-text-muted);
+  text-decoration: none;
+}
+
+.navbar-drawer-contact a:hover {
   color: var(--color-orange-700);
 }
