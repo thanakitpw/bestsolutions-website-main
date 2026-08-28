@@ -25,7 +25,7 @@ export function CaseFrame({ src, alt, url }: Props) {
       </div>
       <div className="case-frame-viewport" tabIndex={0} data-lenis-prevent>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={src} alt={alt} className="case-frame-img" loading="eager" />
+        <img src={src} alt={alt} className="case-frame-img" loading="lazy" decoding="async" />
       </div>
     </figure>
   );

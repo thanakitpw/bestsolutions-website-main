@@ -18,6 +18,7 @@ import {
 import { Reveal } from "@/components/reveal";
 import { HeroScrollLink } from "@/components/hero-scroll-link";
 import { MediaImage } from "@/components/media-image";
+import { BRANDS } from "@/components/client-logos";
 import { pickLocale } from "@/utils/format";
 import "@/styles/pages/home.css";
 
@@ -55,35 +56,15 @@ const TESTI_GRADIENTS = [
 
 const SERVICES_WITH_DETAIL = new Set(["web-design"]);
 
-/**
- * Client logos. Add the file to web/public/brands/ and set `logo` to its path —
- * a brand without one falls back to a wordmark tile so the grid stays complete.
- */
 /** Collage of client sites — set to the file path once the artwork lands. */
 const BRANDS_VISUAL: string | null = "/client-website-showcase.webp";
 
 const HERO_BENEFITS = ["ใช้งานง่าย", "วัดผลได้", "ต่อยอดได้จริง"];
 
-/** Hero artwork — set to the file path once the visual lands. */
-const HERO_VISUAL: string | null = null;
+const PHONE_TEL = "0953854906";
 
-type Brand = { name: string; logo: string; width: number; height: number };
-
-/** Client logos live in web/public/brands/ — exported at 2x the tile height. */
-const BRANDS: Brand[] = [
-  { name: "AIRA Leasing", logo: "/brands/aira-leasing.webp", width: 240, height: 120 },
-  { name: "Blue Rich Material Products", logo: "/brands/blue-rich-material-products.webp", width: 135, height: 120 },
-  { name: "De Beau Clinic", logo: "/brands/de-beau-clinic.webp", width: 296, height: 120 },
-  { name: "HTC Home Tools Center", logo: "/brands/htc-home-tools-center.webp", width: 258, height: 120 },
-  { name: "Infinite Material and Technology", logo: "/brands/infinite-material-technology.webp", width: 126, height: 120 },
-  { name: "Natchaya Clinic", logo: "/brands/natchaya-clinic.webp", width: 371, height: 120 },
-  { name: "Orange Smile Dental Clinic", logo: "/brands/orange-smile-dental-clinic.webp", width: 123, height: 120 },
-  { name: "SUPP", logo: "/brands/supp.webp", width: 400, height: 114 },
-  { name: "SUPP Space", logo: "/brands/supp-space.webp", width: 203, height: 120 },
-  { name: "TFI", logo: "/brands/tfi.webp", width: 347, height: 120 },
-  { name: "Uoneplus Group", logo: "/brands/uoneplus-group.webp", width: 120, height: 120 },
-  { name: "TwoDesk Studio", logo: "/brands/twodesk-studio.svg", width: 554, height: 88 },
-];
+/** Hero artwork — cut-out on a transparent background, so it carries no card frame. */
+const HERO_VISUAL: string | null = "/hero-website-ads-seo-showcase.webp";
 
 const HERO_COPY = {
   eyebrow: "Digital Marketing Agency",
@@ -113,7 +94,7 @@ export default async function HomePage({
   const [services, featuredPortfolio, testimonials, articles, hero, stats, contact] =
     await Promise.all([
       getServices(),
-      getPortfolioItems({ featured: true, limit: 3 }),
+      getPortfolioItems({ featured: true, limit: 6 }),
       getFeaturedTestimonials(3),
       getArticles({ limit: 6 }),
       getSiteSetting<HeroSetting>("hero"),
@@ -191,9 +172,14 @@ export default async function HomePage({
               <Link href="/contact" className="btn btn-primary btn-lg btn-arrow">
                 <span className="btn-label">นัดปรึกษาฟรี</span>
               </Link>
-              <Link href="/portfolio" className="btn btn-secondary btn-lg">
-                <span className="btn-label">ดูผลงานของเรา</span>
-              </Link>
+              <a
+                href={`tel:${PHONE_TEL}`}
+                className="btn btn-secondary btn-lg"
+                aria-label="โทรหาเรา 095-385-4906"
+                data-cta-location="hero"
+              >
+                <span className="btn-label">โทรหาเรา</span>
+              </a>
             </div>
 
           </div>
@@ -203,7 +189,7 @@ export default async function HomePage({
               <MediaImage
                 className="hero-visual-media"
                 src={HERO_VISUAL}
-                alt="ตัวอย่างเว็บไซต์ธุรกิจที่ Best Solutions ออกแบบ"
+                alt="เว็บไซต์ธุรกิจที่ Best Solutions ออกแบบ แสดงบนโน้ตบุ๊ก แท็บเล็ต และมือถือ พร้อมแดชบอร์ด Google Ads และผลลัพธ์ SEO"
                 sizes="(min-width: 1280px) 1040px, 100vw"
                 priority
               />
@@ -213,10 +199,6 @@ export default async function HomePage({
                 <small>2080 × 1170 px · 16:9</small>
               </div>
             )}
-
-            <span className="hero-badge hero-badge-1">เว็บไซต์ธุรกิจ</span>
-            <span className="hero-badge hero-badge-2">Google &amp; Meta Ads</span>
-            <span className="hero-badge hero-badge-3">SEO ติดอันดับ</span>
           </div>
 
           <div className="hero-inner">
@@ -338,7 +320,6 @@ export default async function HomePage({
 
           <Reveal className="grid-3" delay={0.1}>
             {featuredPortfolio.map((p, i) => {
-              const summary = pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th);
               return (
                 <Link key={p.id} href={`/portfolio/${p.slug}`} className="card card-portfolio">
                   <MediaImage
@@ -352,11 +333,14 @@ export default async function HomePage({
                   <div className="card-body">
                     <span className="card-meta">
                       <span>{p.category}</span>
-                      <span className="card-meta-dot"></span>
-                      <span>{p.year ?? ""}</span>
+                      {p.year ? (
+                        <>
+                          <span className="card-meta-dot"></span>
+                          <span>{p.year}</span>
+                        </>
+                      ) : null}
                     </span>
                     <h3 className="card-title">{p.title}</h3>
-                    <p className="card-desc">{summary}</p>
                   </div>
                 </Link>
               );

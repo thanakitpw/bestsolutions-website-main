@@ -183,20 +183,43 @@
    ------------------------------------------------------------------------- */
 .card-portfolio {
   padding: 0;
-  overflow: hidden;
+  overflow: visible;
+  background: transparent;
+  box-shadow: none;
+  gap: 0;
 }
 
+/* `drop-shadow` follows the artwork's own alpha, so it hugs the device
+   silhouette on a cut-out mockup and the rectangle on a flat screenshot. */
 .card-portfolio .card-media {
   display: block;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  background: var(--color-surface-alt);
+  aspect-ratio: 105 / 58;
+  background: transparent;
   object-fit: cover;
   border-radius: 0;
+  filter: drop-shadow(0 14px 24px rgba(26, 24, 20, 0.16));
+  transition: transform var(--t-base) var(--ease), filter var(--t-base) var(--ease);
+}
+
+.card-portfolio.card[href]:hover {
+  transform: none;
+  box-shadow: none;
+}
+.card-portfolio[href]:hover .card-media {
+  transform: translateY(-6px);
+  filter: drop-shadow(0 22px 34px rgba(26, 24, 20, 0.22));
+}
+.card-portfolio[href]:focus-visible {
+  outline: 3px solid var(--color-orange-500);
+  outline-offset: 8px;
+  border-radius: var(--r-2xl);
+  box-shadow: none;
 }
 
 .card-portfolio .card-body {
-  padding: var(--space-6);
+  padding: var(--space-5) var(--space-2) 0;
+  gap: var(--space-2);
 }
 
 .card-portfolio .card-meta {

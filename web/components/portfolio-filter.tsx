@@ -4,7 +4,6 @@ import { useMemo, useState } from "react";
 import { Link } from "@/i18n/navigation";
 import { MediaImage } from "@/components/media-image";
 import { Reveal } from "@/components/reveal";
-import { pickLocale } from "@/utils/format";
 import type { PortfolioItem } from "@/utils/supabase/types";
 
 const CARD_GRADIENTS = [
@@ -21,11 +20,10 @@ const CARD_GRADIENTS = [
 
 type Props = {
   items: PortfolioItem[];
-  locale: string;
   categories: string[];
 };
 
-export function PortfolioFilter({ items, locale, categories }: Props) {
+export function PortfolioFilter({ items, categories }: Props) {
   const [active, setActive] = useState<string>("all");
 
   const filtered = useMemo(() => {
@@ -64,7 +62,6 @@ export function PortfolioFilter({ items, locale, categories }: Props) {
 
       <Reveal className="grid-portfolio">
         {filtered.map((p, i) => {
-          const summary = pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th);
           const bg = CARD_GRADIENTS[i % CARD_GRADIENTS.length];
           return (
             <Link key={p.slug} href={`/portfolio/${p.slug}`} className="card card-portfolio">
@@ -77,8 +74,16 @@ export function PortfolioFilter({ items, locale, categories }: Props) {
                 priority={i < 3}
               />
               <div className="card-body">
+                <span className="card-meta">
+                  <span>{p.category}</span>
+                  {p.year ? (
+                    <>
+                      <span className="card-meta-dot"></span>
+                      <span>{p.year}</span>
+                    </>
+                  ) : null}
+                </span>
                 <h3 className="card-title">{p.title}</h3>
-                <p className="card-desc">{summary}</p>
               </div>
             </Link>
           );

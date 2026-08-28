@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -60,6 +61,8 @@ const RELATED_GRADIENTS = [
   "linear-gradient(135deg, var(--color-blue-300), var(--color-blue-500))",
 ];
 
+const PHONE_TEL = "0953854906";
+
 export default async function PortfolioDetailPage({ params }: Props) {
   const { locale, slug } = await params;
   setRequestLocale(locale);
@@ -71,9 +74,21 @@ export default async function PortfolioDetailPage({ params }: Props) {
 
   if (!item) notFound();
 
+  const en = locale === "en";
   const summary = pickLocale(locale, item.summary_th, item.summary_en ?? item.summary_th);
   const body = pickLocale(locale, item.body_md_th, item.body_md_en ?? item.body_md_th);
   const related = allItems.filter((p) => p.slug !== slug).slice(0, 3);
+  const results = item.results ?? [];
+  const services = item.services ?? [];
+  const techStack = item.tech_stack ?? [];
+  const screenshot = item.gallery?.[0] ?? null;
+
+  const facts = [
+    item.client ? { label: en ? "Client" : "ลูกค้า", value: item.client } : null,
+    item.category ? { label: en ? "Category" : "หมวดหมู่", value: item.category } : null,
+    item.year ? { label: en ? "Year" : "ปี", value: String(item.year) } : null,
+    item.duration ? { label: en ? "Duration" : "ระยะเวลา", value: item.duration } : null,
+  ].filter((f) => f !== null);
 
   return (
     <main id="main">
@@ -82,130 +97,162 @@ export default async function PortfolioDetailPage({ params }: Props) {
       <BreadcrumbJsonLd
         locale={locale}
         items={[
-          { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
-          { name: locale === "en" ? "Portfolio" : "ผลงาน", path: "/portfolio" },
+          { name: en ? "Home" : "หน้าแรก", path: "" },
+          { name: en ? "Portfolio" : "ผลงาน", path: "/portfolio" },
           { name: item.title, path: `/portfolio/${slug}` },
         ]}
       />
 
       {/* ============================================================ HERO */}
-      <section className="case-hero">
+      <section className="case-hero" aria-labelledby="case-title">
         <div className="case-hero-blob" aria-hidden="true"></div>
         <div className="container">
           <Link href="/portfolio" className="breadcrumb">
-            <span aria-hidden="true">←</span><span>ผลงานทั้งหมด</span>
+            <span aria-hidden="true">←</span>
+            <span>{en ? "All work" : "ผลงานทั้งหมด"}</span>
           </Link>
-          <div className="case-hero-meta">
-            {item.services?.map((s) => (
-              <span key={s} className="case-meta-pill is-blue">{s}</span>
-            ))}
-          </div>
-          <h1>{item.title}</h1>
-          <p className="lead">{summary}</p>
 
-          <div className="case-hero-grid">
-            <div className="case-hero-main">
-              {body ? (
-                <div className="case-body case-body-hero">
-                  <ReactMarkdown rehypePlugins={[rehypeSanitize]}>{body}</ReactMarkdown>
-                </div>
-              ) : null}
+          <div className="case-hero-split">
+            <div className="case-hero-copy">
+              <div className="case-hero-meta">
+                {item.category ? <span className="case-meta-pill">{item.category}</span> : null}
+                {item.year ? <span className="case-meta-pill is-neutral">{item.year}</span> : null}
+              </div>
 
-              {item.live_url && (
-                <div className="case-hero-actions">
-                  <a
-                    href={item.live_url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="btn btn-primary btn-arrow"
-                  >
-                    <span className="btn-label">{locale === "en" ? "Visit live site" : "เข้าชมเว็บจริง"}</span>
-                  </a>
+              <h1 id="case-title">{item.title}</h1>
+              <p className="lead">{summary}</p>
+
+            </div>
+
+            <div className="case-hero-visual">
+              {item.cover_image ? (
+                <Image
+                  src={item.cover_image}
+                  alt={`ภาพเว็บไซต์ ${item.title}`}
+                  width={1050}
+                  height={580}
+                  sizes="(min-width: 1024px) 620px, 100vw"
+                  priority
+                />
+              ) : (
+                <div className="case-placeholder" role="img" aria-label="พื้นที่สำหรับภาพเว็บไซต์">
+                  <span>ภาพเว็บไซต์บนอุปกรณ์</span>
+                  <small>1050 × 580 px</small>
                 </div>
               )}
             </div>
-
-            <aside className="case-hero-results" aria-label={locale === "en" ? "Project details" : "ข้อมูลโปรเจค"}>
-              {(item.results ?? []).length > 0 && (
-                <div className="case-aside-block">
-                  <h3 className="case-hero-results-heading">{locale === "en" ? "Results" : "ผลลัพธ์"}</h3>
-                  <ul className="case-results-list">
-                    {(item.results ?? []).map((r: PortfolioResult, i) => {
-                      const tone = i === 0 ? "is-orange" : i === 2 ? "is-blue" : "";
-                      return (
-                        <li key={i} className={tone}>
-                          <div className="result-label">{r.label}</div>
-                          <div className={`result-num tabular ${tone}`}>{r.value}</div>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                </div>
-              )}
-
-              <div className="case-aside-block">
-                <h3 className="case-hero-results-heading">{locale === "en" ? "Project details" : "ข้อมูลโปรเจค"}</h3>
-                <dl className="case-facts">
-                  {item.category && (
-                    <div className="case-fact">
-                      <dt>{locale === "en" ? "Category" : "หมวดหมู่"}</dt>
-                      <dd>{item.category}</dd>
-                    </div>
-                  )}
-                  {item.client && (
-                    <div className="case-fact">
-                      <dt>{locale === "en" ? "Client" : "ลูกค้า"}</dt>
-                      <dd>{item.client}</dd>
-                    </div>
-                  )}
-                  {item.year && (
-                    <div className="case-fact">
-                      <dt>{locale === "en" ? "Year" : "ปี"}</dt>
-                      <dd>{item.year}</dd>
-                    </div>
-                  )}
-                  {item.duration && (
-                    <div className="case-fact">
-                      <dt>{locale === "en" ? "Duration" : "ระยะเวลา"}</dt>
-                      <dd>{item.duration}</dd>
-                    </div>
-                  )}
-                  {(item.tech_stack ?? []).length > 0 && (
-                    <div className="case-fact">
-                      <dt>{locale === "en" ? "Tech stack" : "เทคโนโลยี"}</dt>
-                      <dd className="case-fact-tags">
-                        {(item.tech_stack ?? []).map((t) => (
-                          <span key={t} className="case-fact-tag">{t}</span>
-                        ))}
-                      </dd>
-                    </div>
-                  )}
-                </dl>
-              </div>
-            </aside>
           </div>
+
+          {facts.length > 0 || techStack.length > 0 ? (
+            <dl className="case-facts-strip">
+              {facts.map((f) => (
+                <div key={f.label} className="case-fact">
+                  <dt>{f.label}</dt>
+                  <dd>{f.value}</dd>
+                </div>
+              ))}
+              {techStack.length > 0 ? (
+                <div className="case-fact">
+                  <dt>{en ? "Tech stack" : "เทคโนโลยี"}</dt>
+                  <dd className="case-fact-tags">
+                    {techStack.map((t) => (
+                      <span key={t} className="case-fact-tag">{t}</span>
+                    ))}
+                  </dd>
+                </div>
+              ) : null}
+            </dl>
+          ) : null}
         </div>
       </section>
 
 
-      <section className="section section-tight">
+      {/* ============================================================ RESULTS */}
+      {results.length > 0 ? (
+        <section className="section section-tight" aria-labelledby="results-title">
+          <div className="container">
+            <Reveal className="case-results-band">
+              <h2 id="results-title" className="case-results-title">
+                {en ? "Results" : "ผลลัพธ์ที่วัดได้"}
+              </h2>
+              <ul className="case-results-grid">
+                {results.map((r: PortfolioResult, i) => (
+                  <li key={i} className={i === 0 ? "is-orange" : i === 2 ? "is-blue" : ""}>
+                    <span className="result-num tabular">{r.value}</span>
+                    <span className="result-label">{r.label}</span>
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+          </div>
+        </section>
+      ) : null}
+
+
+      {/* ============================================================ STORY */}
+      {body ? (
+        <section className="section section-tight" aria-labelledby="story-title">
+          <div className="container">
+            <Reveal className="case-story">
+              <h2 id="story-title">{en ? "Behind the project" : "เบื้องหลังโปรเจกต์"}</h2>
+              <div className="case-body">
+                <ReactMarkdown rehypePlugins={[rehypeSanitize]}>{body}</ReactMarkdown>
+              </div>
+            </Reveal>
+          </div>
+        </section>
+      ) : null}
+
+
+      {/* ============================================================ SCREENS */}
+      <section className="section section-tight" aria-labelledby="screens-title">
         <div className="container">
-          {(item.gallery?.[0] ?? item.cover_image) ? (
-            <CaseFrame
-              src={(item.gallery?.[0] ?? item.cover_image) as string}
-              alt={`ภาพผลงาน ${item.title}`}
-            />
-          ) : (
-            <MediaImage
-              className="case-cover"
-              src={item.cover_image}
-              alt={`ภาพผลงาน ${item.title}`}
-              sizes="(min-width: 1280px) 1280px, 100vw"
-              priority
-            />
-          )}
+          <Reveal className="section-header-center">
+            <h2 id="screens-title" style={{ margin: 0 }}>
+              {en ? "The site itself" : "หน้าตาเว็บจริง"}
+            </h2>
+          </Reveal>
+
+          <Reveal delay={0.1}>
+            {screenshot ? (
+              <CaseFrame
+                src={screenshot}
+                alt={`ภาพหน้าจอเว็บไซต์ ${item.title}`}
+                {...(item.live_url ? { url: item.live_url } : {})}
+              />
+            ) : (
+              <div className="case-screens-placeholder" role="img" aria-label="พื้นที่สำหรับภาพหน้าจอเว็บไซต์">
+                <span>ภาพหน้าจอเว็บไซต์เต็มหน้า</span>
+                <small>1440 × 900 px ขึ้นไป</small>
+              </div>
+            )}
+          </Reveal>
         </div>
       </section>
+
+
+      {/* ============================================================ SERVICES USED */}
+      {services.length > 0 ? (
+        <section className="section section-tight" aria-labelledby="used-title">
+          <div className="container">
+            <Reveal className="case-services">
+              <div>
+                <h2 id="used-title">{en ? "Services used" : "บริการที่ใช้ในโปรเจกต์นี้"}</h2>
+                <ul className="case-services-chips">
+                  {services.map((s) => (
+                    <li key={s}>
+                      <Link href="/services" className="case-service-chip">{s}</Link>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <Link href="/services" className="btn btn-secondary btn-arrow">
+                <span className="btn-label">{en ? "All services" : "ดูบริการทั้งหมด"}</span>
+              </Link>
+            </Reveal>
+          </div>
+        </section>
+      ) : null}
 
 
       {/* ============================================================ RELATED */}
@@ -213,8 +260,7 @@ export default async function PortfolioDetailPage({ params }: Props) {
         <section className="section section-tight">
           <div className="container">
             <Reveal className="section-header-center">
-              <span className="eyebrow-chip is-blue">● เคสที่คล้ายกัน</span>
-              <h2 style={{ marginTop: "var(--space-4)" }}>ผลงานอื่นที่อาจสนใจ</h2>
+              <h2 style={{ margin: 0 }}>{en ? "More work" : "ผลงานอื่นที่อาจสนใจ"}</h2>
             </Reveal>
             <Reveal className="grid-3" delay={0.1}>
               {related.map((p, i) => (
@@ -232,7 +278,6 @@ export default async function PortfolioDetailPage({ params }: Props) {
                       {p.year && <><span className="card-meta-dot"></span><span>{p.year}</span></>}
                     </span>
                     <h3 className="card-title">{p.title}</h3>
-                    <p className="card-desc">{pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th)}</p>
                   </div>
                 </Link>
               ))}
@@ -251,10 +296,18 @@ export default async function PortfolioDetailPage({ params }: Props) {
             <h2 id="cta-title">อยากให้เคสของคุณ เป็นเคสต่อไปที่เราภูมิใจ</h2>
             <p className="lead">นัดคุยฟรี 30 นาที — เล่าโจทย์ให้ฟัง เราจะเสนอแนวทางที่ปรับใช้กับธุรกิจคุณได้</p>
           </Reveal>
-          <Reveal style={{ display: "flex", flexWrap: "wrap", gap: "var(--space-4)", justifyContent: "center", marginTop: "var(--space-10)" }} delay={0.1}>
-            <Link href="/contact" className="btn btn-orange btn-lg btn-arrow"><span className="btn-label">นัดคุยกับทีม</span></Link>
-            <Link href="/services" className="btn btn-on-dark btn-lg"><span className="btn-label">ดูบริการทั้งหมด</span></Link>
-            <Link href="/portfolio" className="btn btn-on-dark btn-lg"><span className="btn-label">ผลงานทั้งหมด</span></Link>
+          <Reveal className="case-cta-actions" delay={0.1}>
+            <Link href="/contact" className="btn btn-orange btn-lg btn-arrow">
+              <span className="btn-label">นัดคุยกับทีม</span>
+            </Link>
+            <a
+              href={`tel:${PHONE_TEL}`}
+              className="btn btn-on-dark btn-lg"
+              aria-label="โทรหาเรา 095-385-4906"
+              data-cta-location="portfolio-case"
+            >
+              <span className="btn-label">โทร 095-385-4906</span>
+            </a>
           </Reveal>
         </div>
       </section>

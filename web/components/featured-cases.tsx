@@ -1,6 +1,5 @@
 import { Link } from "@/i18n/navigation";
 import { MediaImage } from "@/components/media-image";
-import { pickLocale } from "@/utils/format";
 import type { PortfolioItem } from "@/utils/supabase/types";
 
 const GRADIENTS = [
@@ -11,15 +10,13 @@ const GRADIENTS = [
 
 type Props = {
   items: PortfolioItem[];
-  locale: string;
 };
 
-export function FeaturedCases({ items, locale }: Props) {
+export function FeaturedCases({ items }: Props) {
   if (!items.length) return null;
   return (
     <div className="grid-3 services-cases">
       {items.map((p, i) => {
-        const summary = pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th);
         return (
           <Link key={p.id} href={`/portfolio/${p.slug}`} className="card card-portfolio">
             <MediaImage
@@ -40,7 +37,6 @@ export function FeaturedCases({ items, locale }: Props) {
                 ) : null}
               </span>
               <h3 className="card-title">{p.title}</h3>
-              <p className="card-desc">{summary}</p>
             </div>
           </Link>
         );

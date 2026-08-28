@@ -70,7 +70,7 @@ export default async function PortfolioPage({
         <div className="container">
           <h2 id="works-title" style={{ position: "absolute", clip: "rect(0 0 0 0)", width: "1px", height: "1px", overflow: "hidden" }}>ผลงานทั้งหมด</h2>
 
-          <PortfolioFilter items={items} locale={locale} categories={categories} />
+          <PortfolioFilter items={items} categories={categories} />
         </div>
       </section>
 

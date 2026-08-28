@@ -115,6 +115,18 @@
 }
 
 /* -------------------------------------------------------------------------
+   Shared 3-column grid — used by portfolio / blog / case card rows
+   ------------------------------------------------------------------------- */
+.grid-3 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--space-6);
+}
+@media (min-width: 768px) {
+  .grid-3 { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* -------------------------------------------------------------------------
    Section header (eyebrow + h2 + lead)
    ------------------------------------------------------------------------- */
 .section-header {
@@ -123,6 +135,18 @@
   gap: var(--space-4);
   max-width: 720px;
   margin-bottom: var(--space-12);
+}
+
+.section-header > .eyebrow-chip,
+.section-header > .eyebrow-pill,
+.section-header > .eyebrow {
+  align-self: flex-start;
+}
+
+.section-header-center > .eyebrow-chip,
+.section-header-center > .eyebrow-pill,
+.section-header-center > .eyebrow {
+  align-self: center;
 }
 
 .section-header-center {

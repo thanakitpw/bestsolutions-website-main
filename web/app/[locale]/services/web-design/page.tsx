@@ -378,7 +378,6 @@ export default async function WebDesignPage({
                     {p.year && <><span className="card-meta-dot"></span><span>{p.year}</span></>}
                   </span>
                   <h3 className="card-title">{p.title}</h3>
-                  <p className="card-desc">{pickLocale(locale, p.summary_th, p.summary_en ?? p.summary_th)}</p>
                 </div>
               </Link>
             ))}
