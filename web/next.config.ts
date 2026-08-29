@@ -62,6 +62,12 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       ...legacyRedirects,
+      // `/` → `/th` permanently. next-intl's proxy already does this, but as a
+      // 307, so Google keeps the two as separate URLs. `redirects` runs at step
+      // 2 of the routing chain, before Proxy at step 3, so this wins.
+      // Safe to make permanent: localePrefix is "always" and localeDetection is
+      // false, so `/` can never resolve to anything but the default locale.
+      { source: "/", destination: "/th", permanent: true },
       // EN locale isn't published yet — keep crawled /en* out of 404s.
       { source: "/en", destination: "/th", permanent: false },
       { source: "/en/:path*", destination: "/th/:path*", permanent: false },
