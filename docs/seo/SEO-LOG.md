@@ -1,6 +1,6 @@
 # SEO-LOG — งานที่ทำไปแล้ว (handoff)
 
-อัปเดต: 2026-05-16 · branch หลัก `main` (push แล้วทุก commit)
+อัปเดต: 2026-08-29 · branch หลัก `main` (push แล้วทุก commit)
 
 ## สรุปสถานะ Sprint
 | Sprint | สถานะ |
@@ -9,7 +9,8 @@
 | S1 Phase A technical | ✅ deployed |
 | S2 on-page keyword | ✅ deployed |
 | S3 content | ⏸️ แผนเสร็จ ผู้ใช้สั่งหยุดก่อนเขียน |
-| S4 off-page/GEO | ⬜ ยังไม่เริ่ม |
+| S4 off-page/GEO | ⬜ ยังไม่เริ่ม (แต่ llms.txt + RSS ทำแล้วใน S5) |
+| S5 audit รอบละเอียด (ส.ค.) | ✅ P0+P1+P2 ปิดครบ — ดู `07-audit-2026-08-29.md` |
 
 ## S0 — setup
 - สร้าง `docs/seo/` (00-strategy, 01-keyword-map, 02-baseline, 03-technical-audit, 04-onpage-checklist, 05-content-calendar, 06-content-pipeline-architecture, ไฟล์นี้)
@@ -39,6 +40,16 @@
 - architecture spec (`06-content-pipeline-architecture.md`): แยก content-project + Supabase ตรง / ingest API+gate
 - **ผู้ใช้สั่งหยุด ยังไม่เขียนบทความ**
 
+## S5 — audit รอบละเอียด (2026-08-29)
+
+รายละเอียดเต็มอยู่ใน **`07-audit-2026-08-29.md`** (ทั้ง finding และผลการแก้). สรุปหัวข้อใหญ่:
+
+- 🔴 **เจอว่า ISR ตายทั้งเว็บ** — `queries.ts` เรียก `cookies()` ทุก query → ทุก route เป็น dynamic, `revalidate` ที่ใส่ไว้ 12 หน้าไม่มีผลเลย, live header เป็น `no-store` + TTFB 0.6–1.1s. แก้ด้วย anon client ไม่มี cookie (`utils/supabase/anon.ts`) + proxy เลิก `updateSession` บน public route → build เปลี่ยนเป็น SSG/ISR ทุกหน้า
+- 🔴 **H1 ซ้ำ 16/16 บทความ** (`body_md` ขึ้นต้นด้วย `# `) → `utils/markdown.ts`
+- 🔴 **GA4 ยิงผิด property** — GTM ยิง `G-R6RHSMLMF9` แต่ property ที่เปิดดูคือ `G-611ZJPLYR4` (เจ้าของเลือกย้ายไป 611)
+- P1: `?q=` search จริงบนหน้า blog (SearchAction ไม่เท็จอีก) · FaqJsonLd web-design · portfolio seo meta 8 rows · related posts ตามหัวข้อ · footer dead links → `/privacy` `/terms` `/sitemap.xml` (สร้าง 2 หน้าใหม่) · sitemap lastmod จริง · contrast + heading-order · blog category hub 4 หมวด · `LocalBusiness.image` ที่ 404
+- P2: RSS `/rss.xml` · `llms.txt` · image sitemap (16→40 URL) · Article wordCount/articleSection/keywords · Organization logo ImageObject · **external reference 2–3 ลิงก์/บท ครบ 16 บท** (เช็ค 200 ทุก URL) · เติม taxonomy ที่ null/ผิด 7 บท
+
 ## Infra / tools (เครื่อง local)
 | ของ | path / สถานะ |
 |---|---|
@@ -60,7 +71,16 @@
 - ⚠️ en hreflang ชี้ /en (routing มีแค่ th) — **ผู้ใช้สั่งคงไว้** = known accepted risk
 - sitemap live = 16 URLs (6 service + blog + portfolio), โดเมนถูก
 
-## ค้างรอผู้ใช้
+## ค้างรอผู้ใช้ (อัปเดต 2026-08-29)
+
+- [ ] **GTM**: เปลี่ยน Measurement ID ของ GA4 tag → `G-611ZJPLYR4` แล้ว Publish (เจ้าของเลือกย้าย property)
+- [ ] **GA4 Admin**: link GA4 ↔ Search Console หลังเปลี่ยน ID เสร็จ
+- [ ] **Vercel Domains**: non-www → www เปลี่ยน 307 → 308
+- [ ] **GSC OAuth หมดอายุ** (`invalid_grant`) → `node scripts/gsc-oauth.mjs` ใหม่ ก่อนจะดึงข้อมูลได้อีก
+- [ ] Supabase: เติม `portfolio_items.year` (ว่าง 6/7) + `live_url` (มี 1/7)
+- [ ] วัด PSI ใหม่หลัง deploy เพื่อยืนยันว่า LCP ลง (baseline ก่อนแก้: home 4.2s / blog 7.5s, Perf 76 / 69)
+
+## ค้างรอผู้ใช้ (ของเดิม พ.ค.)
 - [ ] submit `sitemap.xml` ใน GSC UI (โดเมนตรงแล้ว ทำได้)
 - [ ] non-www redirect → permanent 308
 - [ ] S3: ตัดสิน รูป (default/HTML-shot/AI) + author (Admin/Thanakit/ทีม) + A vs B ingest → แล้วเริ่มเขียน

@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import { Link } from "@/i18n/navigation";
 import { Reveal } from "@/components/reveal";
 import { MediaImage } from "@/components/media-image";
@@ -32,6 +33,20 @@ export function BlogList({
 }) {
   const [active, setActive] = useState<string>(ALL);
 
+  // `?q=` is the target the WebSite SearchAction JSON-LD advertises. Reading it
+  // client-side keeps /blog statically rendered (searchParams in the RSC would
+  // force it dynamic) while making the declared search endpoint real.
+  const searchParams = useSearchParams();
+  const [typed, setTyped] = useState<string | null>(null);
+  const query = typed ?? searchParams.get("q") ?? "";
+
+  const syncUrl = useCallback((next: string) => {
+    const url = new URL(window.location.href);
+    if (next.trim()) url.searchParams.set("q", next.trim());
+    else url.searchParams.delete("q");
+    window.history.replaceState(null, "", url.toString());
+  }, []);
+
   // Categories that actually exist in published articles, by first appearance.
   const categories = useMemo(() => {
     const seen: string[] = [];
@@ -41,15 +56,49 @@ export function BlogList({
     return seen;
   }, [articles]);
 
-  const filtered = useMemo(
-    () => (active === ALL ? articles : articles.filter((a) => a.category === active)),
-    [articles, active],
-  );
+  const filtered = useMemo(() => {
+    const byCategory =
+      active === ALL ? articles : articles.filter((a) => a.category === active);
+    const q = query.trim().toLowerCase();
+    if (!q) return byCategory;
+    return byCategory.filter((a) =>
+      [a.title_th, a.title_en, a.excerpt_th, a.excerpt_en, a.category, ...(a.tags ?? [])]
+        .filter(Boolean)
+        .join(" ")
+        .toLowerCase()
+        .includes(q),
+    );
+  }, [articles, active, query]);
 
   const [featured, ...rest] = filtered;
 
   return (
     <>
+      <form
+        className="blog-search"
+        role="search"
+        onSubmit={(e) => {
+          e.preventDefault();
+          syncUrl(query);
+        }}
+      >
+        <label className="sr-only" htmlFor="blog-search-input">
+          ค้นหาบทความ
+        </label>
+        <input
+          id="blog-search-input"
+          className="blog-search-input"
+          type="search"
+          name="q"
+          value={query}
+          placeholder="ค้นหาบทความ เช่น SEO, ยิงแอด, ทำเว็บไซต์"
+          onChange={(e) => {
+            setTyped(e.target.value);
+            syncUrl(e.target.value);
+          }}
+        />
+      </form>
+
       <div className="filter-bar" role="tablist" aria-label="กรองตามหมวดหมู่">
         <button
           className={`filter-chip${active === ALL ? " is-active" : ""}`}
@@ -135,7 +184,9 @@ export function BlogList({
       </Reveal>
 
       {filtered.length === 0 && (
-        <p className="filter-empty" role="status">ยังไม่มีบทความในหมวดนี้</p>
+        <p className="filter-empty" role="status">
+          {query.trim() ? `ไม่พบบทความที่ตรงกับ "${query.trim()}"` : "ยังไม่มีบทความในหมวดนี้"}
+        </p>
       )}
     </>
   );

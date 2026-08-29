@@ -86,7 +86,9 @@ html {
   gap: var(--space-5);
   min-height: 36px;
   padding-inline: var(--gutter);
-  background: var(--color-orange-500);
+  /* White on --color-orange-500 is 3.11:1 at 13px — below the 4.5:1 floor.
+     This deeper orange reads the same but passes WCAG AA (5.34:1). */
+  background: var(--color-orange-topbar);
   color: var(--color-text-on-dark);
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);

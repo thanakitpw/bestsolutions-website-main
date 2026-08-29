@@ -3,6 +3,7 @@ import Image from "next/image";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
+import { routing } from "@/i18n/routing";
 import ReactMarkdown from "react-markdown";
 import rehypeSanitize from "rehype-sanitize";
 import rehypeSlug from "rehype-slug";
@@ -13,6 +14,8 @@ import { Reveal } from "@/components/reveal";
 import { MediaImage } from "@/components/media-image";
 import { formatThaiDate, pickLocale } from "@/utils/format";
 import { extractHeadings } from "@/utils/toc";
+import { categorySlug } from "@/utils/category";
+import { normalizeArticleHeadings } from "@/utils/markdown";
 import { PostToc } from "@/components/post-toc";
 import { TrackView } from "@/components/track-view";
 import "@/styles/pages/sample-post.css";
@@ -23,10 +26,7 @@ export const revalidate = 300;
 
 export async function generateStaticParams() {
   const slugs = await getArticleSlugs();
-  return slugs.flatMap((slug) => [
-    { locale: "th", slug },
-    { locale: "en", slug },
-  ]);
+  return routing.locales.flatMap((locale) => slugs.map((slug) => ({ locale, slug })));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
@@ -75,9 +75,26 @@ export default async function BlogPostPage({ params }: Props) {
   if (!article) notFound();
 
   const title = pickLocale(locale, article.title_th, article.title_en ?? article.title_th);
-  const body = pickLocale(locale, article.body_md_th, article.body_md_en ?? article.body_md_th);
-  const headings = extractHeadings(body ?? "");
-  const related = allArticles.filter((a) => a.slug !== slug).slice(0, 3);
+  const body = normalizeArticleHeadings(
+    pickLocale(locale, article.body_md_th, article.body_md_en ?? article.body_md_th) ?? "",
+  );
+  const headings = extractHeadings(body);
+  // Topical relatedness, not "the 3 newest" — shared tags first, then category.
+  // Related links are the main internal-link signal between blog clusters.
+  const tags = new Set((article.tags ?? []).map((t) => t.toLowerCase()));
+  const related = allArticles
+    .filter((a) => a.slug !== slug)
+    .map((a) => {
+      const shared = (a.tags ?? []).filter((t) => tags.has(t.toLowerCase())).length;
+      return { a, score: shared * 2 + (a.category === article.category ? 1 : 0) };
+    })
+    .sort(
+      (x, y) =>
+        y.score - x.score ||
+        new Date(y.a.published_at ?? 0).getTime() - new Date(x.a.published_at ?? 0).getTime(),
+    )
+    .slice(0, 3)
+    .map((r) => r.a);
 
   const RELATED_GRADIENTS = [
     "linear-gradient(135deg, var(--color-orange-300), var(--color-peach))",
@@ -94,6 +111,9 @@ export default async function BlogPostPage({ params }: Props) {
         items={[
           { name: locale === "en" ? "Home" : "หน้าแรก", path: "" },
           { name: locale === "en" ? "Blog" : "บทความ", path: "/blog" },
+          ...(article.category
+            ? [{ name: article.category, path: `/blog/category/${categorySlug(article.category)}` }]
+            : []),
           { name: title, path: `/blog/${slug}` },
         ]}
       />
@@ -103,7 +123,9 @@ export default async function BlogPostPage({ params }: Props) {
         <div className="container">
           <div className="post-header-inner">
             <Link href="/blog" className="breadcrumb"><span aria-hidden="true">←</span><span>บทความทั้งหมด</span></Link>
-            <span className="post-cat">{article.category}</span>
+            <Link href={`/blog/category/${categorySlug(article.category)}`} className="post-cat">
+              {article.category}
+            </Link>
             <h1 className="post-title">{title}</h1>
             <div className="post-meta">
               <Image className="post-author-avatar" src="/logo.webp" alt="" width={40} height={40} aria-hidden="true" />
@@ -135,7 +157,7 @@ export default async function BlogPostPage({ params }: Props) {
             {/* BODY */}
             <article className="post-body">
               <ReactMarkdown rehypePlugins={[rehypeSanitize, rehypeSlug]}>
-                {body ?? ""}
+                {body}
               </ReactMarkdown>
 
               <div className="author-card">

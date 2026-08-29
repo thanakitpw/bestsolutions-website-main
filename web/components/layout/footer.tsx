@@ -43,17 +43,18 @@ export async function Footer() {
           </div>
 
           <div className="footer-col">
-            <h4>{t("Footer.servicesHeading")}</h4>
+            <h3>{t("Footer.servicesHeading")}</h3>
             <ul>
               <li><Link href="/services/web-design">รับทำเว็บไซต์</Link></li>
-              <li><Link href="/services">ทำโฆษณา Meta &amp; Google</Link></li>
-              <li><Link href="/services">SEO</Link></li>
-              <li><Link href="/services">AI Automation</Link></li>
+              <li><Link href="/services/paid-ads">รับยิงแอด Meta &amp; Google</Link></li>
+              <li><Link href="/services/seo">รับทำ SEO</Link></li>
+              <li><Link href="/services/social-media">รับดูแลเพจโซเชียล</Link></li>
+              <li><Link href="/services/automation">วางระบบ Automation &amp; AI</Link></li>
             </ul>
           </div>
 
           <div className="footer-col">
-            <h4>{t("Footer.companyHeading")}</h4>
+            <h3>{t("Footer.companyHeading")}</h3>
             <ul>
               <li><Link href="/about">{t("Nav.about")}</Link></li>
               <li><Link href="/portfolio">{t("Nav.portfolio")}</Link></li>
@@ -63,7 +64,7 @@ export async function Footer() {
           </div>
 
           <div className="footer-col">
-            <h4>{t("Footer.contactHeading")}</h4>
+            <h3>{t("Footer.contactHeading")}</h3>
             <ul>
               <li><a href="tel:0953854906">{t("Footer.phone")}</a></li>
               <li><a href="mailto:info@bestsolutionscorp.com">{t("Footer.email")}</a></li>
@@ -77,9 +78,9 @@ export async function Footer() {
         <div className="footer-bottom">
           <span>{t("Footer.copyright")}</span>
           <ul className="footer-bottom-links">
-            <li><a href="#">{t("Footer.privacy")}</a></li>
-            <li><a href="#">{t("Footer.terms")}</a></li>
-            <li><a href="#">{t("Footer.sitemap")}</a></li>
+            <li><Link href="/privacy">{t("Footer.privacy")}</Link></li>
+            <li><Link href="/terms">{t("Footer.terms")}</Link></li>
+            <li><a href="/sitemap.xml">{t("Footer.sitemap")}</a></li>
           </ul>
         </div>
       </div>

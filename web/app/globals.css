@@ -44,6 +44,7 @@
   --color-orange-500: #FF5A1F;
   --color-orange-600: #ED4810;
   --color-orange-700: #D9410E;
+  --color-orange-topbar: #C33A0C;
   --color-orange-800: #A82E08;
   --color-orange-900: #7A2106;
   --color-peach:      #FFB347;
@@ -358,6 +359,21 @@ small { font-size: var(--text-sm); }
 .text-subtle  { color: var(--color-text-subtle); }
 .text-orange  { color: var(--color-orange-500); }
 .text-blue    { color: var(--color-blue-500); }
+
+/* Visually hidden but read by screen readers — for headings that must exist in
+   the outline without showing in the design. */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
 
 /* =============================================================================
    Skip link (a11y) — visually hidden until focused

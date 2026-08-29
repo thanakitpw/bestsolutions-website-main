@@ -27,8 +27,9 @@ export default async function proxy(request: NextRequest) {
     return supabaseResponse;
   }
 
-  // Public routes — session refresh + locale routing
-  await supabaseUpdateSession(request);
+  // Public routes — locale routing only. Refreshing the Supabase session here
+  // added an auth.getUser() round-trip per pageview and put Set-Cookie on every
+  // public response, which blocks CDN caching. Nothing public reads a session.
   return intlMiddleware(request);
 }
 

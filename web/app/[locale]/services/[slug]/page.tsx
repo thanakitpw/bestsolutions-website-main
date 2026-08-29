@@ -3,7 +3,8 @@ import type { ReactNode } from "react";
 import { notFound } from "next/navigation";
 import { setRequestLocale } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
-import { getServiceBySlug } from "@/utils/supabase/queries";
+import { getServiceBySlug, getServiceSitemapEntries } from "@/utils/supabase/queries";
+import { routing } from "@/i18n/routing";
 import { ServiceJsonLd, BreadcrumbJsonLd, FaqJsonLd } from "@/components/json-ld";
 import { ServiceIcon } from "@/components/service-icon";
 import { TrackView } from "@/components/track-view";
@@ -19,6 +20,13 @@ import "@/styles/pages/services.css";
 export const revalidate = 3600;
 
 type Props = { params: Promise<{ locale: string; slug: string }> };
+
+export async function generateStaticParams() {
+  const services = await getServiceSitemapEntries();
+  return routing.locales.flatMap((locale) =>
+    services.map(({ slug }) => ({ locale, slug })),
+  );
+}
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale, slug } = await params;

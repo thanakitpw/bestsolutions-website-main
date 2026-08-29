@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
@@ -15,12 +16,19 @@ type Props = { params: Promise<{ locale: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations({ locale, namespace: "Blog" });
-  return buildPageMetadata({
+  const meta = buildPageMetadata({
     locale,
     path: "/blog",
     title: t("metaTitle"),
     description: t("metaDescription"),
   });
+  return {
+    ...meta,
+    alternates: {
+      ...meta.alternates,
+      types: { "application/rss+xml": "/rss.xml" },
+    },
+  };
 }
 
 export default async function BlogPage({
@@ -61,7 +69,9 @@ export default async function BlogPage({
         <div className="container">
           <h2 id="posts-title" style={{ position: "absolute", clip: "rect(0 0 0 0)", width: "1px", height: "1px", overflow: "hidden" }}>บทความทั้งหมด</h2>
 
-          <BlogList articles={articles} locale={locale} />
+          <Suspense fallback={null}>
+            <BlogList articles={articles} locale={locale} />
+          </Suspense>
         </div>
       </section>
 

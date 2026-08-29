@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
 import { Link } from "@/i18n/navigation";
 import { getServiceBySlug, getPortfolioItems } from "@/utils/supabase/queries";
-import { ServiceJsonLd, BreadcrumbJsonLd } from "@/components/json-ld";
+import { ServiceJsonLd, BreadcrumbJsonLd, FaqJsonLd } from "@/components/json-ld";
 import { Reveal } from "@/components/reveal";
 import { MediaImage } from "@/components/media-image";
 import { ProcessCarousel, type ProcessStep } from "@/components/process-carousel";
@@ -26,6 +26,29 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     description: t("metaDescription"),
   });
 }
+
+const WEB_DESIGN_FAQS = [
+  {
+    q: "ราคาทำเว็บไซต์ประมาณเท่าไหร่?",
+    a: "ราคาขึ้นกับจำนวนหน้า ฟีเจอร์ ระบบหลังบ้าน และความซับซ้อนของงาน เล่าโจทย์คร่าว ๆ มาได้ แล้วเราจะช่วยประเมินช่วงงบประมาณที่เหมาะกับเคสของคุณ",
+  },
+  {
+    q: "ใช้เวลาทำกี่สัปดาห์?",
+    a: "ระยะเวลาขึ้นกับขอบเขตงาน โดยทั่วไปเว็บไซต์ธุรกิจจะใช้เวลาหลายสัปดาห์ ตั้งแต่สำรวจโจทย์ ออกแบบ พัฒนา ทดสอบ และส่งมอบ",
+  },
+  {
+    q: "ถ้ามีเว็บเก่าอยู่แล้ว จะย้ายอย่างไร?",
+    a: "เราจะตรวจโครงสร้างเว็บเดิม หน้าเดิม และ URL สำคัญก่อน เพื่อวางแผน migrate และ redirect ให้เหมาะสม ลดผลกระทบต่อ SEO เท่าที่ทำได้",
+  },
+  {
+    q: "หลังจบงานต้องดูแลต่อไหม?",
+    a: "หลังส่งมอบมีช่วงดูแลปัญหาที่เกี่ยวกับการพัฒนา ส่วนการอัปเดตเนื้อหา SEO หรือดูแลต่อเนื่องสามารถเลือกทำเพิ่มได้ตามความจำเป็น",
+  },
+  {
+    q: "ใช้เทคโนโลยีอะไร?",
+    a: "เราเลือกเทคโนโลยีตามโจทย์ของเว็บไซต์ โดยเน้นความเร็ว ความเสถียร การดูแลต่อ และการส่งมอบที่ทีมอื่นสามารถรับช่วงได้หากจำเป็น",
+  },
+] as const;
 
 const SVG = {
   search: (
@@ -126,6 +149,7 @@ export default async function WebDesignPage({
     <main id="main" className="service-single">
       <TrackView event="service_view" slug="web-design" />
       {service ? <ServiceJsonLd service={service} locale={locale} /> : null}
+      <FaqJsonLd items={[...WEB_DESIGN_FAQS]} />
       <BreadcrumbJsonLd
         locale={locale}
         items={[
@@ -406,26 +430,12 @@ export default async function WebDesignPage({
           </Reveal>
 
           <Reveal className="ss-faq-list" delay={0.1}>
-            <details className="ss-faq-item">
-              <summary>ราคาทำเว็บไซต์ประมาณเท่าไหร่?</summary>
-              <p>ราคาขึ้นกับจำนวนหน้า ฟีเจอร์ ระบบหลังบ้าน และความซับซ้อนของงาน เล่าโจทย์คร่าว ๆ มาได้ แล้วเราจะช่วยประเมินช่วงงบประมาณที่เหมาะกับเคสของคุณ</p>
-            </details>
-            <details className="ss-faq-item">
-              <summary>ใช้เวลาทำกี่สัปดาห์?</summary>
-              <p>ระยะเวลาขึ้นกับขอบเขตงาน โดยทั่วไปเว็บไซต์ธุรกิจจะใช้เวลาหลายสัปดาห์ ตั้งแต่สำรวจโจทย์ ออกแบบ พัฒนา ทดสอบ และส่งมอบ</p>
-            </details>
-            <details className="ss-faq-item">
-              <summary>ถ้ามีเว็บเก่าอยู่แล้ว จะย้ายอย่างไร?</summary>
-              <p>เราจะตรวจโครงสร้างเว็บเดิม หน้าเดิม และ URL สำคัญก่อน เพื่อวางแผน migrate และ redirect ให้เหมาะสม ลดผลกระทบต่อ SEO เท่าที่ทำได้</p>
-            </details>
-            <details className="ss-faq-item">
-              <summary>หลังจบงานต้องดูแลต่อไหม?</summary>
-              <p>หลังส่งมอบมีช่วงดูแลปัญหาที่เกี่ยวกับการพัฒนา ส่วนการอัปเดตเนื้อหา SEO หรือดูแลต่อเนื่องสามารถเลือกทำเพิ่มได้ตามความจำเป็น</p>
-            </details>
-            <details className="ss-faq-item">
-              <summary>ใช้เทคโนโลยีอะไร?</summary>
-              <p>เราเลือกเทคโนโลยีตามโจทย์ของเว็บไซต์ โดยเน้นความเร็ว ความเสถียร การดูแลต่อ และการส่งมอบที่ทีมอื่นสามารถรับช่วงได้หากจำเป็น</p>
-            </details>
+            {WEB_DESIGN_FAQS.map((f) => (
+              <details className="ss-faq-item" key={f.q}>
+                <summary>{f.q}</summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
           </Reveal>
         </div>
       </section>

@@ -1,12 +1,10 @@
-import { cookies } from "next/headers";
-import { createClient } from "./server";
-import { createBrowserClient } from "@supabase/ssr";
+import { createAnonClient } from "./anon";
 import type { Article, PortfolioItem, Service, Testimonial, SiteSetting } from "./types";
-import type { Database } from "./types";
 
 /**
  * Read helpers for RSC pages. RLS guarantees only published rows are returned to anon.
- * Each helper awaits cookies() and passes to the server client per Supabase docs.
+ * All of these run through the cookie-free anon client so the routes stay statically
+ * renderable + ISR-cached (see `anon.ts`).
  *
  * Scheduled publishing: an article is public only when status='published' AND
  * published_at <= now(). RLS enforces this at the DB layer; the .lte() filters
@@ -19,16 +17,7 @@ function nowIso() {
 }
 
 async function db() {
-  const cookieStore = await cookies();
-  return createClient(cookieStore);
-}
-
-/** Cookie-free anon client for use in generateStaticParams (build-time, no HTTP request). */
-function staticDb() {
-  return createBrowserClient<Database>(
-    process.env.NEXT_PUBLIC_SUPABASE_URL!,
-    process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY!,
-  );
+  return createAnonClient();
 }
 
 export async function getServices(): Promise<Service[]> {
@@ -135,7 +124,7 @@ export async function getSiteSetting<T = unknown>(key: string): Promise<T | null
 
 /** For generateStaticParams — cookie-free, build-time safe. */
 export async function getArticleSlugs(): Promise<string[]> {
-  const { data } = await staticDb()
+  const { data } = await createAnonClient()
     .from("articles")
     .select("slug")
     .eq("status", "published")
@@ -145,28 +134,32 @@ export async function getArticleSlugs(): Promise<string[]> {
 
 /** For generateStaticParams — cookie-free, build-time safe. */
 export async function getPortfolioSlugs(): Promise<string[]> {
-  const { data } = await staticDb()
+  const { data } = await createAnonClient()
     .from("portfolio_items")
     .select("slug")
     .eq("status", "published");
   return (data ?? []).map((r) => r.slug);
 }
 
-export type SitemapEntry = { slug: string; updated_at: string };
+export type SitemapEntry = { slug: string; updated_at: string; image?: string | undefined };
 
 /** For sitemap.ts — cookie-free, build-time safe. */
 export async function getArticleSitemapEntries(): Promise<SitemapEntry[]> {
-  const { data } = await staticDb()
+  const { data } = await createAnonClient()
     .from("articles")
-    .select("slug, updated_at")
+    .select("slug, updated_at, og_image, cover_image")
     .eq("status", "published")
     .lte("published_at", nowIso());
-  return (data ?? []).map((r) => ({ slug: r.slug, updated_at: r.updated_at }));
+  return (data ?? []).map((r) => ({
+    slug: r.slug,
+    updated_at: r.updated_at,
+    image: r.og_image ?? r.cover_image ?? undefined,
+  }));
 }
 
 /** For sitemap.ts — cookie-free, build-time safe. */
 export async function getServiceSitemapEntries(): Promise<SitemapEntry[]> {
-  const { data } = await staticDb()
+  const { data } = await createAnonClient()
     .from("services")
     .select("slug, updated_at")
     .eq("status", "published");
@@ -175,9 +168,13 @@ export async function getServiceSitemapEntries(): Promise<SitemapEntry[]> {
 
 /** For sitemap.ts — cookie-free, build-time safe. */
 export async function getPortfolioSitemapEntries(): Promise<SitemapEntry[]> {
-  const { data } = await staticDb()
+  const { data } = await createAnonClient()
     .from("portfolio_items")
-    .select("slug, updated_at")
+    .select("slug, updated_at, og_image, cover_image")
     .eq("status", "published");
-  return (data ?? []).map((r) => ({ slug: r.slug, updated_at: r.updated_at }));
+  return (data ?? []).map((r) => ({
+    slug: r.slug,
+    updated_at: r.updated_at,
+    image: r.og_image ?? r.cover_image ?? undefined,
+  }));
 }

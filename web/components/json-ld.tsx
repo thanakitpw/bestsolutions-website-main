@@ -94,7 +94,13 @@ export function OrganizationJsonLd({ contact, locale }: { contact?: ContactInfo;
     name: "Best Solutions",
     alternateName: "Best Solutions Corp",
     url: `${SITE_URL}/${locale}`,
-    logo: `${SITE_URL}/logo.webp`,
+    logo: {
+      "@type": "ImageObject",
+      url: `${SITE_URL}/logo.webp`,
+      width: 3888,
+      height: 3872,
+    },
+    image: `${SITE_URL}/${locale}/opengraph-image`,
     description:
       locale === "en"
         ? "Bangkok-based digital marketing agency. Web design, ads, SEO, social, AI automation."
@@ -125,7 +131,7 @@ export function LocalBusinessJsonLd({ contact, locale }: { contact?: ContactInfo
     "@id": BUSINESS_ID,
     name: "Best Solutions",
     url: `${SITE_URL}/${locale}`,
-    image: `${SITE_URL}/images/og/default.png`,
+    image: `${SITE_URL}/${locale}/opengraph-image`,
     priceRange: "฿฿",
     address: {
       "@type": "PostalAddress",
@@ -221,6 +227,10 @@ export function ArticleJsonLd({ article, locale }: { article: Article; locale: s
     article.seo_description ??
     pickLocale(locale, article.excerpt_th ?? "", article.excerpt_en ?? article.excerpt_th ?? "");
   const url = `${SITE_URL}/${locale}/blog/${article.slug}`;
+  // Thai has no word spacing, so `split(/\s+/)` undercounts badly. Count the
+  // characters that carry meaning and divide by an average Thai word length.
+  const body = pickLocale(locale, article.body_md_th ?? "", article.body_md_en ?? article.body_md_th ?? "");
+  const wordCount = Math.round((body ?? "").replace(/\s+/g, "").length / 4);
   const data: Json = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -232,6 +242,9 @@ export function ArticleJsonLd({ article, locale }: { article: Article; locale: s
     mainEntityOfPage: { "@type": "WebPage", "@id": url },
     publisher: { "@id": ORG_ID },
     ...(article.cover_image ? { image: [article.cover_image] } : {}),
+    ...(article.category ? { articleSection: article.category } : {}),
+    ...(article.tags && article.tags.length > 0 ? { keywords: article.tags.join(", ") } : {}),
+    ...(wordCount > 0 ? { wordCount } : {}),
     ...(article.published_at ? { datePublished: article.published_at } : {}),
     ...(article.updated_at ? { dateModified: article.updated_at } : {}),
     ...(article.author_name
