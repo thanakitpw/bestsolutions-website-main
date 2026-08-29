@@ -197,24 +197,29 @@ export default async function ServicesPage({
             {featured ? (
               <Link href={`/services/${featured.slug}`} className="card svc-card svc-card-featured">
                 <div className="svc-card-lead">
-                  <span className="svc-card-badge">บริการหลัก</span>
-                  <div className="card-icon is-orange" aria-hidden="true">
-                    <ServiceIcon name={featured.icon} />
+                  <div className="svc-card-topline">
+                    <div className="card-icon is-orange" aria-hidden="true">
+                      <ServiceIcon name={featured.icon} />
+                    </div>
+                    <span className="svc-card-badge">บริการหลัก</span>
                   </div>
-                  <h3 className="card-title">
+                  <h3 className="card-title svc-card-title">
                     {pickLocale(locale, featured.name_th, featured.name_en ?? featured.name_th)}
                   </h3>
-                  <p className="card-desc">
+                  <p className="card-desc svc-card-desc">
                     {pickLocale(locale, featured.summary_th, featured.summary_en ?? featured.summary_th)}
                   </p>
-                  <span className="card-link">ดูรายละเอียด</span>
+                  <span className="svc-card-cta">ดูรายละเอียด</span>
                 </div>
 
-                <ul className="service-features svc-card-features">
-                  {featuredFeatures?.map((f) => (
-                    <li key={f} className="service-feature">{f}</li>
-                  ))}
-                </ul>
+                <div className="svc-card-panel">
+                  <p className="svc-card-panel-label">สิ่งที่คุณจะได้</p>
+                  <ul className="svc-card-features">
+                    {featuredFeatures?.map((f) => (
+                      <li key={f} className="svc-card-feature">{f}</li>
+                    ))}
+                  </ul>
+                </div>
               </Link>
             ) : null}
 
