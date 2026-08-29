@@ -46,7 +46,7 @@ export async function Footer() {
             <h3>{t("Footer.servicesHeading")}</h3>
             <ul>
               <li><Link href="/services/web-design">รับทำเว็บไซต์</Link></li>
-              <li><Link href="/services/paid-ads">รับยิงแอด Meta &amp; Google</Link></li>
+              <li><Link href="/services/paid-ads">รับทำ Google Ads และโฆษณา Facebook</Link></li>
               <li><Link href="/services/seo">รับทำ SEO</Link></li>
               <li><Link href="/services/social-media">รับดูแลเพจโซเชียล</Link></li>
               <li><Link href="/services/automation">วางระบบ Automation &amp; AI</Link></li>

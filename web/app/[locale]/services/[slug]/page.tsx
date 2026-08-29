@@ -89,6 +89,9 @@ const FAQS_BY_SLUG: Record<string, FAQItem[]> = {
     { q: "ROAS เท่าไหร่ถึงเรียกว่าดี?", a: "ขึ้นกับ margin, ราคาสินค้า และเป้าหมายของแคมเปญ เราจะตั้งตัวชี้วัดร่วมกันก่อนเริ่ม เพื่อให้รู้ว่าควรดูตัวเลขไหนเป็นหลัก" },
     { q: "ต้องปรับแคมเปญบ่อยแค่ไหน?", a: "เราปรับเป็นรอบตามข้อมูลที่ได้ ไม่เปลี่ยนเพื่อให้ดูยุ่ง แต่ปรับเมื่อเห็นสัญญาณว่าควรเปลี่ยน audience, creative หรืองบประมาณ" },
     { q: "ดูแลเฉพาะ Meta และ Google หรือไม่?", a: "Meta และ Google เป็นช่องทางหลัก แต่สามารถประเมิน TikTok, LINE Ads หรือ YouTube ได้ตามพฤติกรรมลูกค้าและเป้าหมายของธุรกิจ" },
+    { q: "รับทำ Google Shopping Ads ด้วยไหม?", a: "รับทำครับ ทั้ง Shopping และ Performance Max โดยต้องเชื่อม Google Merchant Center และจัดฟีดสินค้าให้ถูกต้องก่อน ซึ่งเราช่วยวางให้ได้ตั้งแต่ต้น" },
+    { q: "ควรเริ่มจาก Google Ads หรือ Facebook Ads ก่อน?", a: "ถ้าลูกค้าค้นหาสินค้าหรือบริการอยู่แล้ว Google Ads มักคุ้มกว่าเพราะไปเจอตอนเขาตั้งใจหา แต่ถ้าสินค้าต้องสร้างความอยากก่อน Facebook Ads จะทำงานได้ดีกว่า เราประเมินจากพฤติกรรมลูกค้าจริงของธุรกิจก่อนเสมอ" },
+    { q: "ทำ Google Ads เองกับจ้างเอเจนซี ต่างกันตรงไหน?", a: "ระบบเปิดให้ทำเองได้ แต่ส่วนที่กินงบคือการตั้งโครงสร้างแคมเปญ คีย์เวิร์ดเชิงลบ และการอ่านข้อมูลเพื่อปรับ ถ้าไม่มีเวลาดูต่อเนื่อง งบมักไหลไปกับคลิกที่ไม่ใช่ลูกค้า" },
   ],
   "social-media": [
     { q: "ดูแลกี่แพลตฟอร์ม?", a: "ขึ้นกับช่องทางที่ลูกค้าใช้อยู่และกลุ่มเป้าหมายของธุรกิจ โดยทั่วไปเริ่มจากช่องทางหลักก่อน แล้วค่อยขยายเมื่อระบบเริ่มนิ่ง" },
@@ -142,6 +145,11 @@ export default async function ServiceDetailPage({ params }: Props) {
   if (!service) notFound();
 
   const serviceName = pickLocale(locale, service.name_th, service.name_en ?? service.name_th);
+  // H1 comes from seo_title, not name_th. name_th is the short brand label used
+  // in nav, cards and JSON-LD ("ดูแลแคมเปญโฆษณา Meta & Google"); seo_title is the
+  // phrase people actually search ("รับทำ Google Ads …"). GSC showed the two had
+  // drifted apart on every service page, leaving the H1 aimed at nothing.
+  const serviceH1 = service.seo_title ?? serviceName;
   const serviceSummary = pickLocale(locale, service.summary_th, service.summary_en ?? service.summary_th);
   const features = (locale === "en" && service.features_en?.length ? service.features_en : service.features_th) ?? [];
 
@@ -178,7 +186,7 @@ export default async function ServiceDetailPage({ params }: Props) {
               <span>{service.name_en ?? serviceName} · Service</span>
             </span>
             <h1 id="hero-title" className="ss-hero-title">
-              {serviceName}
+              {serviceH1}
             </h1>
             <p className="ss-hero-lead">{serviceSummary}</p>
             <div className="ss-hero-ctas">

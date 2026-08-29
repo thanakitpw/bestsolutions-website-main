@@ -91,7 +91,7 @@ export function BlogList({
           type="search"
           name="q"
           value={query}
-          placeholder="ค้นหาบทความ เช่น SEO, ยิงแอด, ทำเว็บไซต์"
+          placeholder="ค้นหาบทความ เช่น SEO, Google Ads, ทำเว็บไซต์"
           onChange={(e) => {
             setTyped(e.target.value);
             syncUrl(e.target.value);

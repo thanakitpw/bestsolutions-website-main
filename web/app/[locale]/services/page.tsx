@@ -140,7 +140,7 @@ export default async function ServicesPage({
               บริการการตลาดออนไลน์ครบวงจร <span className="svc-hero-accent">ที่วัดผลได้จริง</span>
             </h1>
             <p className="lead">
-              รับทำเว็บไซต์ SEO ยิงแอด Meta &amp; Google ดูแลโซเชียล และวางระบบ Automation
+              รับทำเว็บไซต์ รับทำ SEO รับทำ Google Ads และโฆษณา Facebook ดูแลโซเชียล และวางระบบ Automation
               เลือกเริ่มเฉพาะส่วนที่ธุรกิจต้องการก่อนได้ แล้วค่อยต่อยอดให้ทำงานเป็นระบบเดียวกัน
             </p>
 
