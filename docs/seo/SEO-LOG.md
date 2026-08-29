@@ -1,8 +1,10 @@
 # SEO-LOG — งานที่ทำไปแล้ว (handoff)
 
-อัปเดต: 2026-08-29 · branch หลัก `main` (push แล้วทุก commit)
+อัปเดต: 2026-08-30 · branch หลัก `main` (push แล้วทุก commit)
 
 ## สรุปสถานะ Sprint
+> 📌 **แผนหลักอยู่ที่ `08-seo-master-plan.md`** — อ่านตัวนั้นก่อนถ้าจะเดินงานต่อ ไฟล์นี้เป็น log ย้อนหลัง
+
 | Sprint | สถานะ |
 |---|---|
 | S0 docs/seo + skills | ✅ |
@@ -10,7 +12,8 @@
 | S2 on-page keyword | ✅ deployed |
 | S3 content | ⏸️ แผนเสร็จ ผู้ใช้สั่งหยุดก่อนเขียน |
 | S4 off-page/GEO | ⬜ ยังไม่เริ่ม (แต่ llms.txt + RSS ทำแล้วใน S5) |
-| S5 audit รอบละเอียด (ส.ค.) | ✅ P0+P1+P2 ปิดครบ — ดู `07-audit-2026-08-29.md` |
+| S5 audit รอบละเอียด (ส.ค.) | ✅ P0+P1+P2 ปิดครบ + deploy แล้ว — ดู `07-audit-2026-08-29.md` |
+| S6 master plan | ✅ เขียนแผนเต็ม `08-seo-master-plan.md` — รอ Phase 0 ปลดบล็อก |
 
 ## S0 — setup
 - สร้าง `docs/seo/` (00-strategy, 01-keyword-map, 02-baseline, 03-technical-audit, 04-onpage-checklist, 05-content-calendar, 06-content-pipeline-architecture, ไฟล์นี้)
