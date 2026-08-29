@@ -65,7 +65,7 @@
 | GSC property | `sc-domain:bestsolutionscorp.com` (Domain, verified, siteOwner) |
 | Supabase project | `dhftyjnzqkyocfhtmjet` (bestsolutions-website) |
 - secrets gitignored: `*-sa.json *service-account*.json bestsolutions-seo-*.json gsc-sa.json *psi-key* client_secret*`
-- baseline organic = **0** (property สร้างใหม่ ไม่ backfill, history เก่าหายถาวร) → เริ่มนับศูนย์
+- ~~baseline organic = 0~~ **ผิด** — ดึง GSC จริง 30 ส.ค. พบ 2,868 impressions / 14 clicks ตั้งแต่ 15 พ.ค. ดู `02-baseline.md`
 - CWV baseline (desktop): Perf 98–100, SEO 100, A11y 95–96, CLS 0. mobile blog LCP 2.7s (เฝ้าดู)
 
 ## Live findings
@@ -79,7 +79,7 @@
 - [ ] **GTM**: เปลี่ยน Measurement ID ของ GA4 tag → `G-611ZJPLYR4` แล้ว Publish (เจ้าของเลือกย้าย property)
 - [ ] **GA4 Admin**: link GA4 ↔ Search Console หลังเปลี่ยน ID เสร็จ
 - [ ] **Vercel Domains**: non-www → www เปลี่ยน 307 → 308
-- [ ] **GSC OAuth หมดอายุ** (`invalid_grant`) → `node scripts/gsc-oauth.mjs` ใหม่ ก่อนจะดึงข้อมูลได้อีก
+- [x] ~~GSC OAuth หมดอายุ~~ ✅ แก้แล้ว 30 ส.ค. — เพิ่ม service account `gsc-reader@bestsolutions-seo.iam.gserviceaccount.com` เป็น siteFullUser แทน (ไม่หมดอายุ) เลิกใช้ OAuth flow
 - [ ] Supabase: เติม `portfolio_items.year` (ว่าง 6/7) + `live_url` (มี 1/7)
 - [ ] วัด PSI ใหม่หลัง deploy เพื่อยืนยันว่า LCP ลง (baseline ก่อนแก้: home 4.2s / blog 7.5s, Perf 76 / 69)
 
